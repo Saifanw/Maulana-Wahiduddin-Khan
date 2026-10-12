@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maulana Wahiduddin Khan: Digital Knowledge Library</title>
+<meta name="description" content="Books, articles, ideas, videos and answers in one searchable library.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Figtree:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;500&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F5F7; --surface:#FFFFFF; --ink:#12242E; --muted:#4F6672; --line:#D5DEE4;
+  --accent:#0E6B73; --accent-ink:#FFFFFF; --glow:#8A5410; --chip:#E4ECF0;
+  --serif:'Newsreader',Georgia,serif; --sans:'Figtree',system-ui,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0A141B; --surface:#112029; --ink:#E8EEF1; --muted:#9DB1BC; --line:#233844;
+  --accent:#4FC3C9; --accent-ink:#062126; --glow:#F0B35C; --chip:#162A35;}}
+:root[data-theme="dark"]{
+  --bg:#0A141B; --surface:#112029; --ink:#E8EEF1; --muted:#9DB1BC; --line:#233844;
+  --accent:#4FC3C9; --accent-ink:#062126; --glow:#F0B35C; --chip:#162A35;}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:400 1rem/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+body.ur{font-family:'Noto Nastaliq Urdu',var(--serif);line-height:2.1}
+body.hi{font-family:'Noto Sans Devanagari',var(--sans);line-height:1.8}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+
+/* nav */
+header.nav{position:fixed;inset:0 0 auto 0;z-index:20;padding-top:env(safe-area-inset-top,0px);
+  background:linear-gradient(#050C11cc,#050C1100);color:#EAF1F4}
+header.nav.solid{background:#07121AEE;backdrop-filter:blur(10px)}
+.nav .wrap{display:flex;align-items:center;gap:1rem;height:64px}
+.brand{font:500 1.15rem var(--serif);text-decoration:none;letter-spacing:.01em;white-space:nowrap}
+nav.links{display:flex;gap:.25rem;margin-inline-start:auto}
+nav.links a{padding:.5rem .8rem;border-radius:999px;text-decoration:none;font-size:.95rem;opacity:.85}
+nav.links a:hover{opacity:1;background:#ffffff18}
+.tools{display:flex;gap:.4rem}
+.tools button,.tools select{background:#ffffff14;color:inherit;border:1px solid #ffffff2e;border-radius:999px;height:38px;padding:0 .8rem;font:inherit;font-size:.9rem;cursor:pointer}
+.tools select option{color:#111}
+@media(max-width:820px){nav.links{display:none}.tools{margin-inline-start:auto}}
+
+/* hero: dark in both themes */
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;color:#EAF1F4;overflow:hidden;
+  background:linear-gradient(#050C11 0%,#0A1C27 55%,#12313A 80%,#2C4A47 100%)}
+.hero::before{content:"";position:absolute;left:50%;bottom:-38%;width:150vmax;height:80vmax;translate:-50% 0;border-radius:50%;
+  background:radial-gradient(closest-side,#F0B35C66,#F0B35C1f 45%,transparent 72%);animation:rise 3.2s cubic-bezier(.2,.7,.2,1) both}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:radial-gradient(1px 1px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 78% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 42% 28%,#fff,transparent),radial-gradient(1px 1px at 90% 34%,#fff,transparent),radial-gradient(1px 1px at 24% 40%,#fff,transparent),radial-gradient(1.5px 1.5px at 60% 8%,#fff,transparent),radial-gradient(1px 1px at 5% 52%,#fff,transparent);
+  mask-image:linear-gradient(#000 40%,transparent 85%);animation:fadein 3s ease both}
+@keyframes rise{from{transform:translateY(40%);opacity:0}to{transform:none;opacity:1}}
+@keyframes fadein{from{opacity:0}to{opacity:.55}}
+.hero-in{position:relative;z-index:2;max-width:820px;padding:7rem 1.25rem 5rem;width:100%}
+.hero h1{font:400 clamp(2.1rem,6vw,3.9rem)/1.12 var(--serif);margin:0 0 1rem;letter-spacing:-.01em;text-wrap:balance}
+body.ur .hero h1{line-height:1.7;font-size:clamp(1.8rem,5vw,3rem)}
+.hero p.sub{margin:0 auto 2rem;max-width:560px;color:#C5D4DB;font-size:1.1rem}
+.searchbox{position:relative;max-width:680px;margin:0 auto;text-align:start}
+.searchbox form{display:flex;align-items:center;background:#F7FAFB;border-radius:18px;padding:.35rem .35rem .35rem 1.1rem;
+  box-shadow:0 20px 60px #00000066,0 0 0 1px #ffffff40;color:#12242E}
+.searchbox svg{flex:none;opacity:.6}
+.searchbox input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:1.05rem;padding:.9rem .8rem;color:#12242E}
+.searchbox input:focus{outline:none}
+.searchbox form:focus-within{box-shadow:0 20px 60px #00000066,0 0 0 3px #4FC3C9}
+.go{border:0;border-radius:13px;background:#0E6B73;color:#fff;font:600 1rem var(--sans);padding:.85rem 1.3rem;cursor:pointer}
+.go:hover{background:#0B5960}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 8px);background:#F7FAFB;color:#12242E;border-radius:16px;box-shadow:0 24px 60px #0008;overflow:hidden;display:none;z-index:5}
+.sugg.open{display:block}
+.sugg .hd{padding:.7rem 1.1rem .3rem;font-size:.85rem;color:#4F6672}
+.sugg button{display:flex;width:100%;gap:.7rem;align-items:center;border:0;background:none;text-align:start;padding:.65rem 1.1rem;font:inherit;color:inherit;cursor:pointer}
+.sugg button:hover,.sugg button:focus-visible{background:#E4ECF0}
+.tag{font-size:.78rem;background:#E4ECF0;color:#0E4F56;border-radius:999px;padding:.05rem .6rem;white-space:nowrap}
+.short{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:1.6rem}
+.short a{padding:.6rem 1.1rem;border-radius:999px;border:1px solid #ffffff40;background:#ffffff12;text-decoration:none;font-weight:500;transition:background .2s}
+.short a:hover{background:#ffffff26}
+.popular{margin-top:1.2rem;color:#A9BCC5;font-size:.92rem}
+.popular button{background:none;border:0;color:#F0B35C;font:inherit;cursor:pointer;padding:.1rem .35rem;text-decoration:underline;text-underline-offset:3px}
+.scrollhint{position:absolute;bottom:1.3rem;left:50%;translate:-50% 0;z-index:2;width:22px;height:36px;border:1.5px solid #ffffff66;border-radius:12px}
+.scrollhint::after{content:"";position:absolute;left:50%;top:7px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:#fff;animation:dot 1.8s infinite}
+@keyframes dot{50%{transform:translateY(10px);opacity:.2}}
+
+/* results */
+#results{display:none;padding:3rem 0 1rem}
+#results.show{display:block}
+.rgroup{margin:1.6rem 0}
+.rgroup h3{font:500 1.25rem var(--serif);margin:0 0 .6rem}
+.item{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin-bottom:.6rem;text-decoration:none}
+.item:hover{border-color:var(--accent)}
+.item b{font-weight:600}.item p{margin:.2rem 0 0;color:var(--muted);font-size:.95rem}
+mark{background:#F0B35C55;color:inherit;border-radius:3px;padding:0 2px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:1.4rem}
+
+/* sections */
+section.s{padding:4.5rem 0}
+h2{font:400 clamp(1.6rem,3.6vw,2.2rem)/1.2 var(--serif);margin:0 0 .5rem;letter-spacing:-.005em}
+.lede{color:var(--muted);margin:0 0 2rem;max-width:56ch}
+.start{display:grid;grid-template-columns:1.25fr 1fr;gap:1.5rem}
+@media(max-width:820px){.start{grid-template-columns:1fr}}
+.feature{background:linear-gradient(160deg,#0F2B35,#12404A);color:#EAF1F4;border-radius:22px;padding:2rem;display:flex;flex-direction:column;gap:1rem;min-height:340px;justify-content:flex-end}
+.feature h3{font:400 2rem/1.15 var(--serif);margin:0}
+.feature p{margin:0;color:#BFD2D9;max-width:44ch}
+.pill{align-self:flex-start;font-size:.8rem;border:1px solid #ffffff55;border-radius:999px;padding:.15rem .7rem;color:#F0B35C}
+.btns{display:flex;gap:.6rem;flex-wrap:wrap}
+.btn{display:inline-block;padding:.7rem 1.2rem;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:600;text-decoration:none;border:0;cursor:pointer;font-size:.95rem}
+.btn.alt{background:transparent;border:1px solid #ffffff66;color:#EAF1F4}
+.col{display:flex;flex-direction:column;gap:1.5rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.4rem}
+.panel h3{margin:0 0 .5rem;font:500 1.15rem var(--serif)}
+.panel ul{list-style:none;margin:0;padding:0}
+.panel li{padding:.65rem 0;border-top:1px solid var(--line)}
+.panel li:first-child{border-top:0}
+.panel li a{text-decoration:none}.panel li a:hover{color:var(--accent)}
+.vid{display:flex;gap:1rem;align-items:center}
+.thumb{flex:none;width:96px;aspect-ratio:16/10;border-radius:10px;background:linear-gradient(135deg,#12404A,#2C4A47);display:grid;place-items:center;color:#fff}
+
+.cloud{display:flex;flex-wrap:wrap;gap:.6rem}
+.cloud button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:.6rem 1.1rem;font:500 .98rem var(--sans);cursor:pointer;transition:border-color .2s,background .2s}
+body.ur .cloud button,body.hi .cloud button{font-family:inherit}
+.cloud button:hover{border-color:var(--accent);background:var(--chip)}
+
+.trust{background:var(--surface);border-block:1px solid var(--line)}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+@media(max-width:820px){.tgrid{grid-template-columns:1fr}}
+.tgrid h3{font:500 1.2rem var(--serif);margin:0 0 .4rem}
+.tgrid p{margin:0;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2rem}
+.lb{font-size:.88rem;padding:.25rem .8rem;border-radius:8px;border:1px solid var(--line)}
+.lb.q{border-inline-start:4px solid var(--accent)}.lb.s{border-inline-start:4px solid #8A5410}.lb.e{border-inline-start:4px solid #6B5BA8}.lb.c{border-inline-start:4px solid #7A8A94}
+
+footer{padding:3rem 0 4rem;color:var(--muted);font-size:.93rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between}
+footer nav{display:flex;gap:1.2rem;flex-wrap:wrap}
+footer a{text-decoration:none}footer a:hover{color:var(--accent)}
+.note{font-size:.88rem;color:var(--muted);margin-top:1.4rem}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Wahiduddin Khan Library</a>
+    <nav class="links" aria-label="Primary">
+      <a href="#start" data-i="books">Books</a><a href="#topics" data-i="topics">Topics</a><a href="#start" data-i="questions">Questions</a><a href="#start" data-i="articles">Articles</a><a href="#start" data-i="videos">Videos</a>
+    </nav>
+    <div class="tools">
+      <select id="lang" aria-label="Language"><option value="en">English</option><option value="ur">اردو</option><option value="hi">हिन्दी</option></select>
+      <button id="theme" aria-label="Switch light or dark theme">Theme</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-in">
+    <h1 data-i="h1">Explore the Thoughts and Teachings of Maulana Wahiduddin Khan</h1>
+    <p class="sub" data-i="sub">Books, articles, ideas, videos, and answers to your questions — all in one place.</p>
+    <div class="searchbox">
+      <form id="sf" role="search" autocomplete="off">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" data-ph="ph" placeholder="Search a book, topic, question, or teaching..." aria-label="Search" aria-controls="sugg" enterkeyhint="search">
+        <button class="go" type="submit" data-i="search">Search</button>
+      </form>
+      <div class="sugg" id="sugg" role="listbox"></div>
+    </div>
+    <div class="short" aria-label="Shortcuts">
+      <a href="#start" data-i="eb">Explore Books</a><a href="#topics" data-i="et">Explore Topics</a><a href="#start" data-i="qa">Questions &amp; Answers</a><a href="#start" data-i="articles">Articles</a><a href="#start" data-i="videos">Videos</a>
+    </div>
+    <div class="popular" id="popular"></div>
+  </div>
+  <div class="scrollhint" aria-hidden="true"></div>
+</section>
+
+<div class="wrap" id="results" aria-live="polite"></div>
+
+<section class="s" id="start"><div class="wrap">
+  <h2 data-i="starth">Start here</h2>
+  <p class="lede" data-i="startp">A small selection to begin with. Every item shows where it comes from.</p>
+  <div class="start">
+    <article class="feature">
+      <span class="pill">Sample entry, source check pending</span>
+      <h3>Islam and Peace</h3>
+      <p>A featured book slot. Once a title is verified, this card shows its cover, a short description, and only the buttons that truly work for that edition.</p>
+      <div class="btns"><a class="btn" href="#topics">Open book page</a><a class="btn alt" href="#topics">Open official source</a></div>
+    </article>
+    <div class="col">
+      <div class="panel"><h3>Common questions</h3>
+        <ul>
+          <li><a href="#" data-s="patience">What does the author say about patience?</a></li>
+          <li><a href="#" data-s="peace">How is Islam connected with peace?</a></li>
+          <li><a href="#" data-s="book">Which book should I read first?</a></li>
+        </ul>
+      </div>
+      <div class="panel"><h3>Watch</h3>
+        <div class="vid"><div class="thumb" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <div><b>Featured lecture</b><br><span style="color:var(--muted);font-size:.93rem">Added from an official channel after review.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="s" id="topics" style="padding-top:0"><div class="wrap">
+  <h2 data-i="toph">Browse by topic</h2>
+  <p class="lede" data-i="topp">Pick a subject to see documented views, source references, books and videos together.</p>
+  <div class="cloud" id="cloud"></div>
+  <p class="note">Topics are a starting list. A topic page appears only when verified source material exists for it.</p>
+</div></section>
+
+<section class="s trust"><div class="wrap">
+  <div class="tgrid">
+    <div><h3>Every claim has a source</h3><p>Quotations show the book, edition and page. If no reliable source exists, the page says so instead of guessing.</p></div>
+    <div><h3>Honest download buttons</h3><p>You see Download PDF only when the file is authorized and hosted here. Otherwise you get a clearly labeled link to the official source.</p></div>
+    <div><h3>Words are labeled</h3><p>You can always tell the author's own words from summaries, editor notes and community replies.</p></div>
+  </div>
+  <div class="legend"><span class="lb q">Direct quotation</span><span class="lb s">Summary of the author's view</span><span class="lb e">Editorial explanation</span><span class="lb c">Community contribution</span></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div>An independent knowledge library. Content is added only from official, authorized or permitted sources.</div>
+  <nav aria-label="Footer"><a href="#top">About</a><a href="#top">Saved library</a><a href="#top">Community guidelines</a><a href="#top">Contact</a></nav>
+</div></footer>
+
+<script>
+const T={
+ en:{books:"Books",topics:"Topics",questions:"Questions",articles:"Articles",videos:"Videos",h1:"Explore the Thoughts and Teachings of Maulana Wahiduddin Khan",sub:"Books, articles, ideas, videos, and answers to your questions — all in one place.",ph:"Search a book, topic, question, or teaching...",search:"Search",eb:"Explore Books",et:"Explore Topics",qa:"Questions & Answers",starth:"Start here",startp:"A small selection to begin with. Every item shows where it comes from.",toph:"Browse by topic",topp:"Pick a subject to see documented views, source references, books and videos together.",pop:"Popular:",recent:"Recent searches",sug:"Suggestions",none:"No verified source-based answer is available yet. You can explore related material or contribute a referenced answer.",res:"Results for"},
+ ur:{books:"کتابیں",topics:"موضوعات",questions:"سوالات",articles:"مضامین",videos:"ویڈیوز",h1:"مولانا وحید الدین خان کے افکار و تعلیمات دریافت کریں",sub:"کتابیں، مضامین، خیالات، ویڈیوز اور آپ کے سوالات کے جوابات — سب ایک جگہ۔",ph:"کتاب، موضوع، سوال یا تعلیم تلاش کریں...",search:"تلاش",eb:"کتابیں دیکھیں",et:"موضوعات دیکھیں",qa:"سوال و جواب",starth:"یہاں سے شروع کریں",startp:"شروع کرنے کے لیے ایک مختصر انتخاب۔ ہر چیز کا ماخذ ظاہر کیا جاتا ہے۔",toph:"موضوع کے مطابق دیکھیں",topp:"کوئی موضوع چنیں اور دستاویزی نقطۂ نظر، حوالے، کتابیں اور ویڈیوز ایک ساتھ دیکھیں۔",pop:"مقبول:",recent:"حالیہ تلاش",sug:"تجاویز",none:"ابھی کوئی تصدیق شدہ ماخذی جواب دستیاب نہیں۔ آپ متعلقہ مواد دیکھ سکتے ہیں یا حوالے کے ساتھ جواب دے سکتے ہیں۔",res:"نتائج برائے"},
+ hi:{books:"किताबें",topics:"विषय",questions:"सवाल",articles:"लेख",videos:"वीडियो",h1:"मौलाना वहीदुद्दीन खान के विचारों और शिक्षाओं को जानें",sub:"किताबें, लेख, विचार, वीडियो और आपके सवालों के जवाब — सब एक जगह।",ph:"किताब, विषय, सवाल या शिक्षा खोजें...",search:"खोजें",eb:"किताबें देखें",et:"विषय देखें",qa:"सवाल और जवाब",starth:"यहाँ से शुरू करें",startp:"शुरुआत के लिए एक छोटा चयन। हर चीज़ का स्रोत दिखाया जाता है।",toph:"विषय के अनुसार देखें",topp:"कोई विषय चुनें और प्रलेखित विचार, संदर्भ, किताबें और वीडियो एक साथ देखें।",pop:"लोकप्रिय:",recent:"हाल की खोजें",sug:"सुझाव",none:"अभी कोई सत्यापित स्रोत-आधारित उत्तर उपलब्ध नहीं है। आप संबंधित सामग्री देख सकते हैं या संदर्भ के साथ उत्तर दे सकते हैं।",res:"के परिणाम"}
+};
+const TOPICS=[["Islam and Peace","peace aman shanti"],["Quran and Hadith","quran hadith"],["Spirituality","spirituality ruhaniyat"],["God and Faith","god faith iman"],["Life After Death","akhirat hereafter death"],["Human Nature","human nature"],["Patience and Forgiveness","patience sabr forgiveness"],["Nonviolence","nonviolence ahimsa"],["Interfaith Relations","interfaith"],["Women and Family","women family"],["Education","education talim"],["Science and Religion","science religion"],["Personal Development","development growth"],["Society and Humanity","society humanity"],["Dawah and Communication","dawah communication"],["Success and Failure","success failure"],["Contemporary Issues","contemporary issues"]];
+const DATA=[
+ ...TOPICS.map(([n,k])=>({t:"Topics",title:n,d:"Topic page. Documented views appear here once sources are verified.",k})),
+ {t:"Books",title:"Islam and Peace",d:"Sample record. Edition, publisher and file rights are not yet verified.",k:"peace book"},
+ {t:"Books",title:"The Prophet of Peace",d:"Sample record. Edition, publisher and file rights are not yet verified.",k:"prophet peace seerah book"},
+ {t:"Books",title:"God Arises",d:"Sample record. Edition, publisher and file rights are not yet verified.",k:"god faith book"},
+ {t:"Books",title:"Tazkirul Quran",d:"Sample record. Edition, publisher and file rights are not yet verified.",k:"quran commentary book"},
+ {t:"Questions",title:"What does the author say about patience?",d:"Awaiting a referenced, source-based answer.",k:"patience sabr"},
+ {t:"Questions",title:"How is Islam connected with peace?",d:"Awaiting a referenced, source-based answer.",k:"peace islam aman"},
+ {t:"Questions",title:"Which book should I read first?",d:"Awaiting a referenced, source-based answer.",k:"book start beginner"},
+ {t:"Articles",title:"Article library",d:"Articles are linked to their original publishers where required.",k:"article essay"},
+ {t:"Videos",title:"Video library",d:"Lectures from official channels, added after review.",k:"video lecture youtube"}
+];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let lang="en";
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function hl(text,q){if(!q)return esc(text);const i=text.toLowerCase().indexOf(q);return i<0?esc(text):esc(text.slice(0,i))+"<mark>"+esc(text.slice(i,i+q.length))+"</mark>"+esc(text.slice(i+q.length))}
+function match(q){q=q.toLowerCase().trim();if(!q)return[];const w=q.split(/\s+/).filter(x=>x.length>1);return DATA.filter(x=>{const h=(x.title+" "+x.d+" "+x.k).toLowerCase();return h.includes(q)||(w.length&&w.some(t=>h.includes(t)))})}
+function setLang(l){lang=l;const d=T[l];document.documentElement.lang=l;document.documentElement.dir=l==="ur"?"rtl":"ltr";document.body.className=l==="en"?"":l;
+ $$("[data-i]").forEach(e=>{if(d[e.dataset.i])e.textContent=d[e.dataset.i]});$("#q").placeholder=d.ph;store.set("mwk-lang",l);renderPopular()}
+function renderPopular(){const d=T[lang];$("#popular").innerHTML=esc(d.pop)+" "+["patience","peace","spirituality"].map(w=>`<button type="button" data-s="${w}">${w}</button>`).join("")}
+$("#cloud").innerHTML=TOPICS.map(([n])=>`<button type="button" data-s="${esc(n)}">${esc(n)}</button>`).join("");
+function recent(){try{return JSON.parse(store.get("mwk-recent")||"[]")}catch(e){return[]}}
+function openSugg(){const q=$("#q").value.trim(),d=T[lang];let h="";
+ if(!q){const r=recent();if(r.length)h=`<div class="hd">${d.recent}</div>`+r.map(x=>`<button type="button" data-s="${esc(x)}">${esc(x)}</button>`).join("")}
+ else{const m=match(q).slice(0,6);if(m.length)h=`<div class="hd">${d.sug}</div>`+m.map(x=>`<button type="button" data-s="${esc(x.title)}"><span class="tag">${x.t}</span><span>${hl(x.title,q.toLowerCase())}</span></button>`).join("")}
+ $("#sugg").innerHTML=h;$("#sugg").classList.toggle("open",!!h)}
+function runSearch(q){q=q.trim();if(!q)return;$("#q").value=q;$("#sugg").classList.remove("open");
+ let r=recent().filter(x=>x!==q);r.unshift(q);store.set("mwk-recent",JSON.stringify(r.slice(0,5)));
+ const m=match(q),d=T[lang],box=$("#results");let h=`<h2>${d.res} “${esc(q)}”</h2>`;
+ if(!m.length)h+=`<div class="empty">${d.none}</div>`;
+ else{["Books","Topics","Questions","Articles","Videos"].forEach(t=>{const g=m.filter(x=>x.t===t);if(g.length)h+=`<div class="rgroup"><h3>${t}</h3>`+g.map(x=>`<a class="item" href="#"><b>${hl(x.title,q.toLowerCase())}</b><p>${esc(x.d)}</p></a>`).join("")+`</div>`})}
+ box.innerHTML=h;box.classList.add("show");box.scrollIntoView({behavior:"smooth",block:"start"})}
+$("#sf").addEventListener("submit",e=>{e.preventDefault();runSearch($("#q").value)});
+$("#q").addEventListener("input",openSugg);$("#q").addEventListener("focus",openSugg);
+document.addEventListener("click",e=>{const s=e.target.closest("[data-s]");if(s){e.preventDefault();runSearch(s.dataset.s);return}if(!e.target.closest(".searchbox"))$("#sugg").classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#sugg").classList.remove("open")});
+$("#lang").addEventListener("change",e=>setLang(e.target.value));
+$("#theme").addEventListener("click",()=>{const r=document.documentElement,dark=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0A141B";const n=dark?"light":"dark";r.dataset.theme=n;store.set("mwk-theme",n)});
+addEventListener("scroll",()=>$("#nav").classList.toggle("solid",scrollY>60),{passive:true});
+const st=store.get("mwk-theme");if(st)document.documentElement.dataset.theme=st;
+const sl=store.get("mwk-lang");if(sl&&T[sl]){$("#lang").value=sl;setLang(sl)}else renderPopular();
+</script>
+</body>
+</html>
