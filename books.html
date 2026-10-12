@@ -119,6 +119,25 @@ footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px sol
 .cv.im{padding:0;background:#10202a}.cv.im::before,.cv.im::after{display:none}
 .cv.im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;border-radius:inherit}
 .card .cv.im{box-shadow:inset 0 -1px 0 var(--line)}
+/* ===== unified premium layer ===== */
+:root{--bg:#F3F6FB;--surface:#FFFFFF;--ink:#0B1220;--muted:#566783;--line:#DAE2EF;--accent:#0A8A80;--accent-ink:#FFFFFF;--hot:#C2650A;--hot-ink:#FFFFFF;--gold:#C2650A;--chip:#E9EFF8}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#070B14;--surface:#0D1525;--ink:#E8EEFA;--muted:#8D9DBB;--line:#1D2A45;--accent:#34D8C3;--accent-ink:#03211D;--hot:#FFC25E;--hot-ink:#2A1700;--gold:#FFC25E;--chip:#152039}}
+:root[data-theme="dark"]{--bg:#070B14;--surface:#0D1525;--ink:#E8EEFA;--muted:#8D9DBB;--line:#1D2A45;--accent:#34D8C3;--accent-ink:#03211D;--hot:#FFC25E;--hot-ink:#2A1700;--gold:#FFC25E;--chip:#152039}
+.brand{font:700 1.05rem var(--sans)!important;letter-spacing:-.01em;display:inline-flex;align-items:center;gap:.6rem}
+.brand::before{content:"";width:20px;height:20px;border-radius:50%;background:conic-gradient(from 200deg,#5EE0D0,#AEB9FF,#FFC76B,#5EE0D0);box-shadow:0 0 16px -2px #5EE0D0}
+header.top{background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);color:var(--ink);box-shadow:none;border-bottom:1px solid var(--line)}
+.bar{min-height:60px}
+nav.m a{color:var(--muted);opacity:1;font-weight:500}nav.m a:hover{background:var(--chip);color:var(--ink)}nav.m a.on{background:var(--chip);color:var(--ink);font-weight:600}
+.tb{border-color:var(--line);background:var(--surface);color:var(--ink)}
+.sb form{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line)}.sb input{color:var(--ink)}.sb form:focus-within{box-shadow:0 0 0 2px var(--accent)}.sb button{background:var(--hot);color:var(--hot-ink)}
+.sg{background:var(--surface);color:var(--ink);border:1px solid var(--line)}.sg button{color:var(--ink)}.sg button:hover,.sg button:focus-visible{background:var(--chip)}.sg small{color:var(--muted)}
+.banner{background:radial-gradient(110% 160% at 100% 0,color-mix(in srgb,var(--hot) 20%,transparent),transparent 55%),radial-gradient(90% 140% at 0 0,color-mix(in srgb,var(--accent) 18%,transparent),transparent 55%),var(--surface);color:var(--ink);border:1px solid var(--line);padding:1.3rem 1.6rem}
+.banner h1{font:700 clamp(1.5rem,3vw,2.1rem)/1.2 var(--sans);letter-spacing:-.02em}.banner p{color:var(--muted)}
+.strip button{font-weight:600;font-size:.88rem;padding:.4rem .95rem}.strip button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+aside.f,.card{border-radius:16px}
+.card:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 22px 44px -26px color-mix(in srgb,var(--accent) 55%,#000)}
+.btn.hot{background:linear-gradient(135deg,var(--accent),var(--hot));color:#06130F;border:0}
+.more{border-radius:999px}
 </style>
 </head>
 <body>
@@ -631,7 +650,7 @@ $("#fb").onclick=()=>$("#f").classList.add("open");$("#done").onclick=()=>$("#f"
 $("#sf").onsubmit=e=>{e.preventDefault();st.q=$("#q").value;st.shown=24;$("#sg").classList.remove("open");render();$("#res").scrollIntoView({behavior:"smooth",block:"start"})};
 $("#q").addEventListener("input",()=>{const t=norm($("#q").value).split(" ").filter(Boolean);if(!t.length){$("#sg").classList.remove("open");return}
  const m=B.filter(b=>t.every(w=>b.h.includes(w))).slice(0,6);$("#sg").innerHTML=m.map(b=>`<button type="button" data-o="${b.id}">${esc(b.title)}<small>${esc(b.lang)}</small></button>`).join("");$("#sg").classList.toggle("open",m.length>0)});
-$("#theme").onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0A141B";const v=d?"light":"dark";r.dataset.theme=v;try{localStorage.setItem("mwk-theme",v)}catch(e){}};
+$("#theme").onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).getPropertyValue("--bg").trim().toUpperCase()==="#070B14";const v=d?"light":"dark";r.dataset.theme=v;try{localStorage.setItem("mwk-theme",v)}catch(e){}};
 try{const t=localStorage.getItem("mwk-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
 
 document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)&&!$("#ov").classList.contains("open")){e.preventDefault();$("#q").focus()}

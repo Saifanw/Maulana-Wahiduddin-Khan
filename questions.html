@@ -171,6 +171,29 @@ body::before{opacity:calc(var(--ao)*.55)}
 .empty{border-radius:var(--r)}.empty .hot{margin-top:.6rem}
 .right .box,.left .box{border-radius:var(--r)}
 .lg{border-radius:999px;padding:0 .5rem}
+
+/* ===== content-first layout ===== */
+.left{display:none!important}
+.cols{grid-template-columns:minmax(0,1fr) 290px!important;gap:2.2rem;max-width:1080px;margin:0 auto}
+@media(max-width:900px){.cols{grid-template-columns:1fr!important}}
+.mchips{display:flex!important;flex-wrap:nowrap;overflow-x:auto;gap:.4rem;padding:.1rem 0 .9rem;margin-bottom:.2rem;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.mchips button{font-size:.84rem;padding:.32rem .8rem;display:inline-flex;align-items:center;gap:.4rem;font-weight:600}
+.mchips button[style]::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c)}
+.mchips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.qc{padding:1rem 1.25rem .85rem;margin-bottom:.75rem}
+.qt{font:600 clamp(1.08rem,1.6vw,1.28rem)/1.35 var(--sans);letter-spacing:-.01em;margin:.5rem 0 .4rem}
+.qt.l-ur{line-height:2;font-weight:500}.qt.l-hi{line-height:1.55}
+.qv h1.qt{font:600 clamp(1.5rem,2.6vw,2rem)/1.3 var(--sans)!important}
+.pre{padding:.6rem .85rem;margin:.55rem 0 .1rem}.pre p{-webkit-line-clamp:2;font-size:.95rem}
+.bar2{margin-top:.55rem}
+.tabs{margin-bottom:.7rem}
+.qchips,.trust{display:none}
+.hero{padding:1.6rem 1rem 0}.hero h1{font-size:clamp(2rem,4.6vw,3rem);margin-top:.8rem}.hero p{font-size:1rem;margin-top:.6rem}.ask{margin-top:1.1rem}
+.cols{padding-top:1.4rem}
+/* ===== flat header + brand ===== */
+.hdr{padding:0;background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);border-bottom:1px solid var(--line)}
+.hdr .bar{max-width:1080px;border:0;border-radius:0;background:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:.55rem 1.25rem}
+.brand{font:700 1.05rem var(--sans);letter-spacing:-.01em}.logo{width:20px;height:20px}
 </style>
 </head>
 <body>
@@ -275,6 +298,7 @@ function side(){document.querySelector(".stats").classList.toggle("show",Q().len
  ${rel.length?`<div class="box"><h2>Related questions</h2><ol>${rel.map(li).join("")}</ol></div>`:""}
  <div class="box"><h2>Top questions</h2>${top.length?`<ol>${top.map(li).join("")}</ol>`:`<p class="hint">Top questions will appear here once people start asking.</p>`}</div>
  <div class="box"><h2>Guidelines</h2><p class="hint">Be respectful. Add the book and page when you quote. No spam, abuse or impersonation.</p></div>
+ <div class="box"><h2>Explore</h2><p class="hint">Browse every book and open it on the official source.</p><a class="hot" style="display:inline-block;text-decoration:none" href="${BOOKS}">Browse books</a></div>
  <p class="mode">Live: questions and answers are shared with everyone.</p>`}
 
 const ROM=new Set("ke ka ki hai hain kya nazdeen nazdik mutabiq aur ko se mein nahi nahin kaise kyun kyon liye hota hoti jab tab woh yeh iska uska apni apne bhi par kitab sabr maulana".split(" "));
@@ -290,7 +314,7 @@ function md(src){const L=String(src||"").replace(/\r/g,"").split("\n");let h="",
  else if(!x.trim()){fl();cu()}else{cu();p.push(inl(x))}}fl();cu();return h}
 const ST=[["Anger","How can I control my anger and stay calm?","Patience and Forgiveness"],["Stress","What do the books say about dealing with stress and worry?","Personal Development"],["Family","How should I handle conflict in my family peacefully?","Women and Family"],["Forgiveness","Why is forgiving others important for peace of mind?","Patience and Forgiveness"],["Faith and science","Are science and religion really in conflict?","Science and Religion"],["Start here","Which book should a beginner read first?","Which Book to Read"]];
 const stH=()=>(Q().length<12&&!topic&&!term&&!lang)?`<div class="stw"><h2>Start with a question people really ask</h2><div class="stg">${ST.map(x=>`<button type="button" class="stc" data-ask="${esc(x[1])}" data-t="${esc(x[2])}"><span>${x[0]}</span>${esc(x[1])}</button>`).join("")}</div></div>`:"";
-const qodH=()=>{const a=Q();if(a.length<3||topic||term||lang)return"";const q=a[Math.floor(Date.now()/864e5)%a.length];return`<div class="qod"><div><small>Question of the day</small><a data-q="${q.id}" class="${lc(q)}" dir="auto">${esc(q.title)}</a></div></div>`};
+const qodH=()=>{const a=Q();if(a.length<6||topic||term||lang)return"";const q=a[Math.floor(Date.now()/864e5)%a.length];return`<div class="qod"><div><small>Question of the day</small><a data-q="${q.id}" class="${lc(q)}" dir="auto">${esc(q.title)}</a></div></div>`};
 const BK='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg>';
 const mine=d=>own(d)?`<button type="button" data-edit="${d.id}">Edit</button><button type="button" data-del="${d.id}">Delete</button>`:"";
 const rpb=d=>`<button type="button" data-rep="${d.id}">${d.reported?"Reported":"Report"}</button>`;
@@ -438,6 +462,7 @@ else{render();
 
 document.addEventListener("input",e=>{const t=e.target,l=scr(t.value||"");if(!l)return;if(t.id==="mt")$("#mlang").value=l;if(t.id==="ab")$("#al").value=l});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-ask]");if(!b)return;ask(b.dataset.ask);if(b.dataset.t)$("#mtopic").value=b.dataset.t},true);
+document.addEventListener("wheel",e=>{const m=e.target.closest(".mchips");if(m&&Math.abs(e.deltaY)>Math.abs(e.deltaX)){m.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});
 render();
 </script>
 </body>
