@@ -123,14 +123,14 @@ footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px sol
 </head>
 <body>
 <header class="top"><div class="wrap bar">
-  <a class="brand" href="https://claude.ai/artifact/1RC8XvPpzFPxuiyWqFeP1d">Wahiduddin Khan Library</a>
+  <a class="brand" href="index.html">Wahiduddin Khan Library</a>
   <div class="sb"><form id="sf" role="search" autocomplete="off"><input id="q" type="search" placeholder="Search books by title or language..." aria-label="Search books" enterkeyhint="search"><button type="submit">Search</button></form><div class="sg" id="sg" role="listbox"></div></div>
-  <nav class="m" aria-label="Primary"><a href="https://claude.ai/artifact/1RC8XvPpzFPxuiyWqFeP1d">Home</a><a class="on" href="#">Books</a><a href="https://claude.ai/artifact/1RC8XvPpzFPxuiyWqFeP1d#topics">Topics</a><a href="https://claude.ai/artifact/HmYY575XHRLyb5vnXcM281">Questions</a><a href="https://claude.ai/artifact/1RC8XvPpzFPxuiyWqFeP1d#articles">Articles</a></nav>
+  <nav class="m" aria-label="Primary"><a href="index.html">Home</a><a class="on" href="#">Books</a><a href="books.html#tstrip">Topics</a><a href="question.html">Questions</a><a href="index.html#articles">Articles</a></nav>
   <button class="tb" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
 </div></header>
 
 <main class="wrap">
-  <div class="crumb"><a href="https://claude.ai/artifact/1RC8XvPpzFPxuiyWqFeP1d">Home</a> &gt; Books</div>
+  <div class="crumb"><a href="index.html">Home</a> &gt; Books</div>
   <section class="banner"><h1>Books by Maulana Wahiduddin Khan</h1><p id="bsub">Find a book, choose your language, and open it on the official CPS International library. Excerpts and downloadable formats are provided there.</p></section>
   <div class="strip" id="strip" aria-label="Quick language filter"></div>
   <div class="strip tstrip" id="tstrip" aria-label="Browse by keyword in title"></div>
@@ -638,6 +638,7 @@ document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/
  if(e.key==="Tab"&&$("#ov").classList.contains("open")){const f=[...$("#md").querySelectorAll("button,a[href]")];if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
 try{new IntersectionObserver(es=>{if(es[0].isIntersecting&&$("#more").style.display!=="none"){st.shown+=24;render()}},{rootMargin:"400px"}).observe($("#more"))}catch(e){}
 addEventListener("scroll",()=>$("#btt").classList.toggle("show",scrollY>700),{passive:true});$("#btt").onclick=()=>scrollTo({top:0,behavior:"smooth"});
+try{const _q=new URLSearchParams(location.search).get("q");if(_q){st.q=_q;$("#q").value=_q}}catch(e){}
 buildFilters();render();if(location.hash.length>1)open(location.hash.slice(1));
 </script>
 </body>

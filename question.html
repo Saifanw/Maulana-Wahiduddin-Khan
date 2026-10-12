@@ -125,9 +125,9 @@ footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px sol
 </head>
 <body>
 <header class="top"><div class="wrap bar">
-  <a class="brand" href="https://claude.ai/artifact/1RC8XvPpzFPxuiyWqFeP1d">Wahiduddin Khan Library</a>
+  <a class="brand" href="index.html">Wahiduddin Khan Library</a>
   <div class="sb"><input id="gs" type="search" placeholder="Search questions or ask a new one..." aria-label="Search questions"></div>
-  <nav class="m" aria-label="Primary"><a href="https://claude.ai/artifact/1RC8XvPpzFPxuiyWqFeP1d">Home</a><a href="https://claude.ai/artifact/52DrMXF5iGzPK1mjsXJCdW">Books</a><a class="on" href="#">Questions</a></nav>
+  <nav class="m" aria-label="Primary"><a href="index.html">Home</a><a href="books.html">Books</a><a class="on" href="#">Questions</a></nav>
   <button class="hot" type="button" id="addq">Add question</button>
   <button class="tb" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
 </div></header>
@@ -150,7 +150,7 @@ footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px sol
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const TOP=["Islam and Peace","Quran and Hadith","Spirituality","God and Faith","Life After Death","Patience and Forgiveness","Nonviolence","Interfaith","Women and Family","Education","Science and Religion","Personal Development","Which Book to Read","General"];
-const LG={en:"English",hi:"हिन्दी",ur:"اردو"},BOOKS="https://claude.ai/artifact/52DrMXF5iGzPK1mjsXJCdW";
+const LG={en:"English",hi:"हिन्दी",ur:"اردو"},BOOKS="books.html";
 let db=null,uid="local",docs=[],names={},open=null,tab="latest",topic="",lang="",term="";
 $("#mtopic").innerHTML=TOP.map(t=>`<option>${esc(t)}</option>`).join("");
 const ago=t=>{const s=(Date.now()-t)/1e3;return s<60?"just now":s<3600?Math.floor(s/60)+" min ago":s<86400?Math.floor(s/3600)+" h ago":Math.floor(s/86400)+" d ago"};
