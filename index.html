@@ -64,6 +64,8 @@ background:linear-gradient(#050C11 0%,#0A1C27 50%,#12313A 80%,#2C4A47 100%)}
 .bub.a{justify-self:end;border-radius:16px 16px 4px 16px;background:#4FC3C922;border-color:#4FC3C944}
 .soon{display:inline-block;font-size:.75rem;border:1px solid #F0B35C88;color:#F0B35C;border-radius:999px;padding:.05rem .7rem;align-self:flex-start}
 
+.rcol{display:flex;flex-direction:column;gap:2rem;justify-self:start;max-width:360px;width:100%}.rcol .panel{animation:none}.rcol .panel p{font-size:.95rem}
+@media(max-width:1000px){.rcol{max-width:none}}
 /* center */
 .center{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem}
 .portrait{margin:0;width:min(100%,250px,30svh);position:relative;animation:up 1.2s .1s both}
@@ -201,6 +203,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between}
     </div>
   </div>
 
+  <div class="rcol">
+  <article class="panel r" aria-labelledby="ha">
+    <span class="eyebrow">Monthly Magazine</span>
+    <h2 id="ha">Al-Risala</h2>
+    <p>Every issue since 1976 in Urdu, Hindi and English, plus the weekly Sunday discussion.</p>
+    <a class="cta" href="alrisala.html"><span>Go to Al-Risala</span> <span aria-hidden="true">→</span></a>
+  </article>
   <article class="panel r" aria-labelledby="hq">
     <span class="eyebrow" data-i="e2">Ask &amp; Share</span>
     <h2 id="hq" data-i="qa">Questions &amp; Answers</h2>
@@ -208,6 +217,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between}
     <p data-i="qp">Ask your questions, read answers and join the discussion.</p>
     <a class="cta" href="questions.html"><span data-i="qgo">Go to Questions</span> <span aria-hidden="true">→</span></a>
   </article>
+  </div>
 
 </div></section>
 
