@@ -127,6 +127,50 @@ footer{padding:2rem 0 5rem;color:var(--mut);font-size:.88rem;border-top:1px soli
 .umenu{position:absolute;right:0;top:calc(100% + 8px);min-width:170px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:.3rem;box-shadow:0 20px 50px -15px #000a;z-index:60}.umenu[hidden]{display:none}
 .umenu button{display:block;width:100%;text-align:start;border:0;background:none;padding:.55rem .8rem;border-radius:10px;cursor:pointer}.umenu button:hover{background:var(--s2)}
 #aadmin[hidden]{display:none}
+
+/* ===== premium layer ===== */
+:root{--r:20px;--sh:0 1px 0 rgba(255,255,255,.04) inset,0 18px 40px -26px rgba(0,0,0,.7)}
+body::before{opacity:calc(var(--ao)*.55)}
+.eyebrow{display:inline-flex;gap:.55rem;align-items:center;padding:.32rem .85rem;border:1px solid var(--line);border-radius:999px;background:var(--glass);font-size:.8rem;color:var(--mut);font-weight:600}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:var(--a1);box-shadow:0 0 10px var(--a1)}
+.hero{padding:2.8rem 1rem .4rem}.hero h1{margin-top:1.1rem;font-size:clamp(2.4rem,6vw,4rem)}
+.trust{display:flex;justify-content:center;gap:.6rem 1.6rem;flex-wrap:wrap;margin-top:1.5rem;font-size:.84rem;color:var(--mut)}
+.trust span{display:inline-flex;gap:.45rem;align-items:center}.trust svg{color:var(--a1)}
+.stats{display:none}.stats.show{display:flex}
+.cols{grid-template-columns:210px minmax(0,1fr) 300px;padding-top:2rem}
+@media(max-width:1180px){.cols{grid-template-columns:minmax(0,1fr) 280px}}@media(max-width:780px){.cols{grid-template-columns:1fr}}
+.tabs{display:inline-flex;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--s1);margin:0 0 1.1rem}
+.tabs button{border:0;background:none;border-radius:999px;padding:.45rem 1.1rem;font-weight:600;font-size:.88rem;color:var(--mut);cursor:pointer}
+.tabs button.on{background:var(--ink);color:var(--bg)}
+.qc{margin:0 0 .9rem;padding:1.15rem 1.3rem 1rem;border:1px solid var(--line);border-radius:var(--r);background:color-mix(in srgb,var(--s1) 86%,transparent);box-shadow:var(--sh);transition:border-color .2s,transform .2s,box-shadow .2s}
+.qc::before{content:"";position:absolute;left:-1px;top:22px;bottom:22px;width:3px;border-radius:3px;background:var(--c,var(--a1));opacity:0;transition:opacity .2s}
+.qc:hover{background:color-mix(in srgb,var(--s1) 94%,transparent);border-color:color-mix(in srgb,var(--c,var(--a1)) 50%,var(--line));transform:translateY(-2px);box-shadow:0 26px 50px -28px color-mix(in srgb,var(--c,var(--a1)) 60%,#000)}
+.qc:hover::before{opacity:1}.qc:hover .qt{background:none;color:var(--ink)}
+.qt{font-size:clamp(1.35rem,2.2vw,1.65rem);line-height:1.22}.qt.l-ur{line-height:1.95}.qt.l-hi{line-height:1.45}
+.av{width:22px;height:22px;border-radius:50%;display:inline-grid;place-items:center;font:700 .68rem var(--sans);color:#06130F;background:hsl(var(--h) 72% 64%);flex:none}
+.meta .who2{display:inline-flex;align-items:center;gap:.4rem;color:var(--ink);font-weight:600}
+.pre{border:0;border-image:none;background:color-mix(in srgb,var(--s2) 65%,transparent);border-radius:14px;padding:.75rem .95rem;margin:.75rem 0 .2rem}
+.pre p{color:var(--ink);opacity:.8;margin:.35rem 0 0}.pre .who{gap:.45rem}
+.none{display:inline-block;margin:.5rem 0;padding:.25rem .8rem;border-radius:999px;background:color-mix(in srgb,var(--a2) 12%,transparent);font-size:.85rem}
+.answer{padding:1.2rem 1.3rem;margin:0 0 .9rem;border:1px solid var(--line);border-radius:var(--r);background:var(--s1)}
+.answer.bestc{border-color:color-mix(in srgb,var(--a1) 55%,var(--line));box-shadow:0 0 0 4px color-mix(in srgb,var(--a1) 9%,transparent)}
+.answer .who{gap:.5rem}.answer .av,.qv .av{width:30px;height:30px;font-size:.82rem}
+.md{overflow-wrap:anywhere;line-height:1.7}.md p{margin:.55rem 0}.md h2,.md h3,.md h4{font:400 1.35rem/1.25 var(--disp);margin:1.1rem 0 .3rem}.md h3,.md h4{font-size:1.15rem}
+.md ul{padding-inline-start:1.3rem;margin:.5rem 0}.md li{margin:.25rem 0}.md blockquote{margin:.7rem 0;padding:.2rem .95rem;border-inline-start:3px solid var(--a1);color:var(--mut)}
+.qv .body.md{white-space:normal;font-size:1.04rem}
+.srcc{display:flex;gap:.8rem;align-items:center;margin:.7rem 0;padding:.65rem .9rem;border:1px solid color-mix(in srgb,var(--a1) 38%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--a1) 7%,transparent);text-decoration:none;font-size:.88rem;transition:background .15s}
+.srcc:hover{background:color-mix(in srgb,var(--a1) 13%,transparent)}.srcc svg{flex:none;color:var(--a1)}.srcc b{display:block}.srcc small{color:var(--mut)}.srcc em{margin-inline-start:auto;font-style:normal;font-weight:700;color:var(--a1)}
+.srcc.no{border-style:dashed;border-color:var(--line);background:none;color:var(--mut)}.srcc.no svg{color:var(--mut)}
+.stw{margin:0 0 1.6rem}.stw h2{font:700 .72rem var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin:0 0 .7rem}
+.stg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem}
+.stc{text-align:start;border:1px solid var(--line);background:var(--s1);border-radius:16px;padding:.85rem 1rem;cursor:pointer;font-weight:600;font-size:.92rem;line-height:1.4;transition:transform .15s,border-color .15s}
+.stc:hover{transform:translateY(-2px);border-color:var(--a1)}.stc span{display:block;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--a1);margin-bottom:.3rem}
+.qod{display:flex;gap:.9rem;align-items:center;padding:1rem 1.2rem;margin-bottom:1.1rem;border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(120deg,color-mix(in srgb,var(--g1) 14%,transparent),color-mix(in srgb,var(--g2) 12%,transparent))}
+.qod small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}.qod a{font:400 1.25rem/1.3 var(--disp);cursor:pointer;text-decoration:none}.qod a:hover{color:var(--a1)}
+.sk{height:150px;border-radius:var(--r);margin-bottom:.9rem;background:linear-gradient(90deg,var(--s1),var(--s2),var(--s1));background-size:200% 100%;animation:sh 1.4s linear infinite}@keyframes sh{to{background-position:-200% 0}}
+.empty{border-radius:var(--r)}.empty .hot{margin-top:.6rem}
+.right .box,.left .box{border-radius:var(--r)}
+.lg{border-radius:999px;padding:0 .5rem}
 </style>
 </head>
 <body>
@@ -140,6 +184,7 @@ footer{padding:2rem 0 5rem;color:var(--mut);font-size:.88rem;border-top:1px soli
 
 <div class="setup" id="setup" hidden></div>
 <section class="hero">
+  <span class="eyebrow"><i></i>Free community library · English · हिन्दी · اردو</span>
   <h1>Ask. Learn. <em>Together.</em></h1>
   <p>Questions and answers about the books and ideas of Maulana Wahiduddin Khan, in English, हिन्दी and اردو.</p>
   <div class="ask">
@@ -149,6 +194,7 @@ footer{padding:2rem 0 5rem;color:var(--mut);font-size:.88rem;border-top:1px soli
   </div>
   <div class="qchips" aria-label="Quick topics"><button type="button" data-topic="Which Book to Read">Which book to read?</button><button type="button" data-topic="Patience and Forgiveness">Patience</button><button type="button" data-topic="Islam and Peace">Peace</button><button type="button" data-topic="Spirituality">Spirituality</button><button type="button" data-topic="Life After Death">Hereafter</button></div>
   <div class="stats"><div><b id="s1">0</b><span>Questions</span></div><div><b id="s2">0</b><span>Answers</span></div><div><b id="s3">0</b><span>Replies</span></div></div>
+<div class="trust"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg>Answers linked to book and page</span><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Reports reviewed by moderators</span><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Ask in your own language</span></div>
 </section>
 
 <main class="wrap"><div class="cols">
@@ -156,7 +202,7 @@ footer{padding:2rem 0 5rem;color:var(--mut);font-size:.88rem;border-top:1px soli
   <section id="col" aria-live="polite"></section>
   <aside class="right" id="right"></aside>
 </div></main>
-<footer><div class="wrap">Answers here are community answers. Add the book and page when you quote the author. Unsourced quotations may be removed later by moderators.</div></footer>
+<footer><div class="wrap">Unofficial community library, not affiliated with Maulana Wahiduddin Khan or CPS International. Answers here are community answers. Add the book and page when you quote the author. Unsourced quotations may be removed later by moderators.</div></footer>
 <button class="fab" id="fab" type="button">+ Ask</button>
 
 <div class="ov" id="aov" role="dialog" aria-modal="true" aria-labelledby="ah"><div class="abox">
@@ -204,7 +250,7 @@ let uid=null,session=null,loaded=false,lastSig="",docs=[],names={},open=null,tab
 $("#mtopic").innerHTML=TOP.map(t=>`<option>${esc(t)}</option>`).join("");
 const ago=t=>{const s=(Date.now()-t)/1e3;return s<60?"just now":s<3600?Math.floor(s/60)+" min ago":s<86400?Math.floor(s/3600)+" h ago":Math.floor(s/86400)+" d ago"};
 const nm=u=>u&&u===uid?"You":(names[u]||"Member");
-const lc=d=>"l-"+(d.lang||"en"),lb=d=>`<span class="lg">${(d.lang||"en").toUpperCase()}</span>`;
+const lc=d=>"l-"+({HI:"hi",UR:"ur"}[lng(d)]||"en"),lb=d=>`<span class="lg">${lng(d)}</span>`;
 const Q=()=>docs.filter(d=>d.kind==="q"),A=q=>docs.filter(d=>d.kind==="a"&&d.qid===q.id),sc=d=>d.score||0,own=d=>!!uid&&d.uid===uid;
 const SV=p=>`<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
 const IC={up:SV('<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>'),dn:SV('<path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/>'),com:SV('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),sh:SV('<path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/>')};
@@ -217,48 +263,64 @@ const xp=w=>[w,...((AL[w]||"").split(" ").filter(Boolean))];
 function related(q){const w=words(q.title);return Q().filter(x=>x.id!==q.id).map(x=>{let s=x.topic===q.topic?2:0;words(x.title).forEach(t=>{if(w.has(t))s++});return[s,x]}).filter(a=>a[0]>0).sort((a,b)=>b[0]-a[0]).slice(0,6).map(a=>a[1])}
 function similar(t){const ws=[...words(t)];if(!ws.length)return[];const need=ws.length>2?2:1;return Q().filter(q=>{const h=(q.title+" "+(q.text||"")).toLowerCase();return ws.filter(w=>xp(w).some(x=>h.includes(x))).length>=need}).slice(0,4)}
 const lab=a=>a.label==="editor_reviewed"?`<span class="lab bst">Editor reviewed</span>`:(a.srcBook&&a.srcPage)?`<span class="lab sb2">Source-based answer</span>`:`<span class="lab">Community answer</span>`;
-const srcl=a=>a.srcBook?`<div class="srcl">Source: <a href="${BOOKS}" target="_top">${esc(a.srcBook)}</a>${a.srcPage?", "+esc(a.srcPage):""}</div>`:`<div class="srcl">No source given</div>`;
+const srcl=a=>a.srcBook?`<a class="srcc" href="${BOOKS}" target="_top">${BK}<span><small>Source</small><b>${esc(a.srcBook)}</b>${a.srcPage?`<small>${esc(a.srcPage)}</small>`:""}</span><em>Open →</em></a>`:`<div class="srcc no">${BK}<span>No source cited yet. Add a book and page to build trust.</span></div>`;
 const PAL=["#2DD4BF","#F59E0B","#818CF8","#F472B6","#34D399","#60A5FA","#FB923C","#A78BFA"],tc=t=>PAL[Math.max(0,TOP.indexOf(t))%PAL.length];
-function side(){$("#s1").textContent=Q().length;$("#s2").textContent=docs.filter(d=>d.kind==="a").length;$("#s3").textContent=docs.filter(d=>d.kind==="c").length;const cur=open&&docs.find(d=>d.id===open);const top=[...Q()].sort((a,b)=>A(b).length+sc(b)-A(a).length-sc(a)||b.ts-a.ts).slice(0,6),rel=cur?related(cur):[];
+function side(){document.querySelector(".stats").classList.toggle("show",Q().length>=10);$("#s1").textContent=Q().length;$("#s2").textContent=docs.filter(d=>d.kind==="a").length;$("#s3").textContent=docs.filter(d=>d.kind==="c").length;const cur=open&&docs.find(d=>d.id===open);const top=[...Q()].sort((a,b)=>A(b).length+sc(b)-A(a).length-sc(a)||b.ts-a.ts).slice(0,6),rel=cur?related(cur):[];
  const li=x=>`<li><div><a data-q="${x.id}" class="${lc(x)}" dir="auto">${esc(x.title)}</a><small>${A(x).length} answer${A(x).length===1?"":"s"} · ${esc(x.topic||"General")}</small></div></li>`;
  const lbt=(k,l)=>`<button type="button" data-lang="${k}" class="${lang===k?"on":""}">${l}</button>`;
  $("#left").innerHTML=`<div class="box tp"><h2>Topics</h2><button type="button" data-topic="" class="${topic?"":"on"}">All topics</button>${TOP.map(t=>`<button type="button" data-topic="${esc(t)}" style="--c:${tc(t)}" class="${topic===t?"on":""}">${esc(t)}</button>`).join("")}</div>
- <div class="box"><h2>Community</h2><div class="st">Questions<b>${Q().length}</b></div><div class="st">Answers<b>${docs.filter(d=>d.kind==="a").length}</b></div><div class="st">Replies<b>${docs.filter(d=>d.kind==="c").length}</b></div></div>
+ ${Q().length>=10?`<div class="box"><h2>Community</h2><div class="st">Questions<b>${Q().length}</b></div><div class="st">Answers<b>${docs.filter(d=>d.kind==="a").length}</b></div><div class="st">Replies<b>${docs.filter(d=>d.kind==="c").length}</b></div></div>`:""}
  <div class="box"><h2>Explore</h2><p class="hint">Browse every book by language and open it on the official source.</p><a class="hot" style="display:inline-block;text-decoration:none" href="${BOOKS}">Browse books</a></div>`;
  $("#right").innerHTML=`<div class="box"><h2>Filter by language</h2><div class="flt" style="border:0;margin:0;padding:0">${lbt("","All")}${lbt("en","English")}${lbt("hi","हिन्दी")}${lbt("ur","اردو")}</div></div>
  ${rel.length?`<div class="box"><h2>Related questions</h2><ol>${rel.map(li).join("")}</ol></div>`:""}
  <div class="box"><h2>Top questions</h2>${top.length?`<ol>${top.map(li).join("")}</ol>`:`<p class="hint">Top questions will appear here once people start asking.</p>`}</div>
  <div class="box"><h2>Guidelines</h2><p class="hint">Be respectful. Add the book and page when you quote. No spam, abuse or impersonation.</p></div>
  <p class="mode">Live: questions and answers are shared with everyone.</p>`}
+
+const ROM=new Set("ke ka ki hai hain kya nazdeen nazdik mutabiq aur ko se mein nahi nahin kaise kyun kyon liye hota hoti jab tab woh yeh iska uska apni apne bhi par kitab sabr maulana".split(" "));
+function lng(d){const s=(d.title||"")+" "+(d.text||"");if(/[\u0900-\u097F]/.test(s))return"HI";if(/[\u0600-\u06FF]/.test(s))return"UR";if(d.lang==="hi")return"HI";if(d.lang==="ur")return"UR";return s.toLowerCase().split(/[^a-z]+/).filter(w=>ROM.has(w)).length>=2?"ROMAN":"EN"}
+const scr=s=>/[\u0900-\u097F]/.test(s)?"hi":/[\u0600-\u06FF]/.test(s)?"ur":"";
+const av=n=>{let h=0;for(const c of String(n))h=(h*31+c.charCodeAt(0))%360;return`<span class="av" style="--h:${h}">${esc(String(n||"?").trim()[0]||"?")}</span>`};
+const plain=t=>{const x=String(t||"").replace(/^\s{0,3}#{1,6}\s+/gm,"").replace(/[*`>]/g,"").replace(/^\s*[-•]\s+/gm,"").replace(/\s+/g," ").trim();return x.length>300?x.slice(0,300)+"…":x};
+function md(src){const L=String(src||"").replace(/\r/g,"").split("\n");let h="",ul=0,p=[];const fl=()=>{if(p.length){h+="<p>"+p.join("<br>")+"</p>";p=[]}},cu=()=>{if(ul){h+="</ul>";ul=0}},
+ inl=t=>esc(t).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(^|[\s(])\*([^*\s][^*]*?)\*(?=[\s).,!?:;]|$)/g,"$1<em>$2</em>");
+ for(const x of L){let m;if(m=x.match(/^\s{0,3}(#{1,4})\s+(.*)$/)){fl();cu();const n=Math.min(m[1].length+1,4);h+=`<h${n}>${inl(m[2])}</h${n}>`}
+ else if(m=x.match(/^\s*[-*•]\s+(.*)$/)){fl();if(!ul){h+="<ul>";ul=1}h+="<li>"+inl(m[1])+"</li>"}
+ else if(m=x.match(/^\s*>\s?(.*)$/)){fl();cu();h+="<blockquote>"+inl(m[1])+"</blockquote>"}
+ else if(!x.trim()){fl();cu()}else{cu();p.push(inl(x))}}fl();cu();return h}
+const ST=[["Anger","How can I control my anger and stay calm?","Patience and Forgiveness"],["Stress","What do the books say about dealing with stress and worry?","Personal Development"],["Family","How should I handle conflict in my family peacefully?","Women and Family"],["Forgiveness","Why is forgiving others important for peace of mind?","Patience and Forgiveness"],["Faith and science","Are science and religion really in conflict?","Science and Religion"],["Start here","Which book should a beginner read first?","Which Book to Read"]];
+const stH=()=>(Q().length<12&&!topic&&!term&&!lang)?`<div class="stw"><h2>Start with a question people really ask</h2><div class="stg">${ST.map(x=>`<button type="button" class="stc" data-ask="${esc(x[1])}" data-t="${esc(x[2])}"><span>${x[0]}</span>${esc(x[1])}</button>`).join("")}</div></div>`:"";
+const qodH=()=>{const a=Q();if(a.length<3||topic||term||lang)return"";const q=a[Math.floor(Date.now()/864e5)%a.length];return`<div class="qod"><div><small>Question of the day</small><a data-q="${q.id}" class="${lc(q)}" dir="auto">${esc(q.title)}</a></div></div>`};
+const BK='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg>';
 const mine=d=>own(d)?`<button type="button" data-edit="${d.id}">Edit</button><button type="button" data-del="${d.id}">Delete</button>`:"";
 const rpb=d=>`<button type="button" data-rep="${d.id}">${d.reported?"Reported":"Report"}</button>`;
 const edt=d=>`<div class="edit">${d.kind==="q"?`<input id="edt" maxlength="140" value="${esc(d.title)}" aria-label="Title">`:""}<textarea id="ed" maxlength="3000" dir="auto" aria-label="Edit text">${esc(d.text||"")}</textarea><div class="acts"><button type="button" class="on" data-save="${d.id}">Save</button><button type="button" data-cancel>Cancel</button></div></div>`;
 function cm(c,all,d){const kids=all.filter(x=>x.parent===c.id).sort((a,b)=>a.ts-b.ts);
  return `<div class="cmt"><div class="who">${esc(nm(c.uid))} <span class="meta">${ago(c.ts)}${c.edited?` · <span class="edm">edited</span>`:""}</span></div>${editing===c.id?edt(c):`<p dir="auto" class="${lc(c)}">${esc(c.text)}</p>`}<div class="acts">${vt(c)}${d<3?`<button type="button" data-rp="${c.id}">Reply</button>`:""}${rpb(c)}${mine(c)}</div><div id="rp-${c.id}"></div>${kids.length?`<div class="thread">${kids.map(k=>cm(k,all,d+1)).join("")}</div>`:""}</div>`}
-function feed(){if(!loaded){$("#col").innerHTML=`<div class="empty">Loading questions…</div>`;return}let r=Q();if(topic)r=r.filter(q=>q.topic===topic);if(lang)r=r.filter(q=>(q.lang||"en")===lang);
+function feed(){feed0();if(loaded)$("#col").insertAdjacentHTML("beforeend",stH())}function feed0(){if(!loaded){$("#col").innerHTML=`<div class="sk"></div><div class="sk"></div><div class="sk"></div>`;return}let r=Q();if(topic)r=r.filter(q=>q.topic===topic);if(lang)r=r.filter(q=>(q.lang||"en")===lang);
  if(term)r=r.filter(q=>{const h=(q.title+" "+(q.text||"")).toLowerCase();return term.split(" ").every(w=>xp(w).some(x=>h.includes(x)))});
  if(tab==="latest")r.sort((a,b)=>b.ts-a.ts);else if(tab==="top")r.sort((a,b)=>A(b).length-A(a).length||b.ts-a.ts);else r=r.filter(q=>!A(q).length).sort((a,b)=>b.ts-a.ts);
  const tb=(k,l)=>`<button type="button" data-tab="${k}" class="${tab===k?"on":""}">${l}</button>`;
  $("#col").innerHTML=`
  <div class="mchips"><button type="button" data-topic="" class="${topic?"":"on"}">All topics</button>${TOP.map(t=>`<button type="button" data-topic="${esc(t)}" style="--c:${tc(t)}" class="${topic===t?"on":""}">${esc(t)}</button>`).join("")}</div>
- <div class="flt">${tb("latest","Latest")}${tb("top","Most answered")}${tb("none","Unanswered")}</div>`+
- (r.length?r.map(q=>{const n=A(q).length,b=best(q);return `<article class="qc" data-q="${q.id}"><div class="meta"><span class="tag" style="--c:${tc(q.topic)}">${esc(q.topic||"General")}</span>${lb(q)}<span>${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h3 class="qt ${lc(q)}" dir="auto">${esc(q.title)}</h3>
- ${b?`<div class="pre"><div class="who">${esc(nm(b.uid))} ${lb(b)} ${lab(b)}</div><p dir="auto" class="${lc(b)}">${esc(b.text)}</p></div>`:`<span class="none">No answers yet. Be the first to answer.</span>`}
- <div class="bar2">${vt(q)}<button type="button" data-q="${q.id}">${IC.com}<span>${ncom(q)||"Comment"}</span></button><button type="button" data-share="${q.id}">${IC.sh}<span>Share</span></button><span class="sp">${n} answer${n===1?"":"s"}</span></div></article>`}).join(""):`<div class="empty"><b>No questions yet.</b><p>Be the first to ask. Press “Add question” at the top.</p></div>`)}
+ ${qodH()}<div class="tabs">${tb("latest","Latest")}${tb("top","Most answered")}${tb("none","Unanswered")}</div>`+
+ (r.length?r.map(q=>{const n=A(q).length,b=best(q);return `<article class="qc" data-q="${q.id}" style="--c:${tc(q.topic)}"><div class="meta"><span class="tag" style="--c:${tc(q.topic)}">${esc(q.topic||"General")}</span>${lb(q)}<span class="who2">${av(nm(q.uid))}${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h3 class="qt ${lc(q)}" dir="auto">${esc(q.title)}</h3>
+ ${b?`<div class="pre"><div class="who">${av(nm(b.uid))}${esc(nm(b.uid))} ${lab(b)}</div><p dir="auto" class="${lc(b)}">${esc(plain(b.text))}</p></div>`:`<span class="none">No answers yet. Be the first to answer.</span>`}
+ <div class="bar2">${vt(q)}<button type="button" data-q="${q.id}">${IC.com}<span>${ncom(q)||"Comment"}</span></button><button type="button" data-share="${q.id}">${IC.sh}<span>Share</span></button><span class="sp">${n} answer${n===1?"":"s"}</span></div></article>`}).join(""):`<div class="empty"><b>Nothing here yet</b><p>Be the first to ask a question in this space.</p><button class="hot" type="button" data-newq="1">Ask a question</button></div>`)}
 function detail(){const q=docs.find(d=>d.id===open);if(!q){open=null;return feed()}
  let as=A(q),cs=docs.filter(d=>d.kind==="c"&&d.qid===q.id);
  if(asort==="new")as.sort((a,b)=>b.ts-a.ts);else if(asort==="old")as.sort((a,b)=>a.ts-b.ts);else as.sort((a,b)=>(b.id===q.best)-(a.id===q.best)||sc(b)-sc(a)||a.ts-b.ts);
  $("#col").innerHTML=`<div class="qv"><button class="back" type="button" data-back>&larr; All questions</button><div class="meta"><span class="tag" style="--c:${tc(q.topic)}">${esc(q.topic||"General")}</span>${lb(q)}<span>${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span>${q.edited?`<span class="edm">edited</span>`:""}</div>
- ${editing===q.id?edt(q):`<h1 class="qt ${lc(q)}" dir="auto" style="font-size:clamp(1.6rem,3vw,2.2rem)">${esc(q.title)}</h1>${q.text?`<div class="body ${lc(q)}" dir="auto">${esc(q.text)}</div>`:""}`}
+ ${editing===q.id?edt(q):`<h1 class="qt ${lc(q)}" dir="auto" style="font-size:clamp(1.6rem,3vw,2.2rem)">${esc(q.title)}</h1>${q.text?`<div class="body md ${lc(q)}" dir="auto">${md(q.text)}</div>`:""}`}
  <div class="bar2">${vt(q)}<button type="button" data-focus>${IC.com}<span>${as.length} answer${as.length===1?"":"s"}</span></button><button type="button" data-share="${q.id}">${IC.sh}<span>Share</span></button>${rpb(q)}${mine(q)}</div>
  <div class="box comp" style="margin-top:1.2rem"><h2>Your answer</h2><textarea id="ab" dir="auto" maxlength="3000" placeholder="Write a clear, respectful answer in English, Hindi or Urdu." aria-label="Your answer"></textarea>
  <div class="two2"><input id="sb" maxlength="120" placeholder="Source book (if you quote or rely on one)" aria-label="Source book"><input id="sp" maxlength="60" placeholder="Page or chapter" aria-label="Page or chapter"></div>
  <p class="hint">Answers with a book and page are labelled “Source-based”. Without a source they are labelled “Community answer”.</p>
  <div class="row"><select id="al" aria-label="Answer language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="ur">اردو</option></select><button class="hot" type="button" id="apost">Post answer</button></div></div>
  <div class="srt"><h2 class="ah">${as.length} answer${as.length===1?"":"s"}</h2>${as.length>1?`<select id="asort" aria-label="Sort answers"><option value="best"${asort==="best"?" selected":""}>Best</option><option value="new"${asort==="new"?" selected":""}>Newest</option><option value="old"${asort==="old"?" selected":""}>Oldest</option></select>`:""}</div>
- ${as.length?as.map(a=>{const roots=cs.filter(c=>c.parent===a.id).sort((x,y)=>x.ts-y.ts);return `<div class="answer"><div class="who">${esc(nm(a.uid))} ${lb(a)} ${lab(a)} ${a.id===q.best?`<span class="lab bst">Best answer</span>`:""} <span class="meta">${ago(a.ts)}${a.edited?` · <span class="edm">edited</span>`:""}</span></div>${editing===a.id?edt(a):`<p class="t ${lc(a)}" dir="auto">${esc(a.text)}</p>`}${srcl(a)}<div class="acts">${vt(a)}<button type="button" data-rp="${a.id}">${IC.com}<span>Reply</span></button>${own(q)&&a.id!==q.best?`<button type="button" data-best="${a.id}">Mark best answer</button>`:""}${rpb(a)}${mine(a)}</div><div id="rp-${a.id}"></div>${roots.length?`<div class="thread">${roots.map(c=>cm(c,cs,1)).join("")}</div>`:""}</div>`}).join(""):`<p class="hint" style="padding:1rem 0">No answers yet. You can write the first one above.</p>`}</div>`;
+ ${as.length?as.map(a=>{const roots=cs.filter(c=>c.parent===a.id).sort((x,y)=>x.ts-y.ts);return `<div class="answer${a.id===q.best?" bestc":""}"><div class="who">${av(nm(a.uid))}${esc(nm(a.uid))} ${lb(a)} ${lab(a)} ${a.id===q.best?`<span class="lab bst">Best answer</span>`:""} <span class="meta">${ago(a.ts)}${a.edited?` · <span class="edm">edited</span>`:""}</span></div>${editing===a.id?edt(a):`<div class="t md ${lc(a)}" dir="auto">${md(a.text)}</div>`}${srcl(a)}<div class="acts">${vt(a)}<button type="button" data-rp="${a.id}">${IC.com}<span>Reply</span></button>${own(q)&&a.id!==q.best?`<button type="button" data-best="${a.id}">Mark best answer</button>`:""}${rpb(a)}${mine(a)}</div><div id="rp-${a.id}"></div>${roots.length?`<div class="thread">${roots.map(c=>cm(c,cs,1)).join("")}</div>`:""}</div>`}).join(""):`<p class="hint" style="padding:1rem 0">No answers yet. You can write the first one above.</p>`}</div>`;
  const al=$("#al");if(al)al.value=q.lang||"en"}
-function render(){open?detail():feed();side()}
+function render(){document.querySelector(".hero").style.display=open?"none":"";open?detail():feed();side()}
 const TBL={q:"questions",a:"answers",c:"comments"},TYP={q:"question",a:"answer",c:"comment"};
 const slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const TN={};TOP.forEach(t=>TN[slug(t)]=t);
@@ -335,7 +397,7 @@ $("#af").onsubmit=e=>{e.preventDefault();const v=$("#gs").value.trim();if(v)ask(
 const PH=["Which book explains patience?","सब्र के बारे में किस किताब में पढ़ें?","امن اور اسلام پر کون سی کتاب پڑھوں؟","What is the purpose of life?","Ask anything about the books and ideas...","जन्नत के बारे में क्या लिखा है?"];let phi=0;
 setInterval(()=>{const g=$("#gs");if(document.activeElement!==g&&!g.value){phi=(phi+1)%PH.length;g.placeholder=PH[phi]}},3500);
 document.addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$("#gs").focus();scrollTo({top:0,behavior:"smooth"})}});
-$("#theme").onclick=()=>{const r=document.documentElement,x=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0A141B",v=x?"light":"dark";r.dataset.theme=v;try{localStorage.setItem("mwk-theme",v)}catch(e){}};
+$("#theme").onclick=()=>{const r=document.documentElement,x=getComputedStyle(r).getPropertyValue("--bg").trim().toUpperCase()==="#070B14",v=x?"light":"dark";r.dataset.theme=v;try{localStorage.setItem("mwk-theme",v)}catch(e){}};
 try{const t=localStorage.getItem("mwk-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
 if(location.hash.startsWith("#q="))open=location.hash.slice(3);
 render();
@@ -373,6 +435,10 @@ else{render();
  sb.auth.onAuthStateChange((ev,s)=>{session=s;const nu=s?s.user.id:null;if(nu!==uid){uid=nu;load(true)}else updateUser()});
  sb.auth.getSession().then(({data})=>{session=data.session;uid=session?session.user.id:null;load(true)});
  setInterval(()=>{if(!document.hidden)load(false)},25000)}
+
+document.addEventListener("input",e=>{const t=e.target,l=scr(t.value||"");if(!l)return;if(t.id==="mt")$("#mlang").value=l;if(t.id==="ab")$("#al").value=l});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-ask]");if(!b)return;ask(b.dataset.ask);if(b.dataset.t)$("#mtopic").value=b.dataset.t},true);
+render();
 </script>
 </body>
 </html>
