@@ -262,7 +262,7 @@ function render(){open?detail():feed();side()}
 const TBL={q:"questions",a:"answers",c:"comments"},TYP={q:"question",a:"answer",c:"comment"};
 const slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const TN={};TOP.forEach(t=>TN[slug(t)]=t);
-const GOOGLE_ENABLED=false; // change to true ONLY after Google is switched on in Supabase (Authentication > Sign In / Providers)
+const GOOGLE_ENABLED=true; // change to true ONLY after Google is switched on in Supabase (Authentication > Sign In / Providers)
 const configured=!/PASTE_/.test(SUPABASE_KEY);
 const sb=(configured&&window.supabase)?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}}):null;
 const errMsg=e=>{const m=(e&&e.message)||String(e);return /row-level security|permission denied/i.test(m)?"You do not have permission to do that. Please sign in again.":m};
