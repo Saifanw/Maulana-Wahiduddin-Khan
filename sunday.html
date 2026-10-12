@@ -138,10 +138,23 @@ body{transition:background .35s,color .35s}
 .md .sl{display:block;font-weight:600;font-size:.82rem;margin:.4rem 0 .2rem}
 .admbar{background:color-mix(in srgb,var(--soft) 85%,transparent)}
 .admbar[hidden]{display:none}
+
+/* v3: phone menu, explore section, no video card */
+#vcard{display:none!important}
+.mnav{display:none}
+@media(max-width:900px){.mnav{display:flex;gap:.45rem;overflow-x:auto;padding:.65rem 1.25rem;background:var(--bg);border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch;scrollbar-width:none}.mnav::-webkit-scrollbar{display:none}
+ .mnav a{flex:none;text-decoration:none;font-weight:600;font-size:.92rem;padding:.45rem .95rem;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink)}.mnav a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}}
+.explore{padding-top:2.6rem}.explore h2{font:500 clamp(1.4rem,3vw,1.8rem)/1.2 var(--serif);margin:0 0 1rem}
+.xg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem}
+.xg a{display:flex;flex-direction:column;gap:.15rem;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1rem 1.1rem;transition:transform .25s,border-color .25s,box-shadow .25s}
+.xg a b{font:500 1.2rem var(--serif)}.xg a span{color:var(--muted);font-size:.88rem}
+.xg a:hover{transform:translateY(-3px);border-color:var(--hot);box-shadow:0 14px 34px #0A1C2718}
+@media print{.mnav,.explore{display:none}}
 </style></head><body>
 
 <div id="pgw"></div>
 <header class="top"><div class="wrap bar"><a class="brand" href="index.html">Wahiduddin Khan Library</a><nav class="m" aria-label="Primary"><a href="index.html">Home</a><a href="books.html">Books</a><a href="questions.html">Questions</a><a class="on" href="alrisala.html">Al-Risala</a></nav><button class="tb" id="signin" type="button">Sign in</button><button class="tb" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button></div></header>
+<nav class="mnav" aria-label="Library menu"><a href="index.html">Home</a><a href="books.html">Books</a><a href="questions.html">Questions</a><a class="on" href="alrisala.html">Al-Risala</a></nav>
 <main class="page">
  <div class="top-row"><div class="crumb"><a href="index.html">Home</a> &gt; <a href="alrisala.html">Al-Risala</a> &gt; Sunday Discussion</div>
   <div class="wk"><button id="prev" type="button" aria-label="Older session">&larr;</button><select id="wsel" aria-label="Choose Sunday"></select><button id="next" type="button" aria-label="Newer session">&rarr;</button></div></div>
@@ -160,8 +173,9 @@ body{transition:background .35s,color .35s}
    <div class="cmbox"><textarea id="ct" maxlength="4000" placeholder="Share your learning from this article..." aria-label="Your learning"></textarea>
    <div class="row"><select id="cl" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="ur">اردو</option></select><button class="go" id="post" type="button">Share</button></div></div><div id="cml"></div></section>
  </div>
- <section class="sec" id="pastsec"><h2>Previous Sunday discussions</h2><p class="hint">Missed a week? Open any earlier session to read the article, watch the video and see what others learned.</p><div class="past" id="past"></div></section>
+ <section class="sec" id="pastsec"><h2>Previous Sunday discussions</h2><p class="hint">Missed a week? Open any earlier session to read the article and see what others learned.</p><div class="past" id="past"></div></section>
 </main>
+<section class="page explore" aria-label="Explore the library"><h2>Explore the library</h2><div class="xg"><a href="index.html"><b>Home</b><span>Start here</span></a><a href="books.html"><b>Books</b><span>Read and search</span></a><a href="questions.html"><b>Questions</b><span>Ask and learn</span></a><a href="alrisala.html"><b>Al-Risala</b><span>All issues</span></a></div></section>
 <footer><div class="page">Unofficial community library, not affiliated with Maulana Wahiduddin Khan or CPS International. Magazine articles belong to their rights holders.</div></footer>
 <div class="ov" id="aov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="at"><h3 id="at">Join the discussion</h3><p>Type your name to share your learning. No password needed.</p><input id="an" maxlength="40" placeholder="Your name" autocomplete="name"><div class="e" id="ae"></div><div class="a"><button type="button" id="ac">Cancel</button><button type="button" class="p" id="as">Continue</button></div><p style="margin:1rem 0 0"><button type="button" class="lnk" id="atog">Admin sign in</button></p><div id="adminf" hidden><input id="aem" type="email" placeholder="Admin email" autocomplete="username"><input id="apw" type="password" placeholder="Password" autocomplete="current-password"><div class="a"><button type="button" class="p" id="ago">Sign in as admin</button></div></div></div></div>
 <div class="ov" id="pov"><div class="md wide fm" id="pm" data-al="en" role="dialog" aria-modal="true" aria-labelledby="pt"><h3 id="pt">New Sunday article</h3>
@@ -169,12 +183,12 @@ body{transition:background .35s,color .35s}
 <label for="p_date">Sunday date</label><input id="p_date" type="date" class="dtin">
 <div class="seg ftabs" id="ftabs" role="group" aria-label="Language"><button type="button" data-fl="ur">اردو<i></i></button><button type="button" data-fl="hi">हिन्दी<i></i></button><button type="button" data-fl="en" class="on">English<i></i></button></div>
 <div class="lp" data-l="ur"><label for="pt_ur">عنوان</label><input id="pt_ur" dir="rtl"><label for="pa_ur">مضمون</label><textarea id="pa_ur" dir="rtl" placeholder="مضمون یہاں چسپاں کریں…"></textarea><div class="wc" id="wc_ur"></div></div><div class="lp" data-l="hi"><label for="pt_hi">शीर्षक</label><input id="pt_hi" ><label for="pa_hi">लेख</label><textarea id="pa_hi"  placeholder="लेख यहाँ चिपकाएँ…"></textarea><div class="wc" id="wc_hi"></div></div><div class="lp" data-l="en"><label for="pt_en">Title</label><input id="pt_en" ><label for="pa_en">Article</label><textarea id="pa_en"  placeholder="Paste the article here…"></textarea><div class="wc" id="wc_en"></div></div>
-<details class="more" id="more"><summary>More options: video, source, Maulana Fayyaz Omeri's learning</summary>
- <label for="p_yt">Session video link (YouTube)</label><input id="p_yt" placeholder="https://youtu.be/...">
+<details class="more" id="more"><summary>More options: source, Maulana Fayyaz Omeri's learning</summary>
+ <input id="p_yt" type="hidden">
  <label for="p_src">Source (for example Al-Risala Urdu, May 2019)</label><input id="p_src"><label for="p_srcurl">Source link</label><input id="p_srcurl" type="url" placeholder="https://">
  <h4>Maulana Fayyaz Omeri's learning</h4><p class="sm">Leave empty and the tab stays empty. Text follows the language selected above.</p>
  <label for="p_ot">Title</label><input id="p_ot"><div data-l="ur"><label for="po_ur">اردو</label><textarea id="po_ur" dir="rtl"></textarea></div><div data-l="hi"><label for="po_hi">हिन्दी</label><textarea id="po_hi"></textarea></div><div data-l="en"><label for="po_en">English</label><textarea id="po_en"></textarea></div>
- <label for="p_oyt">Video link for his learning</label><input id="p_oyt" placeholder="https://youtu.be/...">
+ <input id="p_oyt" type="hidden">
 </details>
 <div class="e" id="pe"></div><div class="a"><button type="button" class="dng" id="pdel" hidden>Delete session</button><button type="button" id="pcx">Cancel</button><button type="button" class="p" id="ppub">Publish</button></div></div></div>
 <div class="ov" id="sov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="sh3"><h3 id="sh3">Ready to share</h3><p class="sm" id="sst">Preparing preview card…</p><img id="simg" class="simg" alt="Share preview" hidden><label class="sl" for="surl">Link</label><input id="surl" readonly><div class="a stk"><a class="p wab" id="swa" target="_blank" rel="noopener">Share on WhatsApp</a><button type="button" id="scp">Copy link</button><button type="button" id="scl">Done</button></div></div></div>
