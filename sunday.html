@@ -137,6 +137,7 @@ body{transition:background .35s,color .35s}
 .simg{width:100%;border-radius:12px;border:1px solid var(--line);margin:.3rem 0 .6rem;aspect-ratio:1200/630;object-fit:cover}
 .md .sl{display:block;font-weight:600;font-size:.82rem;margin:.4rem 0 .2rem}
 .admbar{background:color-mix(in srgb,var(--soft) 85%,transparent)}
+.admbar[hidden]{display:none}
 </style></head><body>
 
 <div id="pgw"></div>
@@ -196,7 +197,7 @@ const SUPABASE_URL="https://ibafhumzzkmsiyzxfwyo.supabase.co",SUPABASE_KEY="sb_p
 const LN={ur:"اردو",hi:"हिन्दी",en:"English"};
 /* Paste your Cloudflare Worker address here after deploying worker/share-worker.js, e.g. "https://sunday-share.yourname.workers.dev/s/"
    While it is empty, share links fall back to the plain page link (WhatsApp then shows a generic preview). */
-const SHARE_BASE="const SHARE_BASE="https://sunday-share.saif-anwar1618.workers.dev/s/";";
+const SHARE_BASE="https://sunday-share.saif-anwar1618.workers.dev/s/";
 const shareUrl=id=>SHARE_BASE?SHARE_BASE+encodeURIComponent(id):location.href.split("#")[0]+"#w="+id;
 const FILE=(window.SUNDAY_SESSIONS||[]).slice();let S=FILE.slice().sort((a,b)=>b.date.localeCompare(a.date)),isAdmin=false,dbIds=new Set();
 let cur=null,al="en",tab="a",vidOn=false,fs=1;
