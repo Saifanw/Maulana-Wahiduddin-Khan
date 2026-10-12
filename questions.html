@@ -121,7 +121,12 @@ footer{padding:2rem 0 5rem;color:var(--mut);font-size:.88rem;border-top:1px soli
 #aov .abox{background:var(--s1);border:1px solid var(--line);border-radius:26px;width:100%;max-width:420px;padding:1.5rem;display:grid;gap:.7rem;box-shadow:0 40px 100px -30px #000}
 #aov h2{font:400 1.8rem var(--disp);margin:0}#aov input{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:14px;padding:.75rem .9rem}
 .atabs{display:flex;gap:.4rem}.atabs button{flex:1;border:1px solid var(--line);background:none;border-radius:999px;padding:.5rem;cursor:pointer;font-weight:600;color:var(--mut)}.atabs button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.gbtn{border:1px solid var(--line);background:var(--s1);border-radius:999px;padding:.65rem;cursor:pointer;font-weight:600}.aerr{min-height:1.2em;font-size:.88rem}.amsg{color:var(--mut);margin:0;font-size:.92rem}
+#agoogle[hidden]{display:none}.gbtn{border:1px solid var(--line);background:var(--s1);border-radius:999px;padding:.65rem;cursor:pointer;font-weight:600}.aerr{min-height:1.2em;font-size:.88rem}.amsg{color:var(--mut);margin:0;font-size:.92rem}
+.alab{font-size:.85rem;font-weight:600;color:var(--mut)}.anote{margin:0;font-size:.82rem;color:var(--mut)}.alink{border:0;background:none;color:var(--mut);font-size:.82rem;text-decoration:underline;cursor:pointer;padding:.2rem}
+.uwrap{position:relative}.tb#signin{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.umenu{position:absolute;right:0;top:calc(100% + 8px);min-width:170px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:.3rem;box-shadow:0 20px 50px -15px #000a;z-index:60}.umenu[hidden]{display:none}
+.umenu button{display:block;width:100%;text-align:start;border:0;background:none;padding:.55rem .8rem;border-radius:10px;cursor:pointer}.umenu button:hover{background:var(--s2)}
+#aadmin[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -129,7 +134,7 @@ footer{padding:2rem 0 5rem;color:var(--mut);font-size:.88rem;border-top:1px soli
   <a class="brand" href="index.html"><span class="logo"></span>Wahiduddin Khan Library</a>
   <nav class="m" aria-label="Primary"><a href="index.html">Home</a><a href="books.html">Books</a><a class="on" href="#">Questions</a></nav>
   <button class="hot" type="button" id="addq">Add question</button>
-  <button class="tb" id="signin" type="button">Sign in</button>
+  <span class="uwrap"><button class="tb" id="signin" type="button">Sign in</button><div class="umenu" id="umenu" hidden><button type="button" id="uname">Change name</button><button type="button" id="uout">Sign out</button></div></span>
   <button class="tb" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
 </header></div>
 
@@ -156,13 +161,14 @@ footer{padding:2rem 0 5rem;color:var(--mut);font-size:.88rem;border-top:1px soli
 
 <div class="ov" id="aov" role="dialog" aria-modal="true" aria-labelledby="ah"><div class="abox">
   <h2 id="ah">Join the conversation</h2><p class="amsg" id="amsg"></p>
-  <div class="atabs"><button type="button" id="atabi" class="on">Sign in</button><button type="button" id="atabu">Sign up</button></div>
-  <input id="aname" maxlength="40" placeholder="Your name (shown with your posts)" aria-label="Name" hidden>
-  <input id="aem" type="email" autocomplete="email" placeholder="Email" aria-label="Email">
-  <input id="apw" type="password" autocomplete="current-password" placeholder="Password (6+ characters)" aria-label="Password">
+  <label class="alab" for="aname">Your name</label>
+  <input id="aname" maxlength="40" autocomplete="nickname" placeholder="Type your name" aria-label="Your name">
   <div class="aerr" id="aerr" role="alert"></div>
-  <button class="hot" type="button" id="asub">Sign in</button>
-  <button class="gbtn" type="button" id="agoogle">Continue with Google</button>
+  <button class="hot" type="button" id="asub">Continue</button>
+  <p class="anote">No email or password needed. Your name is shown with your questions and answers. On this device you can edit or delete your own posts.</p>
+  <button class="gbtn" type="button" id="agoogle" hidden>Continue with Google</button>
+  <button class="alink" type="button" id="aadmintog">Admin sign in (email)</button>
+  <div id="aadmin" hidden><input id="aem" type="email" autocomplete="email" placeholder="Email" aria-label="Email"><input id="apw" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" style="margin-top:.5rem"><button class="ghost" type="button" id="aemailgo" style="margin-top:.5rem;width:100%">Sign in with email</button></div>
   <button class="ghost" type="button" id="acl">Not now</button>
 </div></div>
 
@@ -256,6 +262,7 @@ function render(){open?detail():feed();side()}
 const TBL={q:"questions",a:"answers",c:"comments"},TYP={q:"question",a:"answer",c:"comment"};
 const slug=t=>String(t).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const TN={};TOP.forEach(t=>TN[slug(t)]=t);
+const GOOGLE_ENABLED=false; // change to true ONLY after Google is switched on in Supabase (Authentication > Sign In / Providers)
 const configured=!/PASTE_/.test(SUPABASE_KEY);
 const sb=(configured&&window.supabase)?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}}):null;
 const errMsg=e=>{const m=(e&&e.message)||String(e);return /row-level security|permission denied/i.test(m)?"You do not have permission to do that. Please sign in again.":m};
@@ -333,24 +340,32 @@ try{const t=localStorage.getItem("mwk-theme");if(t)document.documentElement.data
 if(location.hash.startsWith("#q="))open=location.hash.slice(3);
 render();
 
-/* ---------- sign in / sign up ---------- */
-let amode="in";
+/* ---------- name-only sign in (anonymous) ---------- */
 function showSetup(t){const b=$("#setup");b.textContent=t;b.hidden=false}
 function aerr(t,ok){const e=$("#aerr");e.textContent=t||"";e.style.color=ok?"var(--a1)":"var(--a2)"}
-function setAmode(m){amode=m;$("#aname").hidden=m!=="up";$("#asub").textContent=m==="up"?"Create account":"Sign in";$("#atabi").classList.toggle("on",m==="in");$("#atabu").classList.toggle("on",m==="up");aerr("")}
-function authOpen(msg){$("#amsg").textContent=msg||"";setAmode(amode);$("#aov").classList.add("open");$("#aem").focus()}
-$("#atabi").onclick=()=>setAmode("in");$("#atabu").onclick=()=>setAmode("up");$("#acl").onclick=()=>$("#aov").classList.remove("open");
+function authOpen(msg){$("#amsg").textContent=msg||"";aerr("");try{if(!$("#aname").value)$("#aname").value=localStorage.getItem("mwk-name")||""}catch(e){}$("#aov").classList.add("open");$("#aname").focus()}
+$("#acl").onclick=()=>$("#aov").classList.remove("open");
 $("#aov").addEventListener("click",e=>{if(e.target.id==="aov")$("#aov").classList.remove("open")});
-$("#asub").onclick=async()=>{if(!sb)return aerr("Setup needed: add your Supabase public key in this file.");const email=$("#aem").value.trim(),pw=$("#apw").value;
- if(!/^\S+@\S+\.\S+$/.test(email))return aerr("Please enter a valid email.");if(pw.length<6)return aerr("Password must be at least 6 characters.");
+$("#aname").addEventListener("keydown",e=>{if(e.key==="Enter")$("#asub").click()});
+$("#asub").onclick=async()=>{if(!sb)return aerr("Setup needed: add your Supabase public key in this file.");const name=$("#aname").value.trim();
+ if(name.length<2)return aerr("Please type your name (at least 2 letters).");
  $("#asub").disabled=true;try{
-  if(amode==="up"){const r=await sb.auth.signUp({email,password:pw,options:{data:{full_name:$("#aname").value.trim().slice(0,40)}}});if(r.error)return aerr(r.error.message);
-   if(!r.data.session)return aerr("Account created. Please check your email to confirm it, then sign in.",true)}
-  else{const r=await sb.auth.signInWithPassword({email,password:pw});if(r.error)return aerr(r.error.message)}
-  $("#aov").classList.remove("open");$("#apw").value=""}finally{$("#asub").disabled=false}};
+  const r=await sb.auth.signInAnonymously({options:{data:{full_name:name.slice(0,40)}}});
+  if(r.error)return aerr(/anonymous/i.test(r.error.message)&&/disabled|not enabled/i.test(r.error.message)?"Name-only sign in is not switched on yet. In Supabase: Authentication > Sign In / Providers > turn on “Allow anonymous sign-ins”.":r.error.message);
+  try{localStorage.setItem("mwk-name",name.slice(0,40))}catch(e){}
+  $("#aov").classList.remove("open")}finally{$("#asub").disabled=false}};
+$("#aadmintog").onclick=()=>{const a=$("#aadmin");a.hidden=!a.hidden;if(!a.hidden)$("#aem").focus()};
+$("#aemailgo").onclick=async()=>{if(!sb)return;const email=$("#aem").value.trim(),pw=$("#apw").value;if(!email||!pw)return aerr("Enter your email and password.");
+ const r=await sb.auth.signInWithPassword({email,password:pw});if(r.error)return aerr(r.error.message);$("#apw").value="";$("#aov").classList.remove("open")};
+$("#agoogle").hidden=!GOOGLE_ENABLED;
 $("#agoogle").onclick=()=>{if(!sb)return aerr("Setup needed.");sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.href.split("#")[0]}}).then(r=>{if(r.error)aerr(r.error.message)})};
 function updateUser(){const b=$("#signin");if(!b)return;b.textContent=uid?(names[uid]||(session&&session.user.user_metadata&&session.user.user_metadata.full_name)||"Account"):"Sign in";b.title=uid?"Click to sign out":"Sign in"}
-$("#signin").onclick=()=>{if(!sb)return need();if(!uid)return authOpen("Welcome back");if(confirm("Sign out?"))sb.auth.signOut()};
+$("#signin").onclick=e=>{e.stopPropagation();if(!sb)return need();if(!uid)return authOpen("Welcome");$("#umenu").hidden=!$("#umenu").hidden};
+document.addEventListener("click",e=>{if(!e.target.closest(".uwrap"))$("#umenu").hidden=true});
+$("#uname").onclick=async()=>{$("#umenu").hidden=true;const cur=names[uid]||"";const n=(prompt("Your display name",cur)||"").trim().slice(0,40);if(n.length<2||n===cur)return;
+ const r=await sb.from("profiles").update({display_name:n}).eq("id",uid);if(r.error)return void alert(errMsg(r.error));try{localStorage.setItem("mwk-name",n)}catch(e){}await load(true)};
+$("#uout").onclick=()=>{$("#umenu").hidden=true;const anon=session&&session.user&&session.user.is_anonymous;
+ if(confirm(anon?"If you sign out, you will not be able to edit or delete your earlier posts from this account. Sign out?":"Sign out?"))sb.auth.signOut()};
 /* ---------- start ---------- */
 if(!configured){showSetup("Setup needed: this page is not connected yet. Paste your Supabase public (publishable) key into SUPABASE_KEY near the top of the script.");loaded=true;render()}
 else if(!sb){showSetup("Could not start the database library.");loaded=true;render()}
