@@ -79,6 +79,33 @@ nav.m a:hover{background:#ffffff1c;opacity:1}nav.m a.on{background:#ffffff26;opa
 .mode{font-size:.82rem;color:var(--muted);margin:.6rem 0 0}
 footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.wrap{max-width:1480px}
+.cols{grid-template-columns:280px minmax(0,1fr) 360px;gap:2.6rem;padding-top:1.8rem}
+@media(max-width:1180px){.cols{grid-template-columns:minmax(0,1fr) 320px;gap:2rem}}
+@media(max-width:780px){.cols{grid-template-columns:1fr}}
+.mchips{display:none;gap:.4rem;overflow-x:auto;padding-bottom:.8rem;scrollbar-width:thin}.mchips button{flex:none;border:1px solid var(--line);background:none;border-radius:999px;padding:.3rem .85rem;cursor:pointer;font-size:.86rem}.mchips button.on{background:var(--chip);border-color:var(--accent);font-weight:700}
+@media(max-width:1180px){.mchips{display:flex}}
+.box{padding:1.2rem 1.3rem}.box h2{font-size:1rem;margin-bottom:.7rem}
+.tp button{padding:.55rem .7rem;font-size:.97rem}
+.flt{margin:.2rem 0 .4rem;border-bottom:1px solid var(--line);padding-bottom:.6rem}
+.qc{background:none;border:0;border-radius:0;border-bottom:1px solid var(--line);padding:1.5rem 0 1.1rem;margin:0;cursor:pointer}
+.qc:hover{border-color:var(--line);transform:none}
+.qt{font:500 clamp(1.35rem,2.2vw,1.65rem)/1.35 var(--serif);color:var(--accent);margin:.5rem 0 .4rem;letter-spacing:-.005em}
+.qc:hover .qt{text-decoration:underline;text-underline-offset:4px}
+.pre{margin:.5rem 0 .2rem;padding-inline-start:.9rem;border-inline-start:3px solid var(--line)}
+.pre .who{font-size:.86rem;font-weight:700}.pre p{margin:.2rem 0 0;color:var(--ink);opacity:.88;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.bar2,.acts{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center;margin-top:.7rem}
+.bar2 button,.acts button{display:inline-flex;align-items:center;gap:.45rem;border:0;background:none;color:var(--muted);border-radius:999px;padding:.5rem .85rem;font:600 .9rem var(--sans);cursor:pointer;transition:background .15s,color .15s}
+.bar2 button:hover,.acts button:hover{background:var(--chip);color:var(--ink)}
+.bar2 button.on,.acts button.on{color:var(--hot);background:none}.bar2 button.on svg{fill:var(--hot);stroke:var(--hot)}
+.bar2 .sp{margin-inline-start:auto;font-size:.84rem;color:var(--muted)}
+.none{color:var(--hot);font-weight:600}.ans{color:var(--muted);font-weight:600}
+.qv .box.q0{background:none;border:0;padding:0}
+.answer{padding:1.3rem 0}.qv h2.ah{font:500 1.15rem var(--sans);margin:1.6rem 0 0;padding-bottom:.6rem;border-bottom:1px solid var(--line)}
+.right ol{margin:0;padding:0;list-style:none;counter-item:c}.right ol li{display:flex;gap:.8rem;padding:.7rem 0;border-top:1px solid var(--line)}.right ol li:first-child{border-top:0}
+.right ol li::before{counter-increment:c;content:counter(c);flex:none;font:500 1.3rem/1 var(--serif);color:var(--hot);width:1.2rem}
+.right ol a{text-decoration:none;cursor:pointer;font-weight:600;line-height:1.35}.right ol a:hover{color:var(--accent)}.right ol small{display:block;color:var(--muted);font-weight:400}
 </style>
 </head>
 <body>
@@ -119,29 +146,39 @@ const best=q=>[...A(q)].sort((a,b)=>L(b)-L(a)||a.ts-b.ts)[0];
 const lk=d=>`<button type="button" class="${(d.likes||[]).includes(uid)?"on":""}" data-like="${d.id}">Helpful${L(d)?" "+L(d):""}</button>`;
 const words=s=>new Set(s.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w=>w.length>3));
 function related(q){const w=words(q.title);return Q().filter(x=>x.id!==q.id).map(x=>{let s=x.topic===q.topic?2:0;words(x.title).forEach(t=>{if(w.has(t))s++});return[s,x]}).filter(a=>a[0]>0).sort((a,b)=>b[0]-a[0]).slice(0,6).map(a=>a[1])}
-function side(){const cur=open&&docs.find(d=>d.id===open);const rel=cur?related(cur):[...Q()].sort((a,b)=>A(b).length-A(a).length||b.ts-a.ts).slice(0,6);
+const SV=p=>`<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const IC={like:SV('<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>'),com:SV('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),sh:SV('<path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/>')};
+const lkb=d=>`<button type="button" class="${(d.likes||[]).includes(uid)?"on":""}" data-like="${d.id}">${IC.like}<span>${L(d)||"Like"}</span></button>`;
+const ncom=q=>A(q).length+docs.filter(d=>d.kind==="c"&&d.qid===q.id).length;
+function side(){const cur=open&&docs.find(d=>d.id===open);const top=[...Q()].sort((a,b)=>A(b).length+L(b)-A(a).length-L(a)||b.ts-a.ts).slice(0,6),rel=cur?related(cur):[];
+ const li=x=>`<li><div><a data-q="${x.id}" class="${lc(x)}" dir="auto">${esc(x.title)}</a><small>${A(x).length} answer${A(x).length===1?"":"s"} · ${esc(x.topic||"General")}</small></div></li>`;
+ const lbt=(k,l)=>`<button type="button" data-lang="${k}" class="${lang===k?"on":""}">${l}</button>`;
  $("#left").innerHTML=`<div class="box tp"><h2>Topics</h2><button type="button" data-topic="" class="${topic?"":"on"}">All topics</button>${TOP.map(t=>`<button type="button" data-topic="${esc(t)}" class="${topic===t?"on":""}">${esc(t)}</button>`).join("")}</div>
- <div class="box"><h2>Community</h2><div class="st">Questions<b>${Q().length}</b></div><div class="st">Answers<b>${docs.filter(d=>d.kind==="a").length}</b></div><div class="st">Replies<b>${docs.filter(d=>d.kind==="c").length}</b></div></div>`;
- $("#right").innerHTML=`<div class="box related"><h2>${cur?"Related questions":"Trending questions"}</h2>${rel.length?`<ul>${rel.map(x=>`<li><a data-q="${x.id}" class="${lc(x)}">${esc(x.title)}</a><small>${A(x).length} answer${A(x).length===1?"":"s"} · ${esc(x.topic||"General")}</small></li>`).join("")}</ul>`:`<p class="hint">Related questions appear as more people ask.</p>`}</div>
- <div class="box"><h2>Looking for a book?</h2><p class="hint">Browse every book by language and open it on the official source.</p><a class="hot" style="display:inline-block;text-decoration:none" href="${BOOKS}">Browse books</a></div>
+ <div class="box"><h2>Community</h2><div class="st">Questions<b>${Q().length}</b></div><div class="st">Answers<b>${docs.filter(d=>d.kind==="a").length}</b></div><div class="st">Replies<b>${docs.filter(d=>d.kind==="c").length}</b></div></div>
+ <div class="box"><h2>Explore</h2><p class="hint">Browse every book by language and open it on the official source.</p><a class="hot" style="display:inline-block;text-decoration:none" href="${BOOKS}">Browse books</a></div>`;
+ $("#right").innerHTML=`<div class="box"><h2>Filter by language</h2><div class="flt" style="border:0;margin:0;padding:0">${lbt("","All")}${lbt("en","English")}${lbt("hi","हिन्दी")}${lbt("ur","اردو")}</div></div>
+ ${rel.length?`<div class="box"><h2>Related questions</h2><ol>${rel.map(li).join("")}</ol></div>`:""}
+ <div class="box"><h2>Top questions</h2>${top.length?`<ol>${top.map(li).join("")}</ol>`:`<p class="hint">Top questions will appear here once people start asking.</p>`}</div>
  <div class="box"><h2>Guidelines</h2><p class="hint">Be respectful. Name the book and page when you quote. No spam, abuse or impersonation.</p></div>
- <p class="mode" id="mode">${db?"Live: shared with everyone who can open this page.":"Preview mode: posts stay on this device until sharing is connected."}</p>`}
+ <p class="mode">${db?"Live: shared with everyone who can open this page.":"Preview mode: posts stay on this device until sharing is connected."}</p>`}
 function cm(c,all,d){const kids=all.filter(x=>x.parent===c.id).sort((a,b)=>a.ts-b.ts);
- return `<div class="cmt"><div class="who">${esc(nm(c.uid))} <span class="meta">${ago(c.ts)}</span></div><p dir="auto" class="${lc(c)}">${esc(c.text)}</p><div class="acts">${lk(c)}${d<3?`<button type="button" data-rp="${c.id}">Reply</button>`:""}<button type="button" data-rep="${c.id}">${c.reported?"Reported":"Report"}</button></div><div id="rp-${c.id}"></div>${kids.length?`<div class="thread">${kids.map(k=>cm(k,all,d+1)).join("")}</div>`:""}</div>`}
+ return `<div class="cmt"><div class="who">${esc(nm(c.uid))} <span class="meta">${ago(c.ts)}</span></div><p dir="auto" class="${lc(c)}">${esc(c.text)}</p><div class="acts">${lkb(c)}${d<3?`<button type="button" data-rp="${c.id}">Reply</button>`:""}<button type="button" data-rep="${c.id}">${c.reported?"Reported":"Report"}</button></div><div id="rp-${c.id}"></div>${kids.length?`<div class="thread">${kids.map(k=>cm(k,all,d+1)).join("")}</div>`:""}</div>`}
 function feed(){let r=Q();if(topic)r=r.filter(q=>q.topic===topic);if(lang)r=r.filter(q=>(q.lang||"en")===lang);
  if(term)r=r.filter(q=>(q.title+" "+(q.text||"")).toLowerCase().includes(term));
  if(tab==="latest")r.sort((a,b)=>b.ts-a.ts);else if(tab==="top")r.sort((a,b)=>A(b).length-A(a).length||b.ts-a.ts);else r=r.filter(q=>!A(q).length).sort((a,b)=>b.ts-a.ts);
- const tb=(k,l)=>`<button type="button" data-tab="${k}" class="${tab===k?"on":""}">${l}</button>`,lbt=(k,l)=>`<button type="button" data-lang="${k}" class="${lang===k?"on":""}">${l}</button>`;
+ const tb=(k,l)=>`<button type="button" data-tab="${k}" class="${tab===k?"on":""}">${l}</button>`;
  $("#col").innerHTML=`<div class="box askcard" id="ask"><div class="av">${uid==="local"?"Y":"M"}</div><div class="fake">What do you want to ask or share?</div><button class="hot" type="button">Ask</button></div>
- <div class="flt">${tb("latest","Latest")}${tb("top","Most answered")}${tb("none","Unanswered")}<span class="sep"></span>${lbt("","All languages")}${lbt("en","English")}${lbt("hi","हिन्दी")}${lbt("ur","اردو")}</div>`+
- (r.length?r.map(q=>{const n=A(q).length,b=best(q);return `<article class="qc" data-q="${q.id}"><div class="meta"><span class="tag">${esc(q.topic||"General")}</span>${lb(q)}<span>${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h3 dir="auto" class="${lc(q)}">${esc(q.title)}</h3>
- ${b?`<div class="top1"><div class="who">${esc(nm(b.uid))} answered ${lb(b)}</div><p dir="auto" class="${lc(b)}">${esc(b.text)}</p></div>`:""}
- <div class="foot"><span class="${n?"ans":"none"}">${n?n+" answer"+(n>1?"s":""):"No answers yet"}</span><span class="meta">${L(q)} helpful</span><button class="link" type="button" data-q="${q.id}">${n?"View answers":"Answer"}</button></div></article>`}).join(""):`<div class="empty"><b>No questions here yet.</b><p>Be the first to ask. Press “Add question” at the top.</p></div>`)}
+ <div class="mchips"><button type="button" data-topic="" class="${topic?"":"on"}">All topics</button>${TOP.map(t=>`<button type="button" data-topic="${esc(t)}" class="${topic===t?"on":""}">${esc(t)}</button>`).join("")}</div>
+ <div class="flt">${tb("latest","Latest")}${tb("top","Most answered")}${tb("none","Unanswered")}</div>`+
+ (r.length?r.map(q=>{const n=A(q).length,b=best(q);return `<article class="qc" data-q="${q.id}"><div class="meta"><span class="tag">${esc(q.topic||"General")}</span>${lb(q)}<span>${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h3 class="qt ${lc(q)}" dir="auto">${esc(q.title)}</h3>
+ ${b?`<div class="pre"><div class="who">${esc(nm(b.uid))} ${lb(b)}</div><p dir="auto" class="${lc(b)}">${esc(b.text)}</p></div>`:`<span class="none">No answers yet. Be the first to answer.</span>`}
+ <div class="bar2">${lkb(q)}<button type="button" data-q="${q.id}">${IC.com}<span>${ncom(q)||"Comment"}</span></button><button type="button" data-share="${q.id}">${IC.sh}<span>Share</span></button><span class="sp">${n} answer${n===1?"":"s"}</span></div></article>`}).join(""):`<div class="empty"><b>No questions yet.</b><p>Be the first to ask. Press “Add question” at the top.</p></div>`)}
 function detail(){const q=docs.find(d=>d.id===open);if(!q){open=null;return feed()}
  const as=A(q).sort((a,b)=>L(b)-L(a)||a.ts-b.ts),cs=docs.filter(d=>d.kind==="c"&&d.qid===q.id);
- $("#col").innerHTML=`<div class="qv"><button class="back" type="button" data-back>&larr; All questions</button><div class="box"><div class="meta"><span class="tag">${esc(q.topic||"General")}</span>${lb(q)}<span>${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h1 dir="auto" class="${lc(q)}">${esc(q.title)}</h1>${q.text?`<div class="body ${lc(q)}" dir="auto">${esc(q.text)}</div>`:""}<div class="acts">${lk(q)}<button type="button" data-rep="${q.id}">${q.reported?"Reported":"Report"}</button><button type="button" id="share">Copy link</button></div></div>
- <div class="box comp"><h2>Your answer</h2><textarea id="ab" dir="auto" maxlength="3000" placeholder="Write a clear, respectful answer in English, Hindi or Urdu. If you quote the author, add the book and page." aria-label="Your answer"></textarea><div class="row"><select id="al" aria-label="Answer language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="ur">اردو</option></select><button class="hot" type="button" id="apost">Post answer</button></div></div>
- <div class="box"><h2>${as.length} answer${as.length===1?"":"s"}</h2>${as.length?as.map(a=>{const roots=cs.filter(c=>c.parent===a.id).sort((x,y)=>x.ts-y.ts);return `<div class="answer"><div class="who">${esc(nm(a.uid))} ${lb(a)} <span class="meta">Community answer · ${ago(a.ts)}</span></div><p class="t ${lc(a)}" dir="auto">${esc(a.text)}</p><div class="acts">${lk(a)}<button type="button" data-rp="${a.id}">Reply</button><button type="button" data-rep="${a.id}">${a.reported?"Reported":"Report"}</button></div><div id="rp-${a.id}"></div>${roots.length?`<div class="thread">${roots.map(c=>cm(c,cs,1)).join("")}</div>`:""}</div>`}).join(""):`<p class="hint">No answers yet. You can write the first one above.</p>`}</div></div>`;
+ $("#col").innerHTML=`<div class="qv"><button class="back" type="button" data-back>&larr; All questions</button><div class="meta"><span class="tag">${esc(q.topic||"General")}</span>${lb(q)}<span>${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h1 class="qt ${lc(q)}" dir="auto" style="font-size:clamp(1.6rem,3vw,2.2rem)">${esc(q.title)}</h1>${q.text?`<div class="body ${lc(q)}" dir="auto">${esc(q.text)}</div>`:""}
+ <div class="bar2">${lkb(q)}<button type="button" data-focus>${IC.com}<span>${as.length} answer${as.length===1?"":"s"}</span></button><button type="button" data-share="${q.id}">${IC.sh}<span>Share</span></button><button type="button" data-rep="${q.id}">${q.reported?"Reported":"Report"}</button></div>
+ <div class="box comp" style="margin-top:1.2rem"><h2>Your answer</h2><textarea id="ab" dir="auto" maxlength="3000" placeholder="Write a clear, respectful answer in English, Hindi or Urdu. If you quote the author, add the book and page." aria-label="Your answer"></textarea><div class="row"><select id="al" aria-label="Answer language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="ur">اردو</option></select><button class="hot" type="button" id="apost">Post answer</button></div></div>
+ <h2 class="ah">${as.length} answer${as.length===1?"":"s"}</h2>${as.length?as.map(a=>{const roots=cs.filter(c=>c.parent===a.id).sort((x,y)=>x.ts-y.ts);return `<div class="answer"><div class="who">${esc(nm(a.uid))} ${lb(a)} <span class="meta">Community answer · ${ago(a.ts)}</span></div><p class="t ${lc(a)}" dir="auto">${esc(a.text)}</p><div class="acts">${lkb(a)}<button type="button" data-rp="${a.id}">${IC.com}<span>Reply</span></button><button type="button" data-rep="${a.id}">${a.reported?"Reported":"Report"}</button></div><div id="rp-${a.id}"></div>${roots.length?`<div class="thread">${roots.map(c=>cm(c,cs,1)).join("")}</div>`:""}</div>`}).join(""):`<p class="hint" style="padding:1rem 0">No answers yet. You can write the first one above.</p>`}</div>`;
  const al=$("#al");if(al)al.value=q.lang||"en"}
 function render(){open?detail():feed();side()}
 async function add(o){const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6),d={...o,id,uid,ts:Date.now(),likes:[]};
@@ -164,7 +201,8 @@ document.addEventListener("click",e=>{if(e.target.id==="ov")return closeM();cons
  if(d.like)mut(d.like,p=>{const l=(p.likes||[]).slice(),i=l.indexOf(uid);i<0?l.push(uid):l.splice(i,1);return{likes:l}});
  else if(d.rep)mut(d.rep,()=>({reported:true}));
  else if(b.id==="apost"){const v=$("#ab").value.trim();if(v.length<5)return $("#ab").focus();add({kind:"a",text:v,qid:open,lang:$("#al").value})}
- else if(b.id==="share"){const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>b.textContent="Link copied").catch(()=>b.textContent="Copy from address bar")}
+ else if(d.share){const u=location.href.split("#")[0]+"#q="+d.share,t=b.querySelector("span");(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>t.textContent="Link copied").catch(()=>t.textContent="Copy from address bar")}
+ else if("focus" in d){$("#ab").focus()}
  else if(d.rp){const h=$("#rp-"+d.rp);if(h.innerHTML){h.innerHTML="";return}h.innerHTML=`<div class="reply"><input dir="auto" maxlength="1000" placeholder="Write a reply" aria-label="Reply"><button type="button">Send</button></div>`;const i=h.querySelector("input");i.focus();
   const send=()=>{const v=i.value.trim();if(!v)return;const p=docs.find(x=>x.id===d.rp);add({kind:"c",text:v,qid:open,parent:p.id,lang:p.lang||"en"})};h.querySelector("button").onclick=send;i.onkeydown=ev=>{if(ev.key==="Enter")send()}}});
 $("#theme").onclick=()=>{const r=document.documentElement,x=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0A141B",v=x?"light":"dark";r.dataset.theme=v;try{localStorage.setItem("mwk-theme",v)}catch(e){}};
