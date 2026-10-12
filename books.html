@@ -52,7 +52,7 @@ aside.f h2{font:600 .95rem var(--sans);margin:1rem 0 .4rem}aside.f h2:first-of-t
 .fh b{font-size:1.05rem}.fh button{border:0;background:none;color:var(--accent);cursor:pointer;font-weight:600}
 .opt{display:flex;align-items:center;gap:.6rem;padding:.3rem .1rem;cursor:pointer;font-size:.95rem}
 .opt input{width:18px;height:18px;accent-color:var(--accent)}.opt span.n{margin-inline-start:auto;color:var(--muted);font-size:.85rem}
-.close{display:none}
+.btn.close{display:none}
 .tool{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .tool .cnt{font-weight:600}.tool .cnt span{color:var(--muted);font-weight:400}
 .ctl{display:flex;gap:.5rem;align-items:center}
@@ -62,7 +62,7 @@ aside.f h2{font:600 .95rem var(--sans);margin:1rem 0 .4rem}aside.f h2:first-of-t
 .fb{display:none;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:.5rem .9rem;cursor:pointer;font-weight:600}
 @media(max-width:900px){.layout{grid-template-columns:1fr}.fb{display:inline-block}
  aside.f{position:fixed;inset:0;z-index:50;max-height:none;border-radius:0;transform:translateY(100%);transition:transform .25s;padding-top:calc(1rem + env(safe-area-inset-top,0px));padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px))}
- aside.f.open{transform:none}.close{display:block}
+ aside.f.open{transform:none}.btn.close{display:block}
  .apply{position:fixed;left:1rem;right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:51;display:none}
  aside.f.open~.apply{display:block}}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.1rem}
@@ -124,7 +124,7 @@ footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem;border-top:1px sol
       <h2>Format</h2><div id="ft"></div>
       <button class="btn hot close" type="button" id="done" style="margin-top:1.2rem;width:100%">Show results</button>
     </aside>
-    <div class="apply"></div>
+    
     <section aria-live="polite">
       <div class="tool">
         <div class="cnt" id="cnt"></div>
