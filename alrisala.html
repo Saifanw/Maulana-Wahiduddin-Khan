@@ -26,15 +26,12 @@ nav.m{display:flex;gap:.2rem;margin-inline-start:auto}nav.m a{padding:.5rem .75r
 .md input{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:.75rem}.md .e{color:#E5533C;font-size:.88rem;min-height:1.2em}.md .a{display:flex;gap:.5rem;justify-content:flex-end;margin-top:.8rem}.md .a button{border-radius:12px;padding:.65rem 1.1rem;border:1px solid var(--line);background:none;cursor:pointer}.md .a .p{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
 footer{border-top:1px solid var(--line);padding:1.4rem 0 2rem;color:var(--muted);font-size:.85rem}
 
-.banner{display:grid;grid-template-columns:1.2fr 1fr;gap:1.4rem;align-items:center;border-radius:22px;padding:clamp(1.2rem,3vw,2rem);color:#EAF1F4;margin:.6rem 0 1.2rem;background:radial-gradient(120% 160% at 100% 0,#F0B35C44,transparent 50%),linear-gradient(135deg,#0A1C27,#12404A)}
-.banner h1{font:400 clamp(1.8rem,3.6vw,2.7rem)/1.1 var(--serif);margin:0 0 .5rem}.banner p{margin:0;color:#C3D4DB;max-width:56ch}
-.stats{display:flex;gap:1.4rem;margin-top:1rem;flex-wrap:wrap}.stats b{display:block;font:500 1.6rem/1 var(--serif);color:var(--gold)}.stats span{font-size:.8rem;color:#A9BCC5}
-.sunc{display:block;text-decoration:none;border-radius:18px;padding:1.2rem 1.3rem;background:linear-gradient(145deg,#F0B35C22,#ffffff0d);border:1px solid #F0B35C77;box-shadow:0 20px 50px #0006;transition:transform .25s,box-shadow .25s}
-.sunc:hover{transform:translateY(-3px);box-shadow:0 26px 60px #F0B35C33}.sunc .e{font-size:.74rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600}
-.sunc h2{font:500 1.45rem/1.2 var(--serif);margin:.35rem 0 .2rem;color:#fff}.sunc p{font-size:.92rem;color:#C3D4DB}.sunc .t{margin-top:.5rem;font-size:.9rem;color:#fff;opacity:.9}
-.sunc .btn{display:inline-flex;gap:.5rem;margin-top:.8rem;background:var(--gold);color:#1B1204;font-weight:600;padding:.7rem 1.2rem;border-radius:12px}
-@media(max-width:860px){.banner{grid-template-columns:1fr}}
-.strip{display:flex;gap:.5rem;overflow-x:auto;padding:.2rem 0 1rem}.strip button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.45rem 1rem;cursor:pointer;font-weight:500;white-space:nowrap}.strip button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.banner{display:flex;align-items:center;justify-content:space-between;gap:1rem 1.5rem;flex-wrap:wrap;border-radius:18px;padding:.9rem 1.3rem;color:#EAF1F4;margin:.4rem 0 .9rem;background:radial-gradient(120% 220% at 100% 0,#F0B35C3d,transparent 55%),linear-gradient(135deg,#0A1C27,#12404A)}
+.banner h1{font:400 clamp(1.5rem,2.6vw,2rem)/1.1 var(--serif);margin:0}.banner p{margin:.15rem 0 0;color:#C3D4DB;font-size:.93rem;max-width:62ch}
+.cta{display:inline-flex;gap:.6rem;align-items:center;padding:.7rem 1.2rem;border-radius:14px;background:linear-gradient(135deg,#F7CF8A,#F0B35C);color:#1B1204;font-weight:600;text-decoration:none;white-space:nowrap;box-shadow:0 10px 28px #F0B35C33;transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 14px 34px #F0B35C55}.cta small{display:block;font-weight:500;font-size:.72rem;opacity:.75;line-height:1.1}
+@media(max-width:640px){.cta{width:100%;justify-content:center}}
+.strip{display:flex;gap:.5rem;overflow-x:auto;padding:.1rem 0 .8rem}.strip button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:.45rem 1rem;cursor:pointer;font-weight:500;white-space:nowrap}.strip button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .layout{display:grid;grid-template-columns:260px 1fr;gap:1.5rem;align-items:start;padding-bottom:3rem}
 aside.f{position:sticky;top:84px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.1rem;max-height:calc(100vh - 100px);overflow:auto}
 aside.f h2{font:600 .95rem var(--sans);margin:1rem 0 .4rem}.fh{display:flex;justify-content:space-between;align-items:center}.fh b{font-size:1.05rem}.fh button{border:0;background:none;color:var(--accent);cursor:pointer;font-weight:600}
@@ -59,9 +56,8 @@ aside.f h2{font:600 .95rem var(--sans);margin:1rem 0 .4rem}.fh{display:flex;just
 <header class="top"><div class="wrap bar"><a class="brand" href="index.html">Wahiduddin Khan Library</a><div class="sb"><form id="sf" role="search" autocomplete="off" onsubmit="return false"><input id="q" type="search" placeholder="Search Al-Risala by year or language, e.g. urdu 1995" aria-label="Search issues"><button type="submit">Search</button></form></div><nav class="m" aria-label="Primary"><a href="index.html">Home</a><a href="books.html">Books</a><a href="questions.html">Questions</a><a class="on" href="alrisala.html">Al-Risala</a></nav><button class="tb" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button></div></header>
 <main class="wrap">
  <div class="crumb"><a href="index.html">Home</a> &gt; Al-Risala</div>
- <section class="banner"><div><h1>Al-Risala</h1><p>The monthly magazine of Maulana Wahiduddin Khan. Find any year, choose your language and open it on the official CPS International library.</p>
-  <div class="stats"><div><b>1976</b><span>First Urdu issue</span></div><div><b>70</b><span>Yearly collections</span></div><div><b>3</b><span>Languages</span></div></div></div>
-  <a class="sunc" href="sunday.html"><span class="e">Every Sunday</span><h2>Weekly Sunday Discussion</h2><p>One article, three languages, a video and your own learning.</p><div class="t" id="thisweek"></div><span class="btn">Join the discussion →</span></a>
+ <section class="banner"><div><h1>Al-Risala</h1><p>Monthly magazine of Maulana Wahiduddin Khan. Pick a year and language, then open it on the official CPS library.</p></div>
+  <a class="cta" href="sunday.html"><span><small>Every Sunday</small>Weekly Sunday Discussion</span> <span aria-hidden="true">→</span></a>
  </section>
  <div class="strip" id="strip" aria-label="Quick language filter"></div>
  <div class="layout">
@@ -76,7 +72,6 @@ aside.f h2{font:600 .95rem var(--sans);margin:1rem 0 .4rem}.fh{display:flex;just
    <p class="note">Each card opens the official CPS International page for that year, where the monthly issues can be read or downloaded. This site does not host the files. <a href="https://cpsalrisala.blogspot.in/p/blog-page_30.html" target="_blank" rel="noopener">Urdu articles catalogue</a> · <a href="http://spiritofislam.co.in/" target="_blank" rel="noopener">Spirit of Islam (current English magazine)</a></p>
   </section></div></main>
 <footer><div class="wrap">Unofficial community library, not affiliated with Maulana Wahiduddin Khan or CPS International. Magazine files belong to their rights holders and open from the official CPS source.</div></footer>
-<script src="sunday-sessions.js"></script>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const LN={ur:"Urdu",hi:"Hindi",en:"English"};
@@ -110,7 +105,5 @@ $("#vg").onclick=()=>{F.v="g";render()};$("#vl").onclick=()=>{F.v="l";render()};
 $("#fb").onclick=()=>$("#f").classList.add("open");$("#done").onclick=()=>$("#f").classList.remove("open");
 $("#theme")&&($("#theme").onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).getPropertyValue("--bg").trim().toUpperCase()==="#0A141B",v=d?"light":"dark";r.dataset.theme=v;try{localStorage.setItem("mwk-theme",v)}catch(e){}});
 try{const t=localStorage.getItem("mwk-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}
-const S=(window.SUNDAY_SESSIONS||[]).slice().sort((a,b)=>b.date.localeCompare(a.date)),t0=new Date().toISOString().slice(0,10),cs=S.find(s=>s.date<=t0)||S[0];
-if(cs){const T=cs.title&&(cs.title.en||cs.title.hi||cs.title.ur);$("#thisweek").innerHTML=new Date(cs.date+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"})+" · "+esc(T||"")}
 render();
 </script></body></html>
