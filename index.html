@@ -189,7 +189,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--accent)}
   <div class="wrap">
     <a class="brand" href="#top">Wahiduddin Khan Library</a>
     <nav class="links" aria-label="Primary">
-      <a href="#books" data-i="books">Books</a><a href="#topics" data-i="topics">Topics</a><a href="#questions" data-i="questions">Questions</a><a href="#articles" data-i="articles">Articles</a><a href="#articles" data-i="videos">Videos</a>
+      <a href="https://claude.ai/artifact/52DrMXF5iGzPK1mjsXJCdW" data-i="books">Books</a><a href="#topics" data-i="topics">Topics</a><a href="#questions" data-i="questions">Questions</a><a href="#articles" data-i="articles">Articles</a><a href="#articles" data-i="videos">Videos</a>
     </nav>
     <div class="tools">
       <select id="lang" aria-label="Language"><option value="en">English</option><option value="ur">اردو</option><option value="hi">हिन्दी</option></select>
@@ -212,7 +212,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--accent)}
       <div class="sugg" id="sugg" role="listbox"></div>
     </div>
     <div class="short" aria-label="Shortcuts">
-      <a href="#books" data-i="eb">Explore Books</a><a href="#topics" data-i="et">Explore Topics</a><a href="#questions" data-i="qa">Questions &amp; Answers</a><a href="#articles" data-i="articles">Articles</a><a href="#articles" data-i="videos">Videos</a>
+      <a href="https://claude.ai/artifact/52DrMXF5iGzPK1mjsXJCdW" data-i="eb">Explore Books</a><a href="#topics" data-i="et">Explore Topics</a><a href="#questions" data-i="qa">Questions &amp; Answers</a><a href="#articles" data-i="articles">Articles</a><a href="#articles" data-i="videos">Videos</a>
     </div>
     <div class="popular" id="popular"></div>
   </div>
@@ -232,6 +232,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--accent)}
 <section class="s" id="books"><div class="wrap">
   <h2>Books</h2><p class="lede">Each book page will show only the actions that really work: read online, download PDF (authorized files only), or open the official source.</p>
   <div class="bgrid" id="bgrid"></div>
+  <p style="margin-top:1.6rem"><a class="btn" style="background:var(--hot,#C2570C);color:#fff" href="https://claude.ai/artifact/52DrMXF5iGzPK1mjsXJCdW">Browse all books in every language</a></p>
 </div></section>
 
 <section class="s" id="questions" style="padding-top:0"><div class="wrap">
@@ -341,7 +342,7 @@ $("#rprev").onclick=()=>showR(ri-1);$("#rnext").onclick=()=>showR(ri+1);
 const rc=$("#rcard");rc.onmouseenter=rc.onfocusin=()=>paused=true;rc.onmouseleave=rc.onfocusout=()=>paused=false;
 /* books */
 const BK=[["Islam and Peace","#12404A,#2C6F73"],["The Prophet of Peace","#3A2F5B,#6B5BA8"],["God Arises","#5B3A12,#B07A2A"],["Tazkirul Quran","#173B2F,#2F7A5E"]];
-$("#bgrid").innerHTML=BK.map(([n,g])=>`<article class="book"><div class="cover" style="background:linear-gradient(150deg,${g.split(",")[0]},${g.split(",")[1]})">${esc(n)}</div><div class="bb"><span class="chipx">Sample entry, source check pending</span><p>Cover, description and official links appear once this edition is verified.</p><a class="btn" href="#" data-s="${esc(n)}">View details</a></div></article>`).join("");
+$("#bgrid").innerHTML=BK.map(([n,g])=>`<article class="book"><div class="cover" style="background:linear-gradient(150deg,${g.split(",")[0]},${g.split(",")[1]})">${esc(n)}</div><div class="bb"><span class="chipx">Sample entry, source check pending</span><p>Cover, description and official links appear once this edition is verified.</p><a class="btn" href="https://claude.ai/artifact/52DrMXF5iGzPK1mjsXJCdW">View in library</a></div></article>`).join("");
 $("#qtopic").innerHTML=TOPICS.map(([n])=>`<option>${esc(n)}</option>`).join("");
 /* community */
 let db=null,uid="local",posts=[],names={};
