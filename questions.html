@@ -6,6 +6,7 @@
 <title>Questions and Answers | Wahiduddin Khan Library</title>
 <meta name="description" content="Ask a question, give an answer and reply in English, Hindi or Urdu. A free public discussion about the books and ideas of Maulana Wahiduddin Khan.">
 <meta name="theme-color" content="#070B14">
+<meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Figtree:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
@@ -187,7 +188,7 @@ body::before{opacity:calc(var(--ao)*.55)}
 .pre{padding:.6rem .85rem;margin:.55rem 0 .1rem}.pre p{-webkit-line-clamp:2;font-size:.95rem}
 .bar2{margin-top:.55rem}
 .tabs{margin-bottom:.7rem}
-.qchips,.trust{display:none}
+.qchips{display:none}
 .hero{padding:1.6rem 1rem 0}.hero h1{font-size:clamp(2rem,4.6vw,3rem);margin-top:.8rem}.hero p{font-size:1rem;margin-top:.6rem}.ask{margin-top:1.1rem}
 .cols{padding-top:1.4rem}
 /* ===== flat header + brand ===== */
@@ -239,16 +240,43 @@ input,textarea,select{font-size:1rem}
 .hot,.go,.reply button,.fab{font-weight:600;letter-spacing:.005em}
 .brand{font:600 1.05rem var(--sans);letter-spacing:-.01em}
 .tabs button,.flt button,.mchips button{font-weight:600;letter-spacing:0}
+/* ===== polish v3: mobile nav, accessibility, contrast ===== */
+.skip{position:absolute;left:.75rem;top:-60px;z-index:100;background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:12px;font-weight:600;text-decoration:none;transition:top .15s}
+.skip:focus{top:.6rem}
+.brand{min-width:0}.bt{overflow:hidden;text-overflow:ellipsis}
+.tb#theme,.menub{width:38px;padding:0;display:inline-grid;place-items:center}
+.menub{display:none}
+.mnav{max-width:1080px;margin:0 auto;padding:.2rem 1.25rem .9rem;display:grid;gap:.2rem}
+.mnav[hidden]{display:none}
+.mnav a{padding:.8rem .95rem;border-radius:12px;text-decoration:none;font-weight:600;color:var(--mut)}
+.mnav a:hover,.mnav a.on{color:var(--ink);background:var(--s2)}
+@media(min-width:761px){.mnav{display:none!important}}
+@media(max-width:760px){.menub{display:inline-grid}#addq{display:none}.hdr .bar{padding:.5rem .8rem;gap:.45rem}.brand{font-size:.98rem}.tb#signin{max-width:96px;padding:0 .7rem}}
+.qc:focus-visible{outline:3px solid var(--a1);outline-offset:3px;border-radius:18px}
+.trust{margin-top:1.2rem;padding:0 .5rem}
+.trust span{padding:.3rem .8rem;border:1px solid var(--line);border-radius:999px;background:var(--glass)}
+@media(max-width:780px){.bar2 button,.acts button{min-height:40px}.tabs button{min-height:38px}.trust{gap:.5rem}}
+:root{--a1:#087A71;--btn:linear-gradient(135deg,var(--g1),var(--g2))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--btn:linear-gradient(135deg,var(--a1),var(--g2))}}
+:root[data-theme="dark"]{--btn:linear-gradient(135deg,var(--a1),var(--g2))}
+.hot,.go,.fab,.lab.bst{background:var(--btn)}
+.hero>*{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.hero>*:nth-child(2){animation-delay:.06s}.hero>*:nth-child(3){animation-delay:.12s}.hero>*:nth-child(4){animation-delay:.18s}.hero>*:nth-child(n+5){animation-delay:.24s}
+@media(max-width:520px){.eyebrow{text-transform:none;letter-spacing:.01em;font-size:.76rem;padding:.3rem .75rem;white-space:nowrap}}
 </style>
 </head>
 <body>
+<a class="skip" href="#col">Skip to questions</a>
 <div class="hdr"><header class="bar">
-  <a class="brand" href="index.html"><span class="logo"></span>Wahiduddin Khan Library</a>
-  <nav class="m" aria-label="Primary"><a href="index.html">Home</a><a href="books.html">Books</a><a class="on" href="#">Questions</a><a href="alrisala.html">Al-Risala</a></nav>
+  <a class="brand" href="index.html"><span class="logo"></span><span class="bt">Wahiduddin Khan Library</span></a>
+  <nav class="m" aria-label="Primary"><a href="index.html">Home</a><a href="books.html">Books</a><a class="on" href="#" aria-current="page">Questions</a><a href="alrisala.html">Al-Risala</a></nav>
   <button class="hot" type="button" id="addq">Add question</button>
   <span class="uwrap"><button class="tb" id="signin" type="button">Sign in</button><div class="umenu" id="umenu" hidden><button type="button" id="uname">Change name</button><button type="button" id="uout">Sign out</button></div></span>
-  <button class="tb" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
-</header></div>
+  <button class="tb" id="theme" type="button" aria-label="Switch light or dark theme" title="Switch light or dark theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor"/></svg></button>
+  <button class="tb menub" id="menub" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</header>
+<nav class="mnav" id="mnav" aria-label="Mobile primary" hidden><a href="index.html">Home</a><a href="books.html">Books</a><a class="on" href="#" aria-current="page">Questions</a><a href="alrisala.html">Al-Risala</a></nav>
+</div>
 
 <div class="setup" id="setup" hidden></div>
 <section class="hero">
@@ -260,12 +288,12 @@ input,textarea,select{font-size:1rem}
     <input id="gs" type="search" placeholder="Ask anything about the books and ideas..." aria-label="Ask a question or search"><kbd>/</kbd><button class="go" type="submit">Ask</button></form>
     <div class="sugg" id="sugg" role="listbox"></div>
   </div>
-  <div class="qchips" aria-label="Quick topics"><button type="button" data-topic="Which Book to Read">Which book to read?</button><button type="button" data-topic="Patience and Forgiveness">Patience</button><button type="button" data-topic="Islam and Peace">Peace</button><button type="button" data-topic="Spirituality">Spirituality</button><button type="button" data-topic="Life After Death">Hereafter</button></div>
+  
   <div class="stats"><div><b id="s1">0</b><span>Questions</span></div><div><b id="s2">0</b><span>Answers</span></div><div><b id="s3">0</b><span>Replies</span></div></div>
 <div class="trust"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg>Answers linked to book and page</span><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Reports reviewed by moderators</span><span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Ask in your own language</span></div>
 </section>
 
-<main class="wrap"><div class="cols">
+<main class="wrap" id="main"><div class="cols">
   <aside class="left" id="left"></aside>
   <section id="col" aria-live="polite"></section>
   <aside class="right" id="right"></aside>
@@ -373,7 +401,7 @@ function feed(){feed0();if(loaded)$("#col").insertAdjacentHTML("beforeend",stH()
  $("#col").innerHTML=`
  <div class="mchips"><button type="button" data-topic="" class="${topic?"":"on"}">All topics</button>${TOP.map(t=>`<button type="button" data-topic="${esc(t)}" style="--c:${tc(t)}" class="${topic===t?"on":""}">${esc(t)}</button>`).join("")}</div>
  ${qodH()}<div class="tabs">${tb("latest","Latest")}${tb("top","Most answered")}${tb("none","Unanswered")}</div>`+
- (r.length?r.map(q=>{const n=A(q).length,b=best(q);return `<article class="qc" data-q="${q.id}" style="--c:${tc(q.topic)}"><div class="meta"><span class="tag" style="--c:${tc(q.topic)}">${esc(q.topic||"General")}</span>${lb(q)}<span class="who2">${av(nm(q.uid))}${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h3 class="qt ${lc(q)}" dir="auto">${esc(q.title)}</h3>
+ (r.length?r.map(q=>{const n=A(q).length,b=best(q);return `<article class="qc" tabindex="0" data-q="${q.id}" style="--c:${tc(q.topic)}"><div class="meta"><span class="tag" style="--c:${tc(q.topic)}">${esc(q.topic||"General")}</span>${lb(q)}<span class="who2">${av(nm(q.uid))}${esc(nm(q.uid))}</span><span>${ago(q.ts)}</span></div><h3 class="qt ${lc(q)}" dir="auto">${esc(q.title)}</h3>
  ${b?`<div class="pre"><div class="who">${av(nm(b.uid))}${esc(nm(b.uid))} ${lab(b)}</div><p dir="auto" class="${lc(b)}">${esc(plain(b.text))}</p></div>`:`<span class="none">No answers yet. Be the first to answer.</span>`}
  <div class="bar2">${vt(q)}<button type="button" data-q="${q.id}">${IC.com}<span>${ncom(q)||"Comment"}</span></button><button type="button" data-share="${q.id}">${IC.sh}<span>Share</span></button><span class="sp">${n} answer${n===1?"":"s"}</span></div></article>`}).join(""):`<div class="empty"><b>Nothing here yet</b><p>Be the first to ask a question in this space.</p><button class="hot" type="button" data-newq="1">Ask a question</button></div>`)}
 function detail(){const q=docs.find(d=>d.id===open);if(!q){open=null;return feed()}
@@ -508,7 +536,22 @@ else{render();
 document.addEventListener("input",e=>{const t=e.target,l=scr(t.value||"");if(!l)return;if(t.id==="mt")$("#mlang").value=l;if(t.id==="ab")$("#al").value=l});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-ask]");if(!b)return;ask(b.dataset.ask);if(b.dataset.t)$("#mtopic").value=b.dataset.t},true);
 document.addEventListener("wheel",e=>{const m=e.target.closest(".mchips");if(m&&Math.abs(e.deltaY)>Math.abs(e.deltaX)){m.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});
-render();
+
+/* ---------- mobile menu, keyboard access, modal focus ---------- */
+const mb=$("#menub"),mn=$("#mnav");
+function menu(o){mn.hidden=!o;mb.setAttribute("aria-expanded",String(o));mb.setAttribute("aria-label",o?"Close menu":"Open menu")}
+mb.onclick=e=>{e.stopPropagation();menu(mn.hidden)};
+document.addEventListener("click",e=>{if(!e.target.closest(".hdr"))menu(false)});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape"){menu(false);$("#aov").classList.remove("open")}
+ const c=e.target;if(c.classList&&c.classList.contains("qc")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();go(c.dataset.q)}});
+const OVS=["#ov","#rov","#aov"].map(x=>$(x));let lastF=null;
+document.addEventListener("focusin",e=>{if(!OVS.some(o=>o.contains(e.target)))lastF=e.target});
+OVS.forEach(o=>new MutationObserver(()=>{if(!OVS.some(x=>x.classList.contains("open"))&&lastF&&document.contains(lastF)){try{lastF.focus({preventScroll:true})}catch(_){}}}).observe(o,{attributes:true,attributeFilter:["class"]}));
+document.addEventListener("keydown",e=>{if(e.key!=="Tab")return;const o=OVS.find(x=>x.classList.contains("open"));if(!o)return;
+ const f=[...o.querySelectorAll("button,input,select,textarea,a[href]")].filter(x=>!x.disabled&&x.offsetParent!==null);if(!f.length)return;
+ const a=f[0],z=f[f.length-1],out=!o.contains(document.activeElement);
+ if(e.shiftKey&&(document.activeElement===a||out)){e.preventDefault();z.focus()}else if(!e.shiftKey&&(document.activeElement===z||out)){e.preventDefault();a.focus()}});
 </script>
 </body>
 </html>
