@@ -15,15 +15,15 @@ export default {
   async fetch(req) {
     const m = new URL(req.url).pathname.match(/^\/s\/([\w-]{4,40})\/?$/);
     if (!m) return Response.redirect(SITE_URL, 302);
-    const id = m[1], target = SITE_URL + "#w=" + id;
+    const id = m[1], lg = (new URL(req.url).searchParams.get("l") || "").replace(/[^a-z]/g, "").slice(0, 2), target = SITE_URL + "#w=" + id + (lg ? "&l=" + lg : "");
     let title = "Sunday Discussion | Al-Risala", desc = "Read this week's Al-Risala article in Urdu, Hindi or English.", img = DEFAULT_IMAGE;
     try {
       const r = await fetch(`${SUPABASE_URL}/rest/v1/sunday_sessions?id=eq.${encodeURIComponent(id)}&select=title,article`, {
         headers: { apikey: SUPABASE_KEY, Authorization: "Bearer " + SUPABASE_KEY }, cf: { cacheTtl: 120, cacheEverything: true } });
       const rows = r.ok ? await r.json() : [];
       if (rows[0]) {
-        title = first(rows[0].title, ["en", "hi", "ur"]) || title;
-        const body = plain(first(rows[0].article, ["en", "hi", "ur"]));
+        title = first(rows[0].title, [lg, "en", "hn", "hi", "ur"]) || title;
+        const body = plain(first(rows[0].article, [lg, "en", "hn", "hi", "ur"]));
         if (body) desc = body.length > 190 ? body.slice(0, 187).replace(/\s+\S*$/, "") + "…" : body;
         const card = `${SUPABASE_URL}/storage/v1/object/public/sunday-og/${encodeURIComponent(id)}.jpg`;
         const h = await fetch(card, { method: "HEAD" });
