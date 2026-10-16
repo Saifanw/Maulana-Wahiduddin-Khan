@@ -251,6 +251,7 @@ html.hh header.top{transform:translateY(-105%)}
  .hero .tabs button.om{white-space:nowrap;font-size:.9rem;padding:.4rem .8rem}
  .om .lf{display:none}.om .ls{display:inline}
 }
+.md #slg{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);padding:0 .7rem;font:inherit}
 </style></head><body>
 <a class="skip" href="#read">Skip to the article</a><div id="live" class="sr" role="status" aria-live="polite"></div>
 
@@ -295,7 +296,7 @@ html.hh header.top{transform:translateY(-105%)}
  <input id="p_oyt" type="hidden">
 </details>
 <div class="e" id="pe"></div><div class="a"><button type="button" class="dng" id="pdel" hidden>Delete session</button><button type="button" id="pcx">Cancel</button><button type="button" class="p" id="ppub">Publish</button></div></div></div>
-<div class="ov" id="sov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="sh3"><h3 id="sh3">Ready to share</h3><p class="sm" id="sst">Preparing preview card…</p><img id="simg" class="simg" alt="Share preview" hidden><label class="sl" for="surl">Link</label><input id="surl" readonly><div class="a stk"><a class="p wab" id="swa" target="_blank" rel="noopener">Share on WhatsApp</a><button type="button" id="scp">Copy link</button><button type="button" id="scl">Done</button></div></div></div>
+<div class="ov" id="sov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="sh3"><h3 id="sh3">Ready to share</h3><p class="sm" id="sst">Preparing preview card…</p><img id="simg" class="simg" alt="Share preview" hidden><label class="sl" for="slg">Link opens in</label><select id="slg"></select><label class="sl" for="surl">Link</label><input id="surl" readonly><div class="a stk"><a class="p wab" id="swa" target="_blank" rel="noopener">Share on WhatsApp</a><button type="button" id="scp">Copy link</button><button type="button" id="scl">Done</button></div></div></div>
 
 <script src="supabase-lib.js" defer onload="initSb()"></script>
 <script src="sunday-sessions.js"></script>
@@ -306,10 +307,11 @@ const LN={ur:"اردو",hi:"हिन्दी",en:"English",hn:"Hinglish"};
 /* Paste your Cloudflare Worker address here after deploying worker/share-worker.js, e.g. "https://sunday-share.yourname.workers.dev/s/"
    While it is empty, share links fall back to the plain page link (WhatsApp then shows a generic preview). */
 const SHARE_BASE="https://sunday-share.saif-anwar1618.workers.dev/s/";
-const shareUrl=id=>SHARE_BASE?SHARE_BASE+encodeURIComponent(id):location.href.split("#")[0]+"#w="+id;
+const shareUrl=(id,l)=>SHARE_BASE?SHARE_BASE+encodeURIComponent(id)+(l?"?l="+l:""):location.href.split("#")[0]+"#w="+id+(l?"&l="+l:"");
 const FILE=(window.SUNDAY_SESSIONS||[]).slice();let S=FILE.slice().sort((a,b)=>b.date.localeCompare(a.date)),isAdmin=false,dbIds=new Set();
 let cur=null,al="en",tab="a",vidOn=false,fs=1;
 try{fs=+localStorage.getItem("mwk-fs")||1;al=localStorage.getItem("mwk-al")||"en"}catch(e){}
+const HL=(location.hash.match(/[&#?]l=(ur|hi|en|hn)\b/)||[])[1];if(HL)al=HL;
 const T0=new Date().toISOString().slice(0,10),DAY=864e5;
 const readSet=()=>{try{return new Set(JSON.parse(localStorage.getItem("mwk-read")||"[]"))}catch(e){return new Set()}};
 const D=d=>new Date(d+"T00:00:00");
@@ -346,7 +348,7 @@ function view(){
  const R=$("#read");R.className="read "+al;R.dir=al==="ur"?"rtl":"ltr";R.lang=al;
  if(tab==="o"&&!O){R.className="read";R.innerHTML='<div class="none"><b>Not shared yet</b><br>Maulana Fayyaz Omeri\'s learning appears here once it is added for this Sunday.</div>';$("#lg").innerHTML="";$("#meta").innerHTML="";$("#stitle").textContent="Maulana Fayyaz Omeri's learning";}
  else R.innerHTML=txt?paras(txt):'<div class="none">This language is not available yet.</div>';
- const u=shareUrl(cur.id),msg=encodeURIComponent(ttl(cur,"en")+" - Sunday Discussion, Al-Risala\n"+u);
+ const u=shareUrl(cur.id,al),msg=encodeURIComponent(ttl(cur,"en")+" - Sunday Discussion, Al-Risala\n"+u);
  $("#endwrap").innerHTML=txt?`<div class="end">End of article</div><div class="reflect"><div><b>What will you take from this?</b><span>One sentence is enough. Write it, or record a voice message.</span></div><button type="button" class="go2" id="rfl">Share your learning</button></div><div class="share"><a class="wa" href="https://wa.me/?text=${msg}" target="_blank" rel="noopener">Share on WhatsApp</a><button type="button" id="cp">Copy link</button></div>`:"";
  $("#vbox").innerHTML=video(isO?(cur.omeri.youtube||cur.youtube):cur.youtube);prog()}
 function past(){$("#past").innerHTML=S.map(s=>{const d=D(s.date),L=langs(s.article);return `<button type="button" class="pc ${cur&&s.id===cur.id?"cur":""}" data-w="${s.id}"><div class="dt"><b>${d.getDate()}</b><span>${d.toLocaleDateString("en-IN",{month:"short"})} ${String(d.getFullYear()).slice(2)}</span></div><div><h4 dir="auto">${esc(ttl(s,"en"))}</h4><small>${L.map(k=>`<i>${LN[k]}</i>`).join("")}${yid(s.youtube)?"<i>▶ Video</i>":""}${hasO(s)?"<i>★ Omeri</i>":""}${readSet().has(s.id)?"<i>Read</i>":""}${cur&&s.id===cur.id?"<i>Reading now</i>":""}</small></div></button>`}).join("")||'<p class="hint">Previous sessions will appear here.</p>'}
@@ -355,7 +357,7 @@ addEventListener("scroll",prog,{passive:true});addEventListener("resize",prog);
 document.addEventListener("click",async e=>{const b=e.target.closest("button");if(!b)return;
  if(b.dataset.al){al=b.dataset.al;try{localStorage.setItem("mwk-al",al)}catch(x){}view()}else if(b.dataset.t){tab=b.dataset.t;vidOn=false;view()}else if(b.dataset.v){vidOn=b.dataset.v;view()}else if(b.dataset.w)setWeek(b.dataset.w,true);
  else if(b.id==="fp"||b.id==="fm"){fs=Math.min(1.5,Math.max(.85,+(fs+(b.id==="fp"?.1:-.1)).toFixed(2)));try{localStorage.setItem("mwk-fs",fs)}catch(x){}document.documentElement.style.setProperty("--fs",fs);prog()}
- else if(b.id==="cp"||b.id==="sh"){const u=shareUrl(cur.id);if(b.id==="sh"&&navigator.share){try{await navigator.share({title:ttl(cur,"en"),url:u});return}catch(x){return}}
+ else if(b.id==="cp"||b.id==="sh"){const u=shareUrl(cur.id,al);if(b.id==="sh"&&navigator.share){try{await navigator.share({title:ttl(cur,"en"),url:u});return}catch(x){return}}
   try{await navigator.clipboard.writeText(u);const o=b.innerHTML;b.textContent="Copied ✓";setTimeout(()=>b.innerHTML=o,1600)}catch(x){prompt("Copy this link",u)}}});
 $("#wsel").onchange=e=>setWeek(e.target.value);$("#prev").onclick=()=>setWeek(S[S.indexOf(cur)+1].id);$("#next").onclick=()=>setWeek(S[S.indexOf(cur)-1].id);
 let sb=null;
@@ -424,8 +426,9 @@ async function chkAdmin(){const was=isAdmin;isAdmin=false;if(sb&&uid){const r=aw
 async function loadS(keep){if(!sb)return;const r=await sb.from("sunday_sessions").select("*").order("date",{ascending:false}).limit(300);if(r.error)return;
  const m=new Map();dbIds=new Set();r.data.forEach(x=>{dbIds.add(x.id);m.set(x.id,{id:x.id,date:x.date,title:x.title||{},source:x.source||"",sourceUrl:x.source_url||"",article:x.article||{},youtube:x.youtube||"",omeri:x.omeri||null})});
  FILE.forEach(s=>{if(!m.has(s.id)&&!(s.demo&&r.data.length))m.set(s.id,s)});
- S=[...m.values()].sort((a,b)=>b.date.localeCompare(a.date));const id=keep||(cur&&cur.id);const h=(location.hash.match(/w=([\d-]+)/)||[])[1];
+ S=[...m.values()].sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));const id=keep||(cur&&cur.id);const h=(location.hash.match(/w=([\d-]+)/)||[])[1];
  cur=S.find(s=>s.id===(keep||h||id))||S.find(s=>s.date<=T0)||S[0]||null;view();loadC()}
+function uniqueId(d){let id=d,n=2;while(S.some(x=>x.id===id)||dbIds.has(id))id=d+"-"+n++;return id}
 function nextSun(){const d=new Date();d.setDate(d.getDate()+((7-d.getDay())%7));return d.toLocaleDateString("en-CA")}
 const FIDS=["p_src","p_srcurl","p_yt","p_ot","p_oyt",...LK.flatMap(k=>["pt_","pa_","po_"].map(x=>x+k))];let editing=false;
 function fl(k){$("#pm").dataset.al=k;document.querySelectorAll("#ftabs button").forEach(b=>b.classList.toggle("on",b.dataset.fl===k))}
@@ -444,9 +447,10 @@ $("#anew").onclick=()=>openForm(false);$("#aedit").onclick=()=>cur&&openForm(tru
 $("#ppub").onclick=async()=>{const e=m=>$("#pe").textContent=m,date=$("#p_date").value;if(!date)return e("Please choose the Sunday date.");
  const title={},art={},ot={};LK.forEach(k=>{title[k]=$("#pt_"+k).value;art[k]=$("#pa_"+k).value;ot[k]=$("#po_"+k).value});
  const T=clean(title),A=clean(art),O=clean(ot),oy=$("#p_oyt").value.trim();if(!Object.keys(T).length)return e("Please add a title in at least one language.");if(!Object.keys(A).length)return e("Please add the article in at least one language.");
- const row={id:date,date,title:T,article:A,source:$("#p_src").value.trim(),source_url:$("#p_srcurl").value.trim(),youtube:$("#p_yt").value.trim(),omeri:(Object.keys(O).length||oy)?{title:$("#p_ot").value.trim(),text:O,youtube:oy}:null,updated_at:new Date().toISOString()};
+ if(!editing&&S.some(x=>x.id===date)&&!confirm("Is Sunday ("+date+") ka article pehle se hai.\n\nOK = ek NAYA alag article banega (purane ke comments/audio purane ke saath hi rahenge).\nCancel = ruk jao (purana badalna ho to us article par Edit use karo)."))return;
+ const id=editing&&cur?cur.id:uniqueId(date);const row={id,date,title:T,article:A,source:$("#p_src").value.trim(),source_url:$("#p_srcurl").value.trim(),youtube:$("#p_yt").value.trim(),omeri:(Object.keys(O).length||oy)?{title:$("#p_ot").value.trim(),text:O,youtube:oy}:null,updated_at:new Date().toISOString()};
  $("#ppub").disabled=true;const r=await sb.from("sunday_sessions").upsert(row,{onConflict:"id"});$("#ppub").disabled=false;if(r.error)return e(r.error.message);
- $("#pov").classList.remove("open");if(!editing){try{localStorage.removeItem("mwk-draft")}catch(x){}}vidOn=false;tab="a";try{history.replaceState(null,"","#w="+date)}catch(x){}await loadS(date);scrollTo({top:0,behavior:"smooth"});showShare(date,true)};
+ $("#pov").classList.remove("open");if(!editing){try{localStorage.removeItem("mwk-draft")}catch(x){}}vidOn=false;tab="a";try{history.replaceState(null,"","#w="+id)}catch(x){}await loadS(id);scrollTo({top:0,behavior:"smooth"});showShare(id,true)};
 $("#pdel").onclick=async()=>{if(!cur||!confirm("Delete this session permanently? Its comments stay in the database."))return;const r=await sb.from("sunday_sessions").delete().eq("id",cur.id);if(r.error)return($("#pe").textContent=r.error.message);$("#pov").classList.remove("open");history.replaceState(null,"",location.pathname);cur=null;await loadS()};
 /* ---- share dialog + generated preview card (1200x630) ---- */
 function wrapLines(x,t,max){const w=t.split(/\s+/),L=[];let l="";w.forEach(k=>{const n=l?l+" "+k:k;if(x.measureText(n).width>max&&l){L.push(l);l=k}else l=n});if(l)L.push(l);return L}
@@ -471,8 +475,10 @@ async function makeCard(o){const W=1200,H=630,c=document.createElement("canvas")
  x.fillStyle="#9DB4BF";x.font="500 22px Figtree,sans-serif";x.textAlign="right";x.fillText(o.foot||"Read in Urdu · Hindi · English",W-90,H-62);
  return new Promise(res=>c.toBlob(res,"image/jpeg",.84))}
 let shareBlobUrl=null;
-async function showShare(id,build){const sx=S.find(z=>z.id===id)||cur;if(!sx)return;const u=shareUrl(id),T=ttl(sx,"en");
- $("#surl").value=u;$("#swa").href="https://wa.me/?text="+encodeURIComponent(T+" - Sunday Discussion, Al-Risala\n"+u);$("#simg").hidden=true;$("#sov").classList.add("open");
+function shareLink(){const id=$("#slg").dataset.id,sx=S.find(z=>z.id===id)||cur,l=$("#slg").value,u=shareUrl(id,l),T=ttl(sx,l);$("#surl").value=u;$("#swa").href="https://wa.me/?text="+encodeURIComponent(T+" - Sunday Discussion, Al-Risala\n"+u)}
+$("#slg").onchange=shareLink;
+async function showShare(id,build){const sx=S.find(z=>z.id===id)||cur;if(!sx)return;const T=ttl(sx,"en"),avail=langs(sx.article),g=$("#slg");
+ g.dataset.id=id;g.innerHTML=["hn","hi","en","ur"].filter(k=>avail.includes(k)).map(k=>`<option value="${k}">${LN[k]}</option>`).join("");g.value=avail.includes(al)?al:(avail[0]||"en");shareLink();$("#simg").hidden=true;$("#sov").classList.add("open");
  $("#sst").textContent=build?"Published. Preparing preview card…":"Preparing preview card…";
  try{const blob=await makeCard({title:sx.title,date:fd(sx.date,{weekday:"long",day:"numeric",month:"long",year:"numeric"})});if(shareBlobUrl)URL.revokeObjectURL(shareBlobUrl);shareBlobUrl=URL.createObjectURL(blob);$("#simg").src=shareBlobUrl;$("#simg").hidden=false;
   let ok=false;if(sb&&isAdmin){const up=await sb.storage.from("sunday-og").upload(id+".jpg",blob,{upsert:true,contentType:"image/jpeg",cacheControl:"300"});ok=!up.error}
