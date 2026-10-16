@@ -34,8 +34,8 @@ grant select on public.sunday_learning_feed to anon, authenticated;
 
 -- 4) Storage bucket for the voice messages (public read, 10 MB max, audio only)
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-  values ('sunday-voice', 'sunday-voice', true, 10485760, array['audio/*'])
-  on conflict (id) do update set public = true, file_size_limit = 10485760, allowed_mime_types = array['audio/*'];
+  values ('sunday-voice', 'sunday-voice', true, 26214400, array['audio/*'])
+  on conflict (id) do update set public = true, file_size_limit = 26214400, allowed_mime_types = array['audio/*'];
 
 drop policy if exists "voice read" on storage.objects;
 drop policy if exists "voice insert own" on storage.objects;

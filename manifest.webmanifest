@@ -1,0 +1,25 @@
+{
+ "name": "Wahiduddin Khan Library",
+ "short_name": "Sunday Reading",
+ "description": "Read the weekly Al-Risala Sunday article in Urdu, Hindi or English.",
+ "start_url": "sunday.html",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#0A141B",
+ "theme_color": "#0A1C27",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
