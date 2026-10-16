@@ -25,9 +25,13 @@ export default {
         title = first(rows[0].title, [lg, "en", "hn", "hi", "ur"]) || title;
         const body = plain(first(rows[0].article, [lg, "en", "hn", "hi", "ur"]));
         if (body) desc = body.length > 190 ? body.slice(0, 187).replace(/\s+\S*$/, "") + "…" : body;
-        const card = `${SUPABASE_URL}/storage/v1/object/public/sunday-og/${encodeURIComponent(id)}.jpg`;
-        const h = await fetch(card, { method: "HEAD" });
-        if (h.ok) img = card;
+        title = title.replace(/^[#\s]+/, "");
+        // per-language card first (id-hn.jpg), then the old single card (id.jpg)
+        for (const name of (lg ? [id + "-" + lg + ".jpg", id + ".jpg"] : [id + ".jpg"])) {
+          const card = `${SUPABASE_URL}/storage/v1/object/public/sunday-og/${encodeURIComponent(name)}`;
+          const h = await fetch(card, { method: "HEAD" });
+          if (h.ok) { const v = Date.parse(h.headers.get("last-modified") || "") || 0; img = card + (v ? "?v=" + v : ""); break; }
+        }
       }
     } catch (e) { /* fall back to defaults */ }
     const html = `<!doctype html><html><head><meta charset="utf-8"><title>${esc(title)}</title>
