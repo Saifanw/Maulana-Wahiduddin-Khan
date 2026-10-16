@@ -127,6 +127,15 @@ body{transition:background .35s,color .35s}
 .hero .tabs button:hover{color:#fff}.hero .tabs button.on{color:#fff;border-bottom-color:var(--gold)}
 .hero .tabs .dot{background:var(--gold)}
 .hero .tabs .empty-t{opacity:.75}
+.hero .tabs button.om{color:#FFE2B0;background:linear-gradient(135deg,#F0B35C33,#F0B35C14);border:1px solid #F0B35C99;border-radius:99px;padding:.45rem 1rem;margin:.1rem 0 .5rem;box-shadow:0 0 0 0 #F0B35C66;animation:omglow 2.6s ease-in-out infinite}
+.hero .tabs button.om::before{content:"★ ";color:var(--gold)}
+.hero .tabs button.om:hover{color:#fff;background:#F0B35C40}
+.hero .tabs button.om.on{background:linear-gradient(135deg,#F7CF8A,#F0B35C);color:#2A1A05;border-color:#F7CF8A;animation:none}
+.hero .tabs button.om.on::before{color:#2A1A05}
+.hero .tabs button.om .dot{background:#fff;box-shadow:0 0 8px #fff}.hero .tabs button.om.on .dot{background:#2A1A05;box-shadow:none}
+.hero .tabs .om.empty-t{opacity:1}
+@keyframes omglow{0%,100%{box-shadow:0 0 0 0 #F0B35C55}50%{box-shadow:0 0 0 7px #F0B35C00}}
+@media(prefers-reduced-motion:reduce){.hero .tabs button.om{animation:none}}
 .tools{background:color-mix(in srgb,var(--bg) 90%,transparent)}
 .read{box-shadow:0 24px 60px -28px #0A1C2733;border-color:color-mix(in srgb,var(--line) 70%,transparent)}
 .read p{text-wrap:pretty;font-optical-sizing:auto}
@@ -145,7 +154,7 @@ body{transition:background .35s,color .35s}
 .ftabs{margin:1.1rem 0 .2rem;width:100%}.ftabs button{flex:1;position:relative}
 .ftabs i{display:none;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-inline-start:.4rem;vertical-align:middle}.ftabs i.f{display:inline-block}
 .ftabs button.on{background:var(--surface);box-shadow:0 1px 4px #0003}
-.fm[data-al="ur"] [data-l]:not([data-l="ur"]),.fm[data-al="hi"] [data-l]:not([data-l="hi"]),.fm[data-al="en"] [data-l]:not([data-l="en"]){display:none}
+.fm[data-al="ur"] [data-l]:not([data-l="ur"]),.fm[data-al="hi"] [data-l]:not([data-l="hi"]),.fm[data-al="en"] [data-l]:not([data-l="en"]),.fm[data-al="hn"] [data-l]:not([data-l="hn"]){display:none}
 .fm .lp textarea{min-height:min(46vh,360px)}.fm .wc{font-size:.78rem;color:var(--muted);margin-top:.3rem;min-height:1.1em}
 .fm .more{margin-top:1.2rem;border-top:1px solid var(--line);padding-top:.9rem}.fm .more summary{cursor:pointer;font-weight:600;color:var(--accent)}
 .md .a.stk{flex-wrap:wrap;justify-content:stretch}.md .a.stk>*{flex:1 1 140px;text-align:center}
@@ -231,6 +240,17 @@ html.hh header.top{transform:translateY(-105%)}
 }
 @media(max-width:380px){#sh{display:none}}
 @media print{.cta,.remind,.reflect{display:none}}
+
+/* mobile fit: 4 languages + tools, Omeri pill */
+.om .ls{display:none}
+@media(max-width:560px){
+ .tools .in{flex-wrap:wrap;row-gap:.35rem}
+ .tools .seg{flex:1 1 100%}.tools .seg button{flex:1;padding:.4rem .3rem;font-size:.92rem;white-space:nowrap}
+ .tools .ic{flex:1 1 100%;margin-inline-start:0;justify-content:space-between}.tools .ic button{flex:1;height:36px;min-height:36px}
+ .hero .tabs{padding:.2rem .2rem .35rem;margin-inline:-.2rem}
+ .hero .tabs button.om{white-space:nowrap;font-size:.9rem;padding:.4rem .8rem}
+ .om .lf{display:none}.om .ls{display:inline}
+}
 </style></head><body>
 <a class="skip" href="#read">Skip to the article</a><div id="live" class="sr" role="status" aria-live="polite"></div>
 
@@ -244,7 +264,7 @@ html.hh header.top{transform:translateY(-105%)}
  <section class="hero" aria-label="Article header"><div class="col">
   <div class="head"><div class="eb" id="eb"></div><h1 class="ttl" id="stitle">Sunday Discussion</h1><div class="meta" id="meta"></div>
    <div class="cta" id="cta"><button type="button" class="startb" id="startbtn">Start reading <small></small></button><span class="chip" id="streak" hidden></span></div>
-   <div class="tabs" role="tablist" aria-label="Article or special learning"><button type="button" data-t="a" class="on">Article</button><button type="button" data-t="o" class="om">Maulana Fayyaz Omeri's learning</button></div></div>
+   <div class="tabs" role="tablist" aria-label="Article or special learning"><button type="button" data-t="a" class="on">Article</button><button type="button" data-t="o" class="om"><span class="lf">Maulana Fayyaz Omeri's learning</span><span class="ls">Maulana Omeri's learning</span></button></div></div>
  </div></section>
  <div class="tools" id="tools"><div class="in"><div class="seg" id="lg" role="group" aria-label="Language"></div>
   <div class="ic"><button type="button" id="fm" aria-label="Smaller text">A−</button><button type="button" id="fp" aria-label="Larger text">A+</button><button type="button" id="sh" aria-label="Share"><span class="lb">Share</span> ↗</button></div></div><div id="pg"></div></div>
@@ -254,7 +274,7 @@ html.hh header.top{transform:translateY(-105%)}
   <div class="vcard" id="vcard"><h3>Watch the discussion</h3><div id="vbox"></div></div>
   <section class="sec" id="cm"><h2>Share your learning <small id="cc">0</small></h2><p class="hint">What did this article change in your thinking? Write in any language, or record a voice message of up to 10 minutes.</p><div id="cs"></div>
    <div class="cmbox"><textarea id="ct" maxlength="4000" placeholder="Type your learning here, or record / upload a voice message..." aria-label="Your learning"></textarea>
-   <div class="vrec" id="vrec" hidden role="status"><span class="dot"></span><span class="tm" id="vtm">0:00 <small>/ 10:00</small></span><span class="sp"></span><button type="button" id="vcancel">Cancel</button><button type="button" class="stop" id="vstop">Done</button><span class="rnote">Keep this screen on while recording. You can speak for up to 10 minutes.</span></div><div class="vprev" id="vprev" hidden><audio id="vpa" controls preload="metadata"></audio><button type="button" class="x" id="vx" aria-label="Remove voice message" title="Remove voice message">&#10005;</button></div><div class="row"><select id="cl" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="ur">اردو</option></select><button type="button" class="vb" id="vmic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg><span>Record voice</span></button><label class="vb" id="vupl" for="vfile" tabindex="0" role="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l9-9a3.7 3.7 0 0 1 5.2 5.2l-9 9a1.8 1.8 0 0 1-2.6-2.6l8.3-8.3"/></svg><span>Upload audio</span></label><input id="vfile" type="file" accept="audio/*" hidden><button class="go" id="post" type="button">Share</button></div></div><div id="cml"><p class="hint" style="margin-top:1rem">Loading learnings...</p></div></section>
+   <div class="vrec" id="vrec" hidden role="status"><span class="dot"></span><span class="tm" id="vtm">0:00 <small>/ 10:00</small></span><span class="sp"></span><button type="button" id="vcancel">Cancel</button><button type="button" class="stop" id="vstop">Done</button><span class="rnote">Keep this screen on while recording. You can speak for up to 10 minutes.</span></div><div class="vprev" id="vprev" hidden><audio id="vpa" controls preload="metadata"></audio><button type="button" class="x" id="vx" aria-label="Remove voice message" title="Remove voice message">&#10005;</button></div><div class="row"><select id="cl" aria-label="Language"><option value="en">English</option><option value="hn">Hinglish</option><option value="hi">हिन्दी</option><option value="ur">اردو</option></select><button type="button" class="vb" id="vmic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg><span>Record voice</span></button><label class="vb" id="vupl" for="vfile" tabindex="0" role="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l9-9a3.7 3.7 0 0 1 5.2 5.2l-9 9a1.8 1.8 0 0 1-2.6-2.6l8.3-8.3"/></svg><span>Upload audio</span></label><input id="vfile" type="file" accept="audio/*" hidden><button class="go" id="post" type="button">Share</button></div></div><div id="cml"><p class="hint" style="margin-top:1rem">Loading learnings...</p></div></section>
   <section class="remind" id="remind" aria-labelledby="rmh"><h2 id="rmh">Make Sunday a habit</h2><p>A new article every Sunday. Add a weekly reminder so it finds you.</p><div class="rbtn"><a class="pri" id="rgc" target="_blank" rel="noopener">Google Calendar</a><button type="button" id="rics">Apple / Outlook</button><button type="button" id="rinst" hidden>Add to home screen</button></div><p class="rtip" id="rtip" hidden>On iPhone: tap the Share button, then Add to Home Screen.</p></section>
  </div>
  <section class="sec" id="pastsec"><h2>Previous Sunday discussions</h2><p class="hint">Missed a week? Open any earlier session to read the article and see what others learned.</p><div class="past" id="past"></div></section>
@@ -263,15 +283,15 @@ html.hh header.top{transform:translateY(-105%)}
 <footer><div class="page">Unofficial community library, not affiliated with Maulana Wahiduddin Khan or CPS International. Magazine articles belong to their rights holders.</div></footer>
 <div class="ov" id="aov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="at"><h3 id="at">Join the discussion</h3><p>Type your name to share your learning. No password needed.</p><input id="an" maxlength="40" placeholder="Your name" autocomplete="name"><div class="e" id="ae"></div><div class="a"><button type="button" id="ac">Cancel</button><button type="button" class="p" id="as">Continue</button></div><p style="margin:1rem 0 0"><button type="button" class="lnk" id="atog">Admin sign in</button></p><div id="adminf" hidden><input id="aem" type="email" placeholder="Admin email" autocomplete="username"><input id="apw" type="password" placeholder="Password" autocomplete="current-password"><div class="a"><button type="button" class="p" id="ago">Sign in as admin</button></div></div></div></div>
 <div class="ov" id="pov"><div class="md wide fm" id="pm" data-al="en" role="dialog" aria-modal="true" aria-labelledby="pt"><h3 id="pt">New Sunday article</h3>
-<p class="sm">Fill one language or all three. A blank line starts a new paragraph. Optional: <code>## Heading</code> &nbsp; <code>&gt; Quote</code> &nbsp; <code>**bold**</code></p>
+<p class="sm">Fill one language or all four (Urdu, Hindi, English, Hinglish). A blank line starts a new paragraph. Optional: <code>## Heading</code> &nbsp; <code>&gt; Quote</code> &nbsp; <code>**bold**</code></p>
 <label for="p_date">Sunday date</label><input id="p_date" type="date" class="dtin">
-<div class="seg ftabs" id="ftabs" role="group" aria-label="Language"><button type="button" data-fl="ur">اردو<i></i></button><button type="button" data-fl="hi">हिन्दी<i></i></button><button type="button" data-fl="en" class="on">English<i></i></button></div>
-<div class="lp" data-l="ur"><label for="pt_ur">عنوان</label><input id="pt_ur" dir="rtl"><label for="pa_ur">مضمون</label><textarea id="pa_ur" dir="rtl" placeholder="مضمون یہاں چسپاں کریں…"></textarea><div class="wc" id="wc_ur"></div></div><div class="lp" data-l="hi"><label for="pt_hi">शीर्षक</label><input id="pt_hi" ><label for="pa_hi">लेख</label><textarea id="pa_hi"  placeholder="लेख यहाँ चिपकाएँ…"></textarea><div class="wc" id="wc_hi"></div></div><div class="lp" data-l="en"><label for="pt_en">Title</label><input id="pt_en" ><label for="pa_en">Article</label><textarea id="pa_en"  placeholder="Paste the article here…"></textarea><div class="wc" id="wc_en"></div></div>
+<div class="seg ftabs" id="ftabs" role="group" aria-label="Language"><button type="button" data-fl="ur">اردو<i></i></button><button type="button" data-fl="hi">हिन्दी<i></i></button><button type="button" data-fl="en" class="on">English<i></i></button><button type="button" data-fl="hn">Hinglish<i></i></button></div>
+<div class="lp" data-l="ur"><label for="pt_ur">عنوان</label><input id="pt_ur" dir="rtl"><label for="pa_ur">مضمون</label><textarea id="pa_ur" dir="rtl" placeholder="مضمون یہاں چسپاں کریں…"></textarea><div class="wc" id="wc_ur"></div></div><div class="lp" data-l="hi"><label for="pt_hi">शीर्षक</label><input id="pt_hi" ><label for="pa_hi">लेख</label><textarea id="pa_hi"  placeholder="लेख यहाँ चिपकाएँ…"></textarea><div class="wc" id="wc_hi"></div></div><div class="lp" data-l="en"><label for="pt_en">Title</label><input id="pt_en" ><label for="pa_en">Article</label><textarea id="pa_en"  placeholder="Paste the article here…"></textarea><div class="wc" id="wc_en"></div></div><div class="lp" data-l="hn"><label for="pt_hn">Title (Hinglish)</label><input id="pt_hn"><label for="pa_hn">Article (Hinglish)</label><textarea id="pa_hn" placeholder="Hinglish article yahan paste karein…"></textarea><div class="wc" id="wc_hn"></div></div>
 <details class="more" id="more"><summary>More options: source, Maulana Fayyaz Omeri's learning</summary>
  <input id="p_yt" type="hidden">
  <label for="p_src">Source (for example Al-Risala Urdu, May 2019)</label><input id="p_src"><label for="p_srcurl">Source link</label><input id="p_srcurl" type="url" placeholder="https://">
  <h4>Maulana Fayyaz Omeri's learning</h4><p class="sm">Leave empty and the tab stays empty. Text follows the language selected above.</p>
- <label for="p_ot">Title</label><input id="p_ot"><div data-l="ur"><label for="po_ur">اردو</label><textarea id="po_ur" dir="rtl"></textarea></div><div data-l="hi"><label for="po_hi">हिन्दी</label><textarea id="po_hi"></textarea></div><div data-l="en"><label for="po_en">English</label><textarea id="po_en"></textarea></div>
+ <label for="p_ot">Title</label><input id="p_ot"><div data-l="ur"><label for="po_ur">اردو</label><textarea id="po_ur" dir="rtl"></textarea></div><div data-l="hi"><label for="po_hi">हिन्दी</label><textarea id="po_hi"></textarea></div><div data-l="en"><label for="po_en">English</label><textarea id="po_en"></textarea></div><div data-l="hn"><label for="po_hn">Hinglish</label><textarea id="po_hn"></textarea></div>
  <input id="p_oyt" type="hidden">
 </details>
 <div class="e" id="pe"></div><div class="a"><button type="button" class="dng" id="pdel" hidden>Delete session</button><button type="button" id="pcx">Cancel</button><button type="button" class="p" id="ppub">Publish</button></div></div></div>
@@ -282,7 +302,7 @@ html.hh header.top{transform:translateY(-105%)}
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const SUPABASE_URL="https://ibafhumzzkmsiyzxfwyo.supabase.co",SUPABASE_KEY="sb_publishable_iEo94aadvYBxSflTWMcEBg_9-Oqy2R1";
-const LN={ur:"اردو",hi:"हिन्दी",en:"English"};
+const LN={ur:"اردو",hi:"हिन्दी",en:"English",hn:"Hinglish"};
 /* Paste your Cloudflare Worker address here after deploying worker/share-worker.js, e.g. "https://sunday-share.yourname.workers.dev/s/"
    While it is empty, share links fall back to the plain page link (WhatsApp then shows a generic preview). */
 const SHARE_BASE="https://sunday-share.saif-anwar1618.workers.dev/s/";
@@ -295,8 +315,8 @@ const readSet=()=>{try{return new Set(JSON.parse(localStorage.getItem("mwk-read"
 const D=d=>new Date(d+"T00:00:00");
 const fd=(d,o)=>D(d).toLocaleDateString("en-IN",o||{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 const yid=u=>{const m=String(u||"").match(/(?:v=|youtu\.be\/|embed\/|live\/|shorts\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(u||"")?u:"")};
-const langs=o=>["ur","hi","en"].filter(k=>o&&o[k]&&String(o[k]).trim());
-const ttl=(s,l)=>(s.title&&(s.title[l]||s.title.en||s.title.hi||s.title.ur))||"Sunday discussion";
+const langs=o=>["ur","hi","en","hn"].filter(k=>o&&o[k]&&String(o[k]).trim());
+const ttl=(s,l)=>(s.title&&(s.title[l]||s.title.en||s.title.hn||s.title.hi||s.title.ur))||"Sunday discussion";
 const hasO=s=>!!(s&&s.omeri&&(langs(s.omeri.text).length||yid(s.omeri.youtube)));
 const inl=t=>esc(t).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(^|[\s(])\*(?!\s)([^*]+?)\*(?=[\s).,;:!?]|$)/g,"$1<em>$2</em>");
 const plain=t=>String(t||"").replace(/^##\s+/gm,"").replace(/^>\s?/gm,"").replace(/\*+/g,"");
@@ -315,11 +335,11 @@ function view(){
  const diff=Math.round((new Date(T0+"T00:00:00")-D(cur.date))/DAY),latest=cur===S.find(s=>s.date<=T0);
  const lab=cur.date>T0?"Upcoming":diff===0?"Today's Sunday article":latest&&diff<=6?"This week's Sunday article":latest?"Latest Sunday article":"Past discussion";
  $("#eb").innerHTML=`<span class="pill">${lab}</span><span>${esc(fd(cur.date))}</span>${cur.demo?'<span class="pill demo">Demo</span>':""}`;
- const O=hasO(cur),ot=document.querySelector(".om");ot.classList.toggle("empty-t",!O);ot.innerHTML="Maulana Fayyaz Omeri's learning"+(O?'<span class="dot"></span>':"");
+ const O=hasO(cur),ot=document.querySelector(".om");ot.classList.toggle("empty-t",!O);ot.innerHTML='<span class="lf">Maulana Fayyaz Omeri\'s learning</span><span class="ls">Maulana Omeri\'s learning</span>'+(O?'<span class="dot"></span>':"");
  document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===tab));
  const isO=tab==="o"&&O,srcObj=isO?cur.omeri.text:cur.article,L=langs(srcObj);
  if(!L.includes(al))al=L.includes("en")?"en":L[0]||"en";
- $("#lg").innerHTML=["ur","hi","en"].map(k=>`<button type="button" data-al="${k}" class="${k===al?"on":""}" ${L.includes(k)?"":"disabled"}>${LN[k]}</button>`).join("");
+ $("#lg").innerHTML=["ur","hi","en","hn"].map(k=>`<button type="button" data-al="${k}" class="${k===al?"on":""}" ${L.includes(k)?"":"disabled"}>${LN[k]}</button>`).join("");
  const T=isO?(cur.omeri.title||"Maulana Fayyaz Omeri's learning"):ttl(cur,al),txt=(srcObj&&srcObj[al])||"";
  $("#stitle").className="ttl "+al;$("#stitle").dir=al==="ur"?"rtl":"ltr";$("#stitle").textContent=T;
  $("#meta").innerHTML=(isO?'<span>★ Special learning</span>':cur.source?`<span>${cur.sourceUrl?`<a href="${esc(cur.sourceUrl)}" target="_blank" rel="noopener">${esc(cur.source)} ↗</a>`:esc(cur.source)}</span>`:"")+(txt?`<span>${mins(txt)} min read</span>`:"")+(L.length?`<span>${L.map(k=>LN[k]).join(" · ")}</span>`:"");
@@ -399,7 +419,7 @@ const who=()=>{$("#signin").textContent=uid?((sess&&sess.user.user_metadata&&ses
 function initSb(){if(!window.supabase||sb)return;sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}});sb.auth.onAuthStateChange((ev,s)=>{sess=s;const n=s?s.user.id:null;if(n!==uid){uid=n;who();loadC()}});sb.auth.getSession().then(({data})=>{sess=data.session;uid=sess?sess.user.id:null;who();loadC()});loadS()}
 setInterval(()=>{if(document.hidden||$("#ct").value||vb||recOn)return;if([...document.querySelectorAll("#cml audio")].some(a=>!a.paused))return;loadC()},45000);
 
-const LK=["ur","hi","en"],clean=o=>{const r={};LK.forEach(k=>{const v=String(o[k]||"").trim();if(v)r[k]=v});return r};
+const LK=["ur","hi","en","hn"],clean=o=>{const r={};LK.forEach(k=>{const v=String(o[k]||"").trim();if(v)r[k]=v});return r};
 async function chkAdmin(){const was=isAdmin;isAdmin=false;if(sb&&uid){const r=await sb.from("sunday_admins").select("user_id").eq("user_id",uid).maybeSingle();isAdmin=!!(r&&r.data)}$("#admbar").hidden=!isAdmin;if(isAdmin!==was&&rows.length)loadC()}
 async function loadS(keep){if(!sb)return;const r=await sb.from("sunday_sessions").select("*").order("date",{ascending:false}).limit(300);if(r.error)return;
  const m=new Map();dbIds=new Set();r.data.forEach(x=>{dbIds.add(x.id);m.set(x.id,{id:x.id,date:x.date,title:x.title||{},source:x.source||"",sourceUrl:x.source_url||"",article:x.article||{},youtube:x.youtube||"",omeri:x.omeri||null})});
@@ -431,7 +451,7 @@ $("#pdel").onclick=async()=>{if(!cur||!confirm("Delete this session permanently?
 /* ---- share dialog + generated preview card (1200x630) ---- */
 function wrapLines(x,t,max){const w=t.split(/\s+/),L=[];let l="";w.forEach(k=>{const n=l?l+" "+k:k;if(x.measureText(n).width>max&&l){L.push(l);l=k}else l=n});if(l)L.push(l);return L}
 async function makeCard(o){const W=1200,H=630,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
- const lg=["en","hi","ur"].find(k=>o.title&&o.title[k])||"en",F={en:"'Newsreader',Georgia,serif",hi:"'Noto Sans Devanagari',sans-serif",ur:"'Noto Nastaliq Urdu',serif"}[lg],WT=lg==="hi"?600:500;
+ const lg=["en","hn","hi","ur"].find(k=>o.title&&o.title[k])||"en",F={en:"'Newsreader',Georgia,serif",hn:"'Newsreader',Georgia,serif",hi:"'Noto Sans Devanagari',sans-serif",ur:"'Noto Nastaliq Urdu',serif"}[lg],WT=lg==="hi"?600:500;
  try{await Promise.all([`500 40px Newsreader`,`600 40px 'Noto Sans Devanagari'`,`500 40px 'Noto Nastaliq Urdu'`,`600 24px Figtree`].map(f=>document.fonts.load(f,"Aअا")))}catch(e){}
  let g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#06111A");g.addColorStop(1,"#0F3140");x.fillStyle=g;x.fillRect(0,0,W,H);
  let r=x.createRadialGradient(W*.88,-60,0,W*.88,-60,640);r.addColorStop(0,"#2a8591bb");r.addColorStop(1,"#2a859100");x.fillStyle=r;x.fillRect(0,0,W,H);
