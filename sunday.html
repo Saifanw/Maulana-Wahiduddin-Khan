@@ -290,7 +290,7 @@ html.hh header.top{transform:translateY(-105%)}
 <div class="lp" data-l="ur"><label for="pt_ur">عنوان</label><input id="pt_ur" dir="rtl"><label for="pa_ur">مضمون</label><textarea id="pa_ur" dir="rtl" placeholder="مضمون یہاں چسپاں کریں…"></textarea><div class="wc" id="wc_ur"></div></div><div class="lp" data-l="hi"><label for="pt_hi">शीर्षक</label><input id="pt_hi" ><label for="pa_hi">लेख</label><textarea id="pa_hi"  placeholder="लेख यहाँ चिपकाएँ…"></textarea><div class="wc" id="wc_hi"></div></div><div class="lp" data-l="en"><label for="pt_en">Title</label><input id="pt_en" ><label for="pa_en">Article</label><textarea id="pa_en"  placeholder="Paste the article here…"></textarea><div class="wc" id="wc_en"></div></div><div class="lp" data-l="hn"><label for="pt_hn">Title (Hinglish)</label><input id="pt_hn"><label for="pa_hn">Article (Hinglish)</label><textarea id="pa_hn" placeholder="Hinglish article yahan paste karein…"></textarea><div class="wc" id="wc_hn"></div></div>
 <details class="more" id="more"><summary>More options: source, Maulana Fayyaz Omeri's learning</summary>
  <input id="p_yt" type="hidden">
- <label for="p_src">Source (for example Al-Risala Urdu, May 2019)</label><input id="p_src"><label for="p_srcurl">Source link</label><input id="p_srcurl" type="url" placeholder="https://">
+ <label for="p_src">Reference (shown on the share card under the title, e.g. Al-Risala Urdu, May 2019)</label><input id="p_src"><label for="p_srcurl">Source link</label><input id="p_srcurl" type="url" placeholder="https://">
  <h4>Maulana Fayyaz Omeri's learning</h4><p class="sm">Leave empty and the tab stays empty. Text follows the language selected above.</p>
  <label for="p_ot">Title</label><input id="p_ot"><div data-l="ur"><label for="po_ur">اردو</label><textarea id="po_ur" dir="rtl"></textarea></div><div data-l="hi"><label for="po_hi">हिन्दी</label><textarea id="po_hi"></textarea></div><div data-l="en"><label for="po_en">English</label><textarea id="po_en"></textarea></div><div data-l="hn"><label for="po_hn">Hinglish</label><textarea id="po_hn"></textarea></div>
  <input id="p_oyt" type="hidden">
@@ -455,7 +455,7 @@ $("#pdel").onclick=async()=>{if(!cur||!confirm("Delete this session permanently?
 /* ---- share dialog + generated preview card (1200x630) ---- */
 function wrapLines(x,t,max){const w=t.split(/\s+/),L=[];let l="";w.forEach(k=>{const n=l?l+" "+k:k;if(x.measureText(n).width>max&&l){L.push(l);l=k}else l=n});if(l)L.push(l);return L}
 async function makeCard(o){const W=1200,H=630,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
- const lg=["en","hn","hi","ur"].find(k=>o.title&&o.title[k])||"en",F={en:"'Newsreader',Georgia,serif",hn:"'Newsreader',Georgia,serif",hi:"'Noto Sans Devanagari',sans-serif",ur:"'Noto Nastaliq Urdu',serif"}[lg],WT=lg==="hi"?600:500;
+ const lg=o.lang||"en",tt=String(o.title||"").replace(/^[#\s]+/,""),ref=String(o.source||"").trim(),F={en:"'Newsreader',Georgia,serif",hn:"'Newsreader',Georgia,serif",hi:"'Noto Sans Devanagari',sans-serif",ur:"'Noto Nastaliq Urdu',serif"}[lg],WT=lg==="hi"?600:500;
  try{await Promise.all([`500 40px Newsreader`,`600 40px 'Noto Sans Devanagari'`,`500 40px 'Noto Nastaliq Urdu'`,`600 24px Figtree`].map(f=>document.fonts.load(f,"Aअا")))}catch(e){}
  let g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#06111A");g.addColorStop(1,"#0F3140");x.fillStyle=g;x.fillRect(0,0,W,H);
  let r=x.createRadialGradient(W*.88,-60,0,W*.88,-60,640);r.addColorStop(0,"#2a8591bb");r.addColorStop(1,"#2a859100");x.fillStyle=r;x.fillRect(0,0,W,H);
@@ -466,23 +466,34 @@ async function makeCard(o){const W=1200,H=630,c=document.createElement("canvas")
  const lab=(o.label||"SUNDAY DISCUSSION").toUpperCase();x.font="600 24px Figtree,sans-serif";const lw=x.measureText(lab).width+44;
  g=x.createLinearGradient(90,0,90+lw,0);g.addColorStop(0,"#F7CF8A");g.addColorStop(1,"#F0B35C");x.fillStyle=g;x.beginPath();x.roundRect(90,78,lw,48,24);x.fill();x.fillStyle="#2A1A05";x.fillText(lab,112,111);
  if(o.date){x.fillStyle="#F0B35C";x.font="600 26px Figtree,sans-serif";x.fillText(o.date.toUpperCase(),90+lw+24,111)}
- const rtl=lg==="ur",maxW=1020;let size=80,L;x.direction=rtl?"rtl":"ltr";x.textAlign=rtl?"right":"left";
- for(;size>=40;size-=4){x.font=`${WT} ${size}px ${F}`;L=wrapLines(x,o.title[lg],maxW);if(L.length<=3)break}
- const lh=size*(rtl?1.75:1.2),tot=L.length*lh,y0=Math.max(190,(H-tot)/2+30);x.fillStyle="#fff";x.shadowColor="rgba(0,0,0,.45)";x.shadowBlur=24;
- L.slice(0,4).forEach((t,i)=>x.fillText(t,rtl?W-90:90,y0+size*(rtl?1.2:.95)+i*lh));x.shadowBlur=0;
+ const rtl=lg==="ur",maxW=1020;let size=80,L,lh,y0,refY;x.direction=rtl?"rtl":"ltr";x.textAlign=rtl?"right":"left";
+ for(;size>=36;size-=4){x.font=`${WT} ${size}px ${F}`;L=wrapLines(x,tt,maxW);lh=size*(rtl?1.75:1.2);const tot=L.length*lh+(ref?64:0);y0=Math.max(190,(H-tot)/2+30);refY=y0+(L.length-1)*lh+size*(rtl?1.2:.95)+(rtl?58:54);if(L.length<=3&&(!ref||refY<=H-135))break}
+ x.fillStyle="#fff";x.shadowColor="rgba(0,0,0,.45)";x.shadowBlur=24;
+ L=L.slice(0,ref?3:4);refY=y0+(L.length-1)*lh+size*(rtl?1.2:.95)+(rtl?58:54);
+ L.forEach((t,i)=>x.fillText(t,rtl?W-90:90,y0+size*(rtl?1.2:.95)+i*lh));x.shadowBlur=0;
+ if(ref){let r2=ref;x.font="600 28px Figtree,'Noto Sans Devanagari','Noto Nastaliq Urdu',sans-serif";while(r2.length>4&&x.measureText(r2).width>maxW)r2=r2.slice(0,-2);if(r2!==ref)r2=r2.trim()+"…";x.fillStyle="#F7CF8A";x.fillText(r2,rtl?W-90:90,refY)}
  x.direction="ltr";x.textAlign="left";x.fillStyle="#F0B35C";x.fillRect(90,H-112,64,4);
  x.fillStyle="#EAF1F4";x.font="500 34px Newsreader,Georgia,serif";x.fillText("Wahiduddin Khan Library",90,H-60);
  x.fillStyle="#9DB4BF";x.font="500 22px Figtree,sans-serif";x.textAlign="right";x.fillText(o.foot||"Read in Urdu · Hindi · English",W-90,H-62);
  return new Promise(res=>c.toBlob(res,"image/jpeg",.84))}
-let shareBlobUrl=null;
+let shareCards={},shareTok=0;
+function showCardFor(l){const k=shareCards[l];if(k){$("#simg").src=k.url;$("#simg").hidden=false}else $("#simg").hidden=true}
 function shareLink(){const id=$("#slg").dataset.id,sx=S.find(z=>z.id===id)||cur,l=$("#slg").value,u=shareUrl(id,l),T=ttl(sx,l);$("#surl").value=u;$("#swa").href="https://wa.me/?text="+encodeURIComponent(T+" - Sunday Discussion, Al-Risala\n"+u)}
-$("#slg").onchange=shareLink;
-async function showShare(id,build){const sx=S.find(z=>z.id===id)||cur;if(!sx)return;const T=ttl(sx,"en"),avail=langs(sx.article),g=$("#slg");
+$("#slg").onchange=()=>{shareLink();showCardFor($("#slg").value)};
+async function showShare(id,build){const sx=S.find(z=>z.id===id)||cur;if(!sx)return;const avail=langs(sx.article),g=$("#slg");
  g.dataset.id=id;g.innerHTML=["hn","hi","en","ur"].filter(k=>avail.includes(k)).map(k=>`<option value="${k}">${LN[k]}</option>`).join("");g.value=avail.includes(al)?al:(avail[0]||"en");shareLink();$("#simg").hidden=true;$("#sov").classList.add("open");
- $("#sst").textContent=build?"Published. Preparing preview card…":"Preparing preview card…";
- try{const blob=await makeCard({title:sx.title,date:fd(sx.date,{weekday:"long",day:"numeric",month:"long",year:"numeric"})});if(shareBlobUrl)URL.revokeObjectURL(shareBlobUrl);shareBlobUrl=URL.createObjectURL(blob);$("#simg").src=shareBlobUrl;$("#simg").hidden=false;
-  let ok=false;if(sb&&isAdmin){const up=await sb.storage.from("sunday-og").upload(id+".jpg",blob,{upsert:true,contentType:"image/jpeg",cacheControl:"300"});ok=!up.error}
-  $("#sst").textContent=ok?(SHARE_BASE?"Preview card saved. This is how the WhatsApp link will look.":"Preview card saved. Set SHARE_BASE in sunday.html to turn on rich WhatsApp previews."):"Link is ready. (Preview card could not be saved; run sunday-upgrade.sql once.)"}
+ Object.values(shareCards).forEach(k=>URL.revokeObjectURL(k.url));shareCards={};const tok=++shareTok;
+ $("#sst").textContent=build?"Published. Preparing preview cards…":"Preparing preview cards…";
+ try{const dt=fd(sx.date,{weekday:"long",day:"numeric",month:"long",year:"numeric"}),canUp=!!(sb&&isAdmin),order=[g.value].concat(avail.filter(k=>k!==g.value)),defL=avail.includes("en")?"en":(avail[0]||"en");let ok=canUp;
+  for(const k of order){
+   const tl=[k,"en","hn","hi","ur"].find(z=>sx.title&&sx.title[z]&&String(sx.title[z]).trim())||"en";
+   const blob=await makeCard({title:(sx.title&&sx.title[tl])||ttl(sx,k),lang:tl,source:sx.source,date:dt});
+   if(tok!==shareTok)return;
+   shareCards[k]={blob,url:URL.createObjectURL(blob)};if(k===$("#slg").value)showCardFor(k);
+   if(canUp){const up=await sb.storage.from("sunday-og").upload(id+"-"+k+".jpg",blob,{upsert:true,contentType:"image/jpeg",cacheControl:"300"});if(up.error)ok=false;
+    if(k===defL){const u2=await sb.storage.from("sunday-og").upload(id+".jpg",blob,{upsert:true,contentType:"image/jpeg",cacheControl:"300"});if(u2.error)ok=false}}}
+  if(tok!==shareTok)return;
+  $("#sst").textContent=ok?(SHARE_BASE?"Preview cards saved (one per language). Change 'Link opens in' to see each card.":"Preview cards saved. Set SHARE_BASE in sunday.html to turn on rich WhatsApp previews."):"Link is ready. (Preview card could not be saved; run sunday-upgrade.sql once.)"}
  catch(e){$("#sst").textContent="Link is ready to share."}}
 $("#ashare").onclick=()=>cur&&showShare(cur.id,false);$("#scl").onclick=()=>$("#sov").classList.remove("open");$("#sov").onclick=e=>{if(e.target.id==="sov")$("#sov").classList.remove("open")};
 $("#scp").onclick=async()=>{const b=$("#scp");try{await navigator.clipboard.writeText($("#surl").value);b.textContent="Copied ✓"}catch(x){$("#surl").select()}setTimeout(()=>b.textContent="Copy link",1600)};
