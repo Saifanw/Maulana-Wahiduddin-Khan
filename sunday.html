@@ -87,6 +87,13 @@ h1.ttl.ur{font-family:'Noto Nastaliq Urdu',var(--serif);line-height:1.9;font-wei
 .vp{display:flex;align-items:center;gap:.6rem;margin:.4rem 0;flex-wrap:wrap}
 .vtag{font-size:.78rem;color:var(--muted)}
 .it button{background:none;border:0;color:var(--hot);cursor:pointer;font-size:.82rem;margin-inline-start:.6rem}
+.it .ib,.it .rb{min-width:0;flex:1}
+.it .act{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap}.it .act button{margin:0;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:.32rem .9rem;font-size:.84rem;font-weight:600;background:var(--surface)}
+.it .act button:hover{border-color:var(--accent)}.it .act button.on{color:#D1344B;border-color:#D1344B}.it .act button.on2{color:var(--accent);border-color:var(--accent)}
+.it .rth{margin-top:.7rem;padding-inline-start:.9rem;border-inline-start:2px solid var(--line)}.it .rp{display:flex;gap:.6rem;padding:.55rem 0 0}.it .rp .t{margin:.15rem 0 0;line-height:1.6}
+.av.s{width:28px;height:28px;font-size:.78rem}
+.it .rrow{display:flex;gap:.5rem;margin-top:.7rem}.it .rrow input{flex:1;min-width:0;padding:.55rem .8rem;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:inherit;font:inherit;font-size:.92rem}
+.it .rrow .rgo{margin:0;background:var(--accent);color:var(--accent-ink);border-radius:12px;padding:.5rem 1rem;font-weight:600;font-size:.88rem}.it .rrow .rgo:disabled{opacity:.6}
 .setup{background:#C2570C22;border:1px solid var(--hot);padding:.8rem 1rem;border-radius:12px;font-size:.9rem;margin-bottom:.8rem}
 .past{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem}
 .pc{display:flex;gap:.9rem;text-align:start;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1rem;transition:transform .25s,border-color .25s,box-shadow .25s}
@@ -361,20 +368,39 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button");i
   try{await navigator.clipboard.writeText(u);const o=b.innerHTML;b.textContent="Copied ✓";setTimeout(()=>b.innerHTML=o,1600)}catch(x){prompt("Copy this link",u)}}});
 $("#wsel").onchange=e=>setWeek(e.target.value);$("#prev").onclick=()=>setWeek(S[S.indexOf(cur)+1].id);$("#next").onclick=()=>setWeek(S[S.indexOf(cur)-1].id);
 let sb=null;
-let uid=null,sess=null,rows=[];
+let uid=null,sess=null,rows=[],st={},mine=new Set(),rp={},xOk=false,pend=null;const openT=new Set(),draft={};
 const ago=t=>{const s=(Date.now()-t)/1e3;return s<60?"just now":s<3600?Math.floor(s/60)+" min ago":s<86400?Math.floor(s/3600)+" h ago":Math.floor(s/86400)+" d ago"};
 const VB="sunday-voice",MAXV=600,MAXB=25*1024*1024;
 const fmtT=s=>Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
 const vurlOf=p=>sb.storage.from(VB).getPublicUrl(p).data.publicUrl;
 async function loadC(){if(!sb||!cur)return;const r=await sb.from("sunday_learning_feed").select("*").eq("session_id",cur.id).order("created_at",{ascending:false}).limit(300);
  if(r.error){$("#cs").innerHTML='<div class="setup">Sharing is not switched on yet. Run <b>sunday-setup.sql</b> once in Supabase to enable it.</div>';rows=[]}else{$("#cs").innerHTML="";rows=r.data}
- $("#cc").textContent=rows.length;
- $("#cml").innerHTML=rows.length?rows.map(c=>`<div class="it"><div class="av">${esc((c.author_name||"M")[0].toUpperCase())}</div><div><b>${esc(c.author_name||"Member")}</b> <small>${ago(Date.parse(c.created_at))}</small>${(uid&&c.author_id===uid)||isAdmin?`<button type="button" data-del="${c.id}" data-ap="${esc(c.audio_path||"")}">${uid&&c.author_id===uid?"Delete":"Remove"}</button>`:""}${c.body?`<div class="t ${c.lang==="ur"?"r":""}" dir="auto">${esc(c.body)}</div>`:""}${c.audio_path?`<div class="vp"><audio controls preload="none" src="${esc(vurlOf(c.audio_path))}"></audio><span class="vtag">Voice message${c.audio_seconds?" · "+fmtT(c.audio_seconds):""}</span></div>`:""}</div></div>`).join(""):'<p class="hint" style="margin-top:1rem">No learnings yet. Be the first to share.</p>'}
+ $("#cc").textContent=rows.length;await loadX();drawC()}
+async function loadX(){st={};mine=new Set();rp={};xOk=false;if(!rows.length||!cur)return;
+ try{const q=[sb.from("sunday_learning_stats").select("*").eq("session_id",cur.id).limit(1000),sb.from("sunday_reply_feed").select("*").eq("session_id",cur.id).order("created_at",{ascending:true}).limit(1000),uid?sb.from("sunday_likes").select("learning_id").eq("session_id",cur.id).eq("user_id",uid).limit(1000):Promise.resolve({data:[]})];
+  const [a,b,c]=await Promise.all(q);if(a.error||b.error)return;xOk=true;
+  a.data.forEach(x=>st[x.learning_id]={likes:x.likes||0,replies:x.replies||0});(c.data||[]).forEach(x=>mine.add(x.learning_id));b.data.forEach(x=>(rp[x.learning_id]=rp[x.learning_id]||[]).push(x))}catch(e){xOk=false}}
+function replyHtml(x){const own=uid&&x.author_id===uid;return `<div class="rp"><div class="av s">${esc((x.author_name||"M")[0].toUpperCase())}</div><div class="rb"><b>${esc(x.author_name||"Member")}</b> <small>${ago(Date.parse(x.created_at))}</small>${own||isAdmin?`<button type="button" data-rdel="${x.id}">${own?"Delete":"Remove"}</button>`:""}<div class="t" dir="auto">${esc(x.body)}</div></div></div>`}
+function socialHtml(c){if(!xOk)return"";const s=st[c.id]||{likes:0,replies:0},lk=mine.has(c.id),rs=rp[c.id]||[],op=openT.has(c.id);
+ return `<div class="act"><button type="button" class="${lk?"on":""}" data-like="${c.id}" aria-pressed="${lk}">${lk?"♥":"♡"} ${s.likes?s.likes+" ":""}Like</button><button type="button" class="${op?"on2":""}" data-rt="${c.id}" aria-expanded="${op}">Reply${rs.length?" ("+rs.length+")":""}</button></div><div class="rth"${op?"":" hidden"}>${rs.map(replyHtml).join("")}<div class="rrow"><input class="rin" data-for="${c.id}" maxlength="1000" placeholder="Write a reply…" dir="auto" aria-label="Write a reply"><button type="button" class="rgo" data-rs="${c.id}">Send</button></div></div>`}
+function drawC(){document.querySelectorAll("#cml .rin").forEach(i=>{if(i.value)draft[i.dataset.for]=i.value});const fo=document.activeElement&&document.activeElement.classList&&document.activeElement.classList.contains("rin")?document.activeElement.dataset.for:null;
+ $("#cml").innerHTML=rows.length?rows.map(c=>`<div class="it"><div class="av">${esc((c.author_name||"M")[0].toUpperCase())}</div><div class="ib"><b>${esc(c.author_name||"Member")}</b> <small>${ago(Date.parse(c.created_at))}</small>${(uid&&c.author_id===uid)||isAdmin?`<button type="button" data-del="${c.id}" data-ap="${esc(c.audio_path||"")}">${uid&&c.author_id===uid?"Delete":"Remove"}</button>`:""}${c.body?`<div class="t ${c.lang==="ur"?"r":""}" dir="auto">${esc(c.body)}</div>`:""}${c.audio_path?`<div class="vp"><audio controls preload="none" src="${esc(vurlOf(c.audio_path))}"></audio><span class="vtag">Voice message${c.audio_seconds?" · "+fmtT(c.audio_seconds):""}</span></div>`:""}${socialHtml(c)}</div></div>`).join(""):'<p class="hint" style="margin-top:1rem">No learnings yet. Be the first to share.</p>';
+ document.querySelectorAll("#cml .rin").forEach(i=>{if(draft[i.dataset.for])i.value=draft[i.dataset.for]});if(fo){const i=document.querySelector(`#cml .rin[data-for="${fo}"]`);if(i){i.focus();const n=i.value.length;try{i.setSelectionRange(n,n)}catch(e){}}}}
+async function me(){if(uid)return uid;if(!sb)return null;try{const {data}=await sb.auth.getSession();if(data.session){sess=data.session;uid=sess.user.id}}catch(e){}return uid}
+async function toggleLike(id){if(!await me()){pend=()=>toggleLike(id);return auth()}
+ const was=mine.has(id),s=st[id]||(st[id]={likes:0,replies:0});if(was){mine.delete(id);s.likes=Math.max(0,s.likes-1)}else{mine.add(id);s.likes++}drawC();
+ const r=was?await sb.from("sunday_likes").delete().eq("learning_id",id).eq("user_id",uid):await sb.from("sunday_likes").insert({learning_id:id});
+ if(r.error&&r.error.code!=="23505"){alert(r.error.message);loadC()}}
+async function sendReply(id){const inp=document.querySelector(`#cml .rin[data-for="${id}"]`),t=((inp?inp.value:draft[id])||"").trim();if(!t)return inp&&inp.focus();
+ draft[id]=t;if(!await me()){pend=()=>sendReply(id);return auth()}
+ if(inp)inp.disabled=true;const r=await sb.from("sunday_replies").insert({learning_id:id,body:t});
+ if(r.error){alert(r.error.message);if(inp)inp.disabled=false;return}
+ delete draft[id];openT.add(id);await loadC()}
 const aerr=m=>$("#ae").textContent=m||"";
 function auth(){aerr("");try{$("#an").value=localStorage.getItem("mwk-name")||""}catch(e){}$("#aov").classList.add("open");$("#an").focus()}
-$("#ac").onclick=()=>$("#aov").classList.remove("open");$("#aov").onclick=e=>{if(e.target.id==="aov")$("#aov").classList.remove("open")};$("#an").onkeydown=e=>{if(e.key==="Enter")$("#as").click()};
+$("#ac").onclick=()=>{pend=null;$("#aov").classList.remove("open")};$("#aov").onclick=e=>{if(e.target.id==="aov")$("#aov").classList.remove("open")};$("#an").onkeydown=e=>{if(e.key==="Enter")$("#as").click()};
 $("#as").onclick=async()=>{const n=$("#an").value.trim();if(n.length<2)return aerr("Please type your name (at least 2 letters).");if(!sb)return aerr("Still connecting. Please try again in a moment.");$("#as").disabled=true;
- try{const r=await sb.auth.signInAnonymously({options:{data:{full_name:n.slice(0,40)}}});if(r.error)return aerr(r.error.message);try{localStorage.setItem("mwk-name",n.slice(0,40))}catch(e){}$("#aov").classList.remove("open");if($("#ct").value.trim()||vb)$("#post").click()}finally{$("#as").disabled=false}};
+ try{const r=await sb.auth.signInAnonymously({options:{data:{full_name:n.slice(0,40)}}});if(r.error)return aerr(r.error.message);try{localStorage.setItem("mwk-name",n.slice(0,40))}catch(e){}$("#aov").classList.remove("open");if(pend){const f=pend;pend=null;setTimeout(f,60)}else if($("#ct").value.trim()||vb)$("#post").click()}finally{$("#as").disabled=false}};
 $("#signin").onclick=()=>{if(!uid)return auth();if(confirm("Sign out?"))sb.auth.signOut()};
 $("#post").onclick=async()=>{const t=$("#ct").value.trim();if(recOn)return alert("Please tap Done to finish your recording first.");if(!vb&&t.length<2)return $("#ct").focus();if(!uid)return auth();
  const btn=$("#post");btn.disabled=true;btn.textContent=vb?"Uploading...":"Sharing...";let path=null;
@@ -416,10 +442,16 @@ $("#vfile").onchange=e=>{const f=e.target.files[0];e.target.value="";if(!f)retur
  a.onerror=()=>{if(vurl===keep){clearV();alert("This browser cannot play that audio file. Please choose another one.")}}};
 window.addEventListener("pagehide",()=>{if(recOn)stopRec(true)});
 $("#cml").addEventListener("play",e=>{document.querySelectorAll("#cml audio").forEach(a=>{if(a!==e.target)a.pause()})},true);
-$("#cml").onclick=async e=>{const b=e.target.closest("[data-del]");if(!b||!confirm("Delete this permanently?"))return;const r=await sb.from("sunday_learnings").delete().eq("id",b.dataset.del);if(r.error)alert(r.error.message);else if(b.dataset.ap)sb.storage.from(VB).remove([b.dataset.ap]);loadC()};
+$("#cml").onclick=async e=>{const t=e.target;let b;
+ if(b=t.closest("[data-like]"))return toggleLike(b.dataset.like);
+ if(b=t.closest("[data-rt]")){const id=b.dataset.rt;openT.has(id)?openT.delete(id):openT.add(id);drawC();if(openT.has(id)){const i=document.querySelector(`#cml .rin[data-for="${id}"]`);if(i)i.focus()}return}
+ if(b=t.closest("[data-rs]"))return sendReply(b.dataset.rs);
+ if(b=t.closest("[data-rdel]")){if(!confirm("Delete this reply?"))return;const r=await sb.from("sunday_replies").delete().eq("id",b.dataset.rdel);if(r.error)alert(r.error.message);return loadC()}
+ b=t.closest("[data-del]");if(!b||!confirm("Delete this permanently?"))return;const r=await sb.from("sunday_learnings").delete().eq("id",b.dataset.del);if(r.error)alert(r.error.message);else if(b.dataset.ap)sb.storage.from(VB).remove([b.dataset.ap]);loadC()};
+$("#cml").onkeydown=e=>{if(e.key==="Enter"&&!e.isComposing&&e.target.classList&&e.target.classList.contains("rin")){e.preventDefault();sendReply(e.target.dataset.for)}};
 const who=()=>{$("#signin").textContent=uid?((sess&&sess.user.user_metadata&&sess.user.user_metadata.full_name)||"Account"):"Sign in";chkAdmin()};
 function initSb(){if(!window.supabase||sb)return;sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true}});sb.auth.onAuthStateChange((ev,s)=>{sess=s;const n=s?s.user.id:null;if(n!==uid){uid=n;who();loadC()}});sb.auth.getSession().then(({data})=>{sess=data.session;uid=sess?sess.user.id:null;who();loadC()});loadS()}
-setInterval(()=>{if(document.hidden||$("#ct").value||vb||recOn)return;if([...document.querySelectorAll("#cml audio")].some(a=>!a.paused))return;loadC()},45000);
+setInterval(()=>{if(document.hidden||$("#ct").value||vb||recOn)return;if(document.activeElement&&document.activeElement.classList&&document.activeElement.classList.contains("rin"))return;if([...document.querySelectorAll("#cml audio")].some(a=>!a.paused))return;loadC()},45000);
 
 const LK=["ur","hi","en","hn"],clean=o=>{const r={};LK.forEach(k=>{const v=String(o[k]||"").trim();if(v)r[k]=v});return r};
 async function chkAdmin(){const was=isAdmin;isAdmin=false;if(sb&&uid){const r=await sb.from("sunday_admins").select("user_id").eq("user_id",uid).maybeSingle();isAdmin=!!(r&&r.data)}$("#admbar").hidden=!isAdmin;if(isAdmin!==was&&rows.length)loadC()}
